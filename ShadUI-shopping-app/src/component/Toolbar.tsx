@@ -2,7 +2,7 @@ import { Button } from '../components/ui/button'
 
 const Toolbar = () => {
   return (
-    <div className='py-2 flex items-center justify-between box-border'>
+    <div className='p-2 flex items-center justify-between box-border'>
         <div className="logo font-extrabold">SHOPPING</div>
         <div>
         <Button variant={'ghost'}>Products</Button>
