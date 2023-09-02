@@ -1,19 +1,128 @@
-import { Button } from '../components/ui/button'
+import { useForm } from "react-hook-form";
+import { UpdateIcon } from "@radix-ui/react-icons";
+import { Button } from "../components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../components/ui/form";
+import { Input } from "../components/ui/input";
+import { useState } from "react";
+
+const loginFormSchema = z.object({
+  email: z.string().email(),
+  password: z
+    .string()
+    .regex(
+      new RegExp(
+        "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+      ),
+      {
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character:",
+      }
+    )
+    .min(8, { message: "Password must be alteast 8 characters" })
+    .max(20, { message: "Password must be not more than 20 characters" }),
+});
 
 const Toolbar = () => {
-  return (
-    <div className='p-2 flex items-center justify-between box-border'>
-        <div className="logo font-extrabold">SHOPPING</div>
-        <div>
-        <Button variant={'ghost'}>Products</Button>
-        <Button variant={'ghost'}>Offers</Button>
-        <Button variant={'ghost'}>More</Button>
-        </div>
-        <div>
-            <Button>Login</Button>
-        </div>
-    </div>
-  )
-}
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const loginForm = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+  });
 
-export default Toolbar
+  function onSubmit(values: z.infer<typeof loginFormSchema>) {
+    setIsLoading((prevState) => !prevState);
+    setTimeout(() => {
+      setIsLoading((prevState) => !prevState);
+      setOpen((prevState) => !prevState);
+      console.log(values);
+    }, 3000);
+  }
+  return (
+    <div className="p-2 flex items-center justify-between box-border transi">
+      <div className="logo font-extrabold">SHOPPING</div>
+      <div>
+        <Button variant={"ghost"}>Products</Button>
+        <Button variant={"ghost"}>Offers</Button>
+        <Button variant={"ghost"}>More</Button>
+      </div>
+      <div>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button>Login</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Login</DialogTitle>
+              <DialogDescription>Enter your credentials</DialogDescription>
+            </DialogHeader>
+            <Form {...loginForm}>
+              <form onSubmit={loginForm.handleSubmit(onSubmit)}>
+                <div>
+                  <FormField
+                    control={loginForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="example@gmail.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <DialogFooter className="pt-4">
+                  <Button disabled={isLoading} className="w-full" type="submit">
+                    {!isLoading ? (
+                      "Login"
+                    ) : (
+                      <UpdateIcon className="h-5 w-5 animate-spin"></UpdateIcon>
+                    )}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+            <div>
+              Don't have an Account?{" "}
+              <Button variant={"ghost"}>Create Account</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </div>
+  );
+};
+
+export default Toolbar;

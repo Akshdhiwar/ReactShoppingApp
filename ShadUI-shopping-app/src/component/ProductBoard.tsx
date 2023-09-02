@@ -29,8 +29,8 @@ const ProductBoard = () => {
   return (
     <div className="grid grid-cols-2 w-full gap-2 box-border md:grid-cols-4 p-2 pt-0">
       {productData.map((element: ProductData) => (
-        <Card className="p-2 flex flex-col gap-1 m-0">
-          <AspectRatio ratio={16/9} className="overflow-hidden">
+        <Card className="p-2 flex flex-col gap-1 m-0" key={element.id}>
+          <AspectRatio ratio={16 / 9} className="overflow-hidden">
             <img
               src={element.thumbnail}
               className="object-cover rounded-sm bg-center"
