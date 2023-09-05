@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { AspectRatio } from "../components/ui/aspect-ratio";
+import axios from "axios";
 
 interface ProductData {
   brand: string;
@@ -21,9 +22,10 @@ const ProductBoard = () => {
   const [productData, setProductData] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data) => setProductData(data.products));
+    axios.get("https://dummyjson.com/products").then((res) => {
+      const { data } = res;
+      setProductData(data.products);
+    });
   }, []);
 
   return (
