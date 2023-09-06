@@ -1,4 +1,5 @@
 import { Button } from "../components/ui/button";
+import CreateAccount from "./CreateAccount";
 import Login from "./Login";
 
 const Toolbar = () => {
@@ -11,6 +12,7 @@ const Toolbar = () => {
         <Button variant={"ghost"}>More</Button>
       </div>
       <div className="flex gap-2">
+        <CreateAccount></CreateAccount>
         <Login></Login>
       </div>
     </div>

@@ -22,6 +22,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Loader from "../components/ui/loader";
+import CreateAccount from "./CreateAccount";
+import { Separator } from "../components/ui/separator";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const loginFormSchema = z.object({
   email: z.string().email(),
@@ -106,10 +109,16 @@ const Login = () => {
             </DialogFooter>
           </form>
         </Form>
-        <div>
-          Don't have an Account?
-          <Button variant={"ghost"}>Create Account</Button>
+        <div className="w-full flex items-center gap-2">
+          <Separator className="flex-1"></Separator>or
+          <Separator className="flex-1"></Separator>
         </div>
+        <Button variant={"secondary"} className="hover:border border-slate-400">
+          <img src="/google.svg" className="h-4 mr-1" /> Signin with Google
+        </Button>
+        <Button variant={"secondary"} className="hover:border border-slate-400">
+          <GitHubLogoIcon className="h-4 mr-1" /> Signin with Github
+        </Button>
       </DialogContent>
     </Dialog>
   );
