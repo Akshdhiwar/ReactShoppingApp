@@ -22,7 +22,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Loader from "../components/ui/loader";
-import CreateAccount from "./CreateAccount";
 import { Separator } from "../components/ui/separator";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 

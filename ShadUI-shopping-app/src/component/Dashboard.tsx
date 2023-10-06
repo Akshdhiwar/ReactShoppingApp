@@ -1,14 +1,13 @@
-
-import Toolbar from './Toolbar'
-import ProductBoard from './ProductBoard'
+import Toolbar from "./Toolbar";
+import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
     <div>
-        <Toolbar></Toolbar>
-        <ProductBoard></ProductBoard>
+      <Toolbar></Toolbar>
+      <Outlet></Outlet>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -30,6 +30,8 @@ const CreateAccountSchema = z
     email: z.string().email(),
     password: z
       .string()
+
+      .min(8, { message: "Password must be alteast 8 characters" })
       .regex(
         new RegExp(
           "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
@@ -39,7 +41,6 @@ const CreateAccountSchema = z
             "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character:",
         }
       )
-      .min(8, { message: "Password must be alteast 8 characters" })
       .max(20, { message: "Password must be not more than 20 characters" }),
     confirmPassword: z
       .string()
