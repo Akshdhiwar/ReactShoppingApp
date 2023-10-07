@@ -70,7 +70,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="h-full w-1/2 p-8 flex items-center justify-center">
+      <div className="h-full w-full p-8 flex items-center justify-center lg:w-1/2">
         <div className="w-[350px]">
           <p className="text-3xl font-bold tracking-tight mb-2 text-center lg:hidden text-orange-500">
             Dumbles.shop
