@@ -43,7 +43,7 @@ const createAccountSchema = z.object({
     ),
 });
 
-const CreateAccount = () => {
+const CreateAccount = (props: any) => {
   const createAccountForm = useForm<z.infer<typeof createAccountSchema>>({
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
@@ -54,6 +54,9 @@ const CreateAccount = () => {
   });
 
   function onSubmit() {}
+  function goToLogin() {
+    props.goToLoginFunction();
+  }
 
   return (
     <>
@@ -141,7 +144,11 @@ const CreateAccount = () => {
           <Separator className="flex-1" />
         </div>
         <div>
-          <Button className="w-full mt-2" variant={"outline"}>
+          <Button
+            className="w-full mt-2"
+            variant={"outline"}
+            onClick={goToLogin}
+          >
             Login
           </Button>
         </div>

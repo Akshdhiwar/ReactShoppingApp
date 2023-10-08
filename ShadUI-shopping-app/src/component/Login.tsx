@@ -178,7 +178,7 @@ const Login = () => {
               </div>
             </div>
           ) : (
-            <CreateAccount />
+            <CreateAccount goToLoginFunction={toggleLoginScreen} />
           )}
         </div>
       </div>
