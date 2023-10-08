@@ -12,7 +12,6 @@ import {
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Separator } from "../components/ui/separator";
-import { InstagramLogoIcon } from "@radix-ui/react-icons";
 
 const createAccountSchema = z.object({
   name: z.string(),
