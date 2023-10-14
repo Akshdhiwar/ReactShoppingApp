@@ -1,5 +1,35 @@
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../components/ui/avatar";
+import { Button } from "../../components/ui/button";
+
 const Toolbar = () => {
-  return <div>Toolbar</div>;
+  return (
+    <div className="flex items-center w-full p-2 flex-wrap">
+      <p className="m-2 font-extrabold text-2xl sm:flex-none text-orange-500 flex-1 order-1">
+        DUMBLES.IO
+      </p>
+      <div className="flex-1 flex items-center justify-center gap-1 order-3 sm:order-2 sm:basis-4/12">
+        <Button variant={"ghost"} className="sm:flex-none flex-1">
+          Products
+        </Button>
+        <Button variant={"ghost"} className="sm:flex-none flex-1">
+          Catagories
+        </Button>
+        <Button variant={"ghost"} className="sm:flex-none flex-1">
+          Explore
+        </Button>
+      </div>
+      <div className="flex items-center justify-center m-2 order-2 sm:order-3">
+        <Avatar className="h-8 w-8">
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+      </div>
+    </div>
+  );
 };
 
 export default Toolbar;

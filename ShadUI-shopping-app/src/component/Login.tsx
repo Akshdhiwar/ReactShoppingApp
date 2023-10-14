@@ -1,5 +1,5 @@
 import image from "../assets/images/dumbles.jpg";
-import { FrameIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
+import { FrameIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
@@ -17,7 +17,7 @@ import { Separator } from "../components/ui/separator";
 import { useState } from "react";
 import CreateAccount from "./CreateAccount";
 import { useNavigate } from "react-router-dom";
-import Loader from "../components/ui/loader";
+import { Icons } from "../components/ui/Icons";
 
 const loginSchema = z.object({
   email: z.string().email({
@@ -144,8 +144,15 @@ const Login = () => {
                       </FormItem>
                     )}
                   ></FormField>
-                  <Button className="w-full mt-4" type="submit">
-                    {!isLoading ? "Login" : <Loader></Loader>}
+                  <Button
+                    className="w-full mt-4"
+                    disabled={isLoading}
+                    type="submit"
+                  >
+                    {isLoading && (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    Login
                   </Button>
                 </form>
               </Form>
@@ -155,7 +162,8 @@ const Login = () => {
                 <Separator className="flex-1" />
               </div>
               <Button variant={"outline"} className="gap-2 w-full mb-2">
-                <InstagramLogoIcon></InstagramLogoIcon>Login with Instagram
+                <Icons.google className="mr-2 h-4 w-4"></Icons.google>
+                Login with Google
               </Button>
               <div className="lg:hidden">
                 <div className="flex w-full items-center gap-1 text-sm my-2">
