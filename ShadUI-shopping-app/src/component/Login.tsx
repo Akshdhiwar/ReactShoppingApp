@@ -16,6 +16,8 @@ import { Button } from "../components/ui/button";
 import { Separator } from "../components/ui/separator";
 import { useState } from "react";
 import CreateAccount from "./CreateAccount";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/ui/loader";
 
 const loginSchema = z.object({
   email: z.string().email({
@@ -41,7 +43,9 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+  let navigate = useNavigate();
   const [loginScreen, setLoginScreen] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -50,7 +54,13 @@ const Login = () => {
     },
   });
 
-  function onSubmit() {}
+  function onSubmit() {
+    setLoading((prev) => (prev = !prev));
+    setTimeout(() => {
+      setLoading((prev) => (prev = !prev));
+      return navigate("/dashboard");
+    }, 3000);
+  }
 
   function toggleLoginScreen() {
     setLoginScreen((prev) => (prev = !prev));
@@ -135,7 +145,7 @@ const Login = () => {
                     )}
                   ></FormField>
                   <Button className="w-full mt-4" type="submit">
-                    Login
+                    {!isLoading ? "Login" : <Loader></Loader>}
                   </Button>
                 </form>
               </Form>
