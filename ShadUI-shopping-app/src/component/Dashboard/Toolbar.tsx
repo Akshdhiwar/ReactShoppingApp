@@ -8,7 +8,7 @@ import { Button } from "../../components/ui/button";
 const Toolbar = () => {
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center w-full py-2 flex-wrap px-2 sm:px-0 max-w-screen-2xl">
+      <div className="flex items-center w-full py-2 flex-wrap px-2 max-w-screen-2xl">
         <p className="my-2 font-extrabold text-2xl sm:flex-none text-orange-500 flex-1 order-1">
           DUMBLES.IO
         </p>
