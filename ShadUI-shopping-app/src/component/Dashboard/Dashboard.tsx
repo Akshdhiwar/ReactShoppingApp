@@ -14,7 +14,7 @@ const Dashboard = () => {
     {
       imageLink:
         "https://img.freepik.com/free-vector/abstract-monochrome-distorted-mesh-plane-dark-background-futuristic-style-card-elegant-background-business-presentations-grayscale-corrupted-point-plane-chaos-aesthetics_1217-1798.jpg?w=826&t=st=1698574196~exp=1698574796~hmac=96384788d9de195987ac51534e92cfa0c389c6439628d6bed93c27c42c086445",
-      style: "col-span-2 row-span-2",
+      style: "lg:col-span-2 lg:row-span-2",
     },
     {
       imageLink:
@@ -27,7 +27,7 @@ const Dashboard = () => {
     {
       imageLink:
         "https://img.freepik.com/free-vector/abstract-monochrome-distorted-mesh-plane-dark-background-futuristic-style-card-elegant-background-business-presentations-grayscale-corrupted-point-plane-chaos-aesthetics_1217-1798.jpg?w=826&t=st=1698574196~exp=1698574796~hmac=96384788d9de195987ac51534e92cfa0c389c6439628d6bed93c27c42c086445",
-      style: "col-span-2",
+      style: "lg:col-span-2",
     },
   ];
   return (
