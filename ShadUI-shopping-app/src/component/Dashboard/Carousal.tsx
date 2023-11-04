@@ -13,10 +13,6 @@ const Carousal: FC<CarousalType> = ({ slideImages }): JSX.Element => {
       if (active + 1 == slideImages.length) setActive(-1);
       setmove(() => {
         setActive((p) => p + 1);
-        console.log(
-          active,
-          active * document.getElementById("image")!.offsetWidth
-        );
         return -active * document.getElementById("image")!.offsetWidth;
       });
     }, 2500);
