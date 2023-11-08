@@ -130,10 +130,14 @@ const Toolbar = () => {
             </div>
           ) : (
             <div className="flex gap-1">
-              <Button variant={"outline"} className="hidden sm:block">
+              <Button
+                variant={"outline"}
+                className="hidden sm:block"
+                onClick={() => navigate("/login")}
+              >
                 Sign Up
               </Button>
-              <Button>Sign In</Button>
+              <Button onClick={() => navigate("/login")}>Sign In</Button>
             </div>
           )}
         </div>

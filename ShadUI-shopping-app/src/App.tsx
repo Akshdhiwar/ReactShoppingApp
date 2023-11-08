@@ -9,8 +9,8 @@ function App() {
     <>
       {/* <Login></Login> */}
       <Routes>
+        <Route path="/" Component={Dashboard}></Route>
         <Route path="/login" Component={Login}></Route>
-        <Route index Component={Dashboard}></Route>
         <Route path="/search" Component={Search}></Route>
       </Routes>
     </>

@@ -1,10 +1,11 @@
 import image from "../assets/images/dumbles.jpg";
-import { FrameIcon } from "@radix-ui/react-icons";
+import { ChevronRightIcon, FrameIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "../Constants/supabase";
 import { useEffect, useState } from "react";
+import { Button } from "../components/ui/button";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -50,6 +51,14 @@ const Login = () => {
         </div>
       </div>
       <div className="h-full w-full p-8 flex items-center justify-center lg:w-1/2">
+        <Button
+          className="absolute right-8 top-8 rounded-full flex items-center justify-center"
+          onClick={() => navigate("/")}
+          size={"icon"}
+          variant={"secondary"}
+        >
+          <ChevronRightIcon height={30} width={30} />
+        </Button>
         <div className="w-[350px] py-6 box-border">
           <p className="text-3xl font-bold tracking-tight my-2 text-center lg:hidden text-orange-500">
             Dumbles.shop
