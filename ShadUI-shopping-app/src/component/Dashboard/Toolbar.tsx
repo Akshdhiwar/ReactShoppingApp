@@ -16,7 +16,7 @@ import {
 import { Button } from "../../components/ui/button";
 import { supabase } from "../../Constants/supabase";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Userprofile from "../../Interfaces/UserProfile";
 import { HeartIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
@@ -36,13 +36,14 @@ const Toolbar = () => {
     }
   }
 
-  getUser().then((res: Userprofile | any) => {
-    setUser(res);
-  });
+  useEffect(() => {
+    getUser().then((res: Userprofile | any) => {
+      setUser(res);
+    });
+  }, [user]);
 
   function logout() {
     supabase.auth.signOut();
-    navigate("/");
   }
   return (
     <div className="flex items-center justify-center">
