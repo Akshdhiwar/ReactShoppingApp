@@ -22,7 +22,7 @@ import { HeartIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 const Toolbar = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<Userprofile>();
+  const [user, setUser] = useState<Userprofile | null>(null);
 
   async function getUser() {
     try {
@@ -40,10 +40,11 @@ const Toolbar = () => {
     getUser().then((res: Userprofile | any) => {
       setUser(res);
     });
-  }, [user]);
+  }, []);
 
   function logout() {
     supabase.auth.signOut();
+    setUser(null);
   }
   return (
     <div className="flex items-center justify-center">
@@ -72,7 +73,7 @@ const Toolbar = () => {
             <MagnifyingGlassIcon width={25} height={25}></MagnifyingGlassIcon>
           </Button>
 
-          {user ? (
+          {user != null ? (
             <div className="flex gap-1">
               <Button variant={"ghost"} size={"icon"} className="rounded-full">
                 <HeartIcon width={25} height={25}></HeartIcon>
