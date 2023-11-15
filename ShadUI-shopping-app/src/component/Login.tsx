@@ -1,4 +1,3 @@
-import image from "../assets/images/dumbles.jpg";
 import { ChevronRightIcon, FrameIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "@supabase/auth-ui-react";
@@ -32,7 +31,7 @@ const Login = () => {
     <div className="h-screen flex ">
       <div className="h-full w-1/2 relative box-border hidden lg:block">
         <img
-          src={image}
+          src="./dumbles.jpg"
           alt=""
           className="absolute h-full w-full object-cover bg-center grayscale"
         />
