@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/button";
 
 const Products = () => {
   return (
-    <div className="w-full grid lg:grid-cols-4 gap-4 py-4 grid-cols-2">
+    <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
       {[1, 2, 3, 4, 5, 6, 7, 8].map((e) => {
         return (
           <div
@@ -19,7 +19,7 @@ const Products = () => {
               <div className="p-1 bg-red-500 text-xs text-white absolute rounded-2xl top-2 right-2">
                 -25%
               </div>
-              <div className="group-hover/img:flex absolute top-0 left-0 bg-slate-300/80 w-full h-full gap-2 items-center hidden justify-center rounded-lg">
+              <div className="group-hover/img:flex absolute top-0 left-0 bg-slate-300/50 w-full h-full gap-2 items-center hidden justify-center rounded-lg">
                 <p>View Product</p>
                 <ArrowRightIcon width={20} height={20}></ArrowRightIcon>
               </div>

@@ -56,10 +56,13 @@ const Dashboard = () => {
       </div>
 
       <div className="flex flex-col w-full justify-center m-auto items-center max-w-screen-2xl px-3 xl:p-0">
+        <h1 className="font-bold text-4xl my-4">Products</h1>
         <Products />
+        <h1 className="font-bold text-4xl my-4">Category</h1>
         <Category data={categoryList} />
+        <h1 className="font-bold text-4xl my-4">Explore More</h1>
+        <Products />
       </div>
-
       <div
         className="fixed bottom-0 m-4 border-white border-2 rounded-full"
         style={{ right: right }}
