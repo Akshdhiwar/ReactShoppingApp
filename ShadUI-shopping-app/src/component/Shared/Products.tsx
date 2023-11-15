@@ -25,8 +25,8 @@ const Products = () => {
               </div>
             </div>
 
-            <h2 className="text-2xl font-semibold mt-2">Dubmles</h2>
-            <p className="line-clamp-2 text-sm">
+            <h2 className="text-xl font-semibold mt-2">Dubmles</h2>
+            <p className="line-clamp-2 text-sm text-slate-500">
               High Quality Dumble with A grade rubber coating with steel grip
               made with machine engraving
             </p>
