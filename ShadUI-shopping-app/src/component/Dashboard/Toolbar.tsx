@@ -23,6 +23,7 @@ import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const Toolbar = () => {
   const navigate = useNavigate();
+  const [selected, setSelected] = useState("dashboard");
   const [user, setUser] = useState<Userprofile | null>(null);
 
   async function getUser() {
@@ -47,6 +48,10 @@ const Toolbar = () => {
     supabase.auth.signOut();
     setUser(null);
   }
+
+  const onTabChange = (value: string) => {
+    setSelected(value);
+  };
   return (
     <div className="flex items-center justify-center">
       <div className="flex items-center w-full py-2 flex-wrap px-2 max-w-screen-2xl">
@@ -54,7 +59,11 @@ const Toolbar = () => {
           DUMBLES.IO
         </p>
         <div className="flex-1 flex items-center justify-center gap-1 order-3 sm:order-2 sm:basis-4/12">
-          <Tabs defaultValue="dashboard " className="w-full sm:w-max">
+          <Tabs
+            value={selected}
+            onValueChange={onTabChange}
+            className="w-full sm:w-max"
+          >
             <TabsList className="w-full">
               <TabsTrigger
                 value="dashboard"
