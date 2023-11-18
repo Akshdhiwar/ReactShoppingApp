@@ -16,7 +16,7 @@ const Products = () => {
 
   return (
     <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
-      {data.map((e) => {
+      {data.map((e: any) => {
         return (
           <div
             key={e.id}
