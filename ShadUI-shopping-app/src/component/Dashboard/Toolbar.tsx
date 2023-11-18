@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Userprofile from "../../Interfaces/UserProfile";
 import { HeartIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const Toolbar = () => {
   const navigate = useNavigate();
@@ -53,15 +54,31 @@ const Toolbar = () => {
           DUMBLES.IO
         </p>
         <div className="flex-1 flex items-center justify-center gap-1 order-3 sm:order-2 sm:basis-4/12">
-          <Button variant={"ghost"} className="sm:flex-none flex-1">
-            Products
-          </Button>
-          <Button variant={"ghost"} className="sm:flex-none flex-1">
-            Catagories
-          </Button>
-          <Button variant={"ghost"} className="sm:flex-none flex-1">
-            Explore
-          </Button>
+          <Tabs defaultValue="dashboard " className="w-full sm:w-max">
+            <TabsList className="w-full">
+              <TabsTrigger
+                value="dashboard"
+                className="flex-1"
+                onClick={() => {
+                  navigate("dashboard");
+                }}
+              >
+                Dashboard
+              </TabsTrigger>
+              <TabsTrigger
+                value="products"
+                className="flex-1"
+                onClick={() => {
+                  navigate("product");
+                }}
+              >
+                Products
+              </TabsTrigger>
+              <TabsTrigger value="explore" className="flex-1">
+                Explore
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
           <Button

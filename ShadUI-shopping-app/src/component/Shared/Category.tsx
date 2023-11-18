@@ -10,7 +10,7 @@ type categoryInfoType = {
 
 const Category: FC<CategoryProps> = ({ data }): JSX.Element => {
   return (
-    <div className="w-full lg:h-screen grid lg:grid-cols-4 lg:grid-rows-2 grid-cols-2 grid-rows-4 gap-4 my-2">
+    <div className="w-full lg:h-screen grid lg:grid-cols-4 grid-cols-2 grid-rows-2 gap-4 my-2">
       {data.map((ele, index) => {
         return (
           <div className={ele.style!}>
