@@ -26,6 +26,7 @@ const Products = () => {
               <img
                 src={e.image}
                 alt=""
+                loading="lazy"
                 className=" w-full object-cover aspect-square group-hover:rounded-lg transition p-6"
               />
               <div className="p-1 bg-red-500 text-xs text-white absolute rounded-2xl top-2 right-2">
