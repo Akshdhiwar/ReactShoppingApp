@@ -1,20 +1,32 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "../../components/ui/button";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+// "https://fakestoreapi.com/products"
 
 const Products = () => {
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    axios.get("https://fakestoreapi.com/products?limit=8").then((data) => {
+      setData(data.data);
+    });
+  });
+
   return (
     <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((e) => {
+      {data.map((e) => {
         return (
           <div
-            key={e}
-            className="group hover:scale-105 hover:shadow-2xl hover:p-2 transition-all box-border hover:rounded-xl hover:cursor-pointer border-slate-300 hover:border-2"
+            key={e.id}
+            className="group flex flex-col hover:scale-105 hover:shadow-2xl hover:p-2 transition-all box-border hover:rounded-xl hover:cursor-pointer border-slate-300 hover:border-2"
           >
             <div className="relative transition-all rounded-lg group/img">
               <img
-                src="./dumbles.jpg"
+                src={e.image}
                 alt=""
-                className=" w-full object-cover aspect-square group-hover:rounded-lg transition "
+                className=" w-full object-cover aspect-square group-hover:rounded-lg transition p-6"
               />
               <div className="p-1 bg-red-500 text-xs text-white absolute rounded-2xl top-2 right-2">
                 -25%
@@ -25,14 +37,17 @@ const Products = () => {
               </div>
             </div>
 
-            <h2 className="text-xl font-semibold mt-2">Dubmles</h2>
+            <h2 className="text-xl font-semibold mt-2 flex-1 line-clamp-2">
+              {e.title}
+            </h2>
             <p className="line-clamp-2 text-sm text-slate-500">
-              High Quality Dumble with A grade rubber coating with steel grip
-              made with machine engraving
+              {e.description}
             </p>
             <div className="my-2 flex gap-2">
-              <p className="font-semibold text-xl">$199</p>
-              <p className="line-through text-sm">$249</p>
+              <p className="font-semibold text-xl">${e.price}</p>
+              <p className="line-through text-sm">
+                ${parseFloat(e.price + 50.0).toFixed(2)}
+              </p>
             </div>
             <Button className="w-full"> Add to Cart</Button>
           </div>
