@@ -1,10 +1,12 @@
 import Toolbar from "./Toolbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CheckoutBag from "./CheckoutBag";
 import { Outlet } from "react-router";
+import { CartContext } from "../../Context/CartContext";
 
 const Dashboard = () => {
   const [right, setRight] = useState(0);
+  const cart = useContext(CartContext);
 
   useEffect(() => {
     const updatePosition = () => {

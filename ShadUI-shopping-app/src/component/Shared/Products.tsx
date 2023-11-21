@@ -1,12 +1,16 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "../../components/ui/button";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../../Context/CartContext";
+import iProduct from "../../Interfaces/Products";
 
 // "https://fakestoreapi.com/products"
 
 const Products = () => {
   const [data, setData] = useState<any>([]);
+
+  const cart = useContext(CartContext);
 
   useEffect(() => {
     axios.get("https://fakestoreapi.com/products?limit=8").then((data) => {
@@ -16,15 +20,15 @@ const Products = () => {
 
   return (
     <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
-      {data.map((e: any) => {
+      {data.map((items: iProduct) => {
         return (
           <div
-            key={e.id}
+            key={items.id}
             className="group flex flex-col hover:scale-105 hover:shadow-2xl hover:p-2 transition-all box-border hover:rounded-xl hover:cursor-pointer border-slate-300 hover:border-2"
           >
             <div className="relative transition-all rounded-lg group/img">
               <img
-                src={e.image}
+                src={items.image}
                 alt=""
                 loading="lazy"
                 className=" w-full object-cover aspect-square group-hover:rounded-lg transition p-6"
@@ -39,18 +43,26 @@ const Products = () => {
             </div>
 
             <h2 className="text-xl font-semibold mt-2 flex-1 line-clamp-2">
-              {e.title}
+              {items.title}
             </h2>
             <p className="line-clamp-2 text-sm text-slate-500">
-              {e.description}
+              {items.description}
             </p>
             <div className="my-2 flex gap-2">
-              <p className="font-semibold text-xl">${e.price}</p>
+              <p className="font-semibold text-xl">${items.price}</p>
               <p className="line-through text-sm">
-                ${parseFloat(e.price + 50.0).toFixed(2)}
+                {/* ${parseFloat(items.price).toFixed(2)} */}
               </p>
             </div>
-            <Button className="w-full"> Add to Cart</Button>
+            <Button
+              className="w-full"
+              onClick={() => {
+                cart?.addToCart(items);
+              }}
+            >
+              {" "}
+              Add to Cart
+            </Button>
           </div>
         );
       })}
