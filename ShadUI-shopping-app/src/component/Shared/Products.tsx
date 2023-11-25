@@ -4,13 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import iProduct from "../../Interfaces/Products";
 import { Button } from "../../components/ui/button";
 import { CartContext } from "../../Context/CartContext";
-
-// "https://fakestoreapi.com/products"
+import { useToast } from "../../components/ui/use-toast";
 
 const Products = () => {
   const [data, setData] = useState<iProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const cart = useContext(CartContext);
+  const { toast } = useToast();
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products?limit=8")
@@ -27,6 +27,15 @@ const Products = () => {
         setLoading(false);
       });
   }, []);
+
+  function addProduct(items: iProduct) {
+    items.isAddedToCart = true;
+    cart?.addToCart(items);
+    toast({
+      title: `Product Added to Cart!`,
+      description: `${items.title} was added to the cart! Enjoy shopping`,
+    });
+  }
 
   return (
     <>
@@ -80,8 +89,7 @@ const Products = () => {
                   <Button
                     className="w-full"
                     onClick={() => {
-                      items.isAddedToCart = true;
-                      cart?.addToCart(items);
+                      addProduct(items);
                     }}
                   >
                     Add to Cart

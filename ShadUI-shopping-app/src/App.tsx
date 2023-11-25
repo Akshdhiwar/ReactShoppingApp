@@ -8,6 +8,7 @@ import ProductView from "./component/Product/ProductView";
 import { useState } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
@@ -40,6 +41,7 @@ function App() {
         <Route path="/login" Component={Login}></Route>
         <Route path="/search" Component={Search}></Route>
       </Routes>
+      <Toaster />
     </CartContext.Provider>
   );
 }
