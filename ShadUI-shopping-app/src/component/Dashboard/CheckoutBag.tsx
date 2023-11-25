@@ -66,7 +66,7 @@ const CheckoutBag = () => {
             <Separator className="h-[1px] bg-black"></Separator>
             <div className="flex justify-between">
               <p className="font-semibold">Total</p>
-              <p className="font-semibold">{totalPrice}</p>
+              <p className="font-semibold">{totalPrice.toFixed(2)}</p>
             </div>
           </div>
         )}
