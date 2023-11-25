@@ -9,6 +9,8 @@ interface iProduct {
     rate: number;
     count: number;
   };
+
+  isAddedToCart: boolean;
 }
 
 export default iProduct;

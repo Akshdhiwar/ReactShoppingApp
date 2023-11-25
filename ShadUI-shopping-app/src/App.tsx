@@ -13,6 +13,7 @@ function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
 
   const addToCart = (product: iProduct) => {
+    if (checkCart(product.id)) return;
     setCart((prevCart) => [...prevCart, product]);
   };
 
@@ -20,6 +21,10 @@ function App() {
     setCart((prevCart) =>
       prevCart.filter((product) => product.id !== productId)
     );
+  };
+
+  const checkCart = (productId: number): boolean => {
+    return cart.some((item) => item.id === productId);
   };
 
   return (
