@@ -24,6 +24,7 @@ import {
   MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
+import { ModeToggle } from "../Mode-toggle";
 
 const Toolbar = () => {
   const navigate = useNavigate();
@@ -101,6 +102,7 @@ const Toolbar = () => {
             </Tabs>
           </div>
           <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
+            <ModeToggle />
             <Button
               variant={"ghost"}
               size={"icon"}

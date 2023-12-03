@@ -9,6 +9,7 @@ import { useState } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/toaster";
+import { ThemeProvider } from "./component/Theme-provider";
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
@@ -29,20 +30,22 @@ function App() {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-      {/* <Login></Login> */}
-      <Routes>
-        <Route path="/" Component={Dashboard}>
-          <Route index element={<Navigate to="dashboard" />}></Route>
-          <Route path="dashboard" Component={DashboardView}></Route>
-          <Route path="product" Component={ProductView}></Route>
-          <Route path="explore" Component={DashboardView}></Route>
-        </Route>
-        <Route path="/login" Component={Login}></Route>
-        <Route path="/search" Component={Search}></Route>
-      </Routes>
-      <Toaster />
-    </CartContext.Provider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        {/* <Login></Login> */}
+        <Routes>
+          <Route path="/" Component={Dashboard}>
+            <Route index element={<Navigate to="dashboard" />}></Route>
+            <Route path="dashboard" Component={DashboardView}></Route>
+            <Route path="product" Component={ProductView}></Route>
+            <Route path="explore" Component={DashboardView}></Route>
+          </Route>
+          <Route path="/login" Component={Login}></Route>
+          <Route path="/search" Component={Search}></Route>
+        </Routes>
+        <Toaster />
+      </CartContext.Provider>
+    </ThemeProvider>
   );
 }
 
