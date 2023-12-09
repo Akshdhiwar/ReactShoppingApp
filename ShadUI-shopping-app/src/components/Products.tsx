@@ -1,10 +1,10 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import iProduct from "../../Interfaces/Products";
-import { Button } from "../../components/ui/button";
-import { CartContext } from "../../Context/CartContext";
-import { useToast } from "../../components/ui/use-toast";
+import iProduct from "../Interfaces/Products";
+import { Button } from "./ui/button";
+import { CartContext } from "../Context/CartContext";
+import { useToast } from "./ui/use-toast";
 
 const Products = () => {
   const [data, setData] = useState<iProduct[]>([]);

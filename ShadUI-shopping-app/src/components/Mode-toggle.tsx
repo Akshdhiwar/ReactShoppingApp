@@ -1,8 +1,8 @@
 import { Moon, Sun } from "lucide-react";
 
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 
-import { useTheme } from "./Theme-provider";
+import { useTheme } from "../Context/Theme-provider";
 import { useState } from "react";
 
 export function ModeToggle() {
@@ -10,8 +10,6 @@ export function ModeToggle() {
   const [value, setValue] = useState(
     localStorage.getItem("vite-ui-theme") !== "dark" ? true : false
   );
-
-  console.log();
 
   function theme() {
     setValue((prev) => !prev);
@@ -33,17 +31,5 @@ export function ModeToggle() {
       <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
       <span className="sr-only">Toggle theme</span>
     </Button>
-    //   <DropdownMenuContent align="end">
-    //     <DropdownMenuItem onClick={() => }>
-    //       Light
-    //     </DropdownMenuItem>
-    //     <DropdownMenuItem onClick={() => setTheme("dark")}>
-    //       Dark
-    //     </DropdownMenuItem>
-    //     <DropdownMenuItem onClick={() => setTheme("system")}>
-    //       System
-    //     </DropdownMenuItem>
-    //   </DropdownMenuContent>
-    // </DropdownMenu>
   );
 }

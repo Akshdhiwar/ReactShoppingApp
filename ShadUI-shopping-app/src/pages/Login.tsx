@@ -62,10 +62,12 @@ const Login = () => {
           <p className="text-3xl font-bold tracking-tight my-2 text-center lg:hidden text-orange-500">
             Dumbles.shop
           </p>
+          <p className="text-center text-2xl tracking-tight my-6">Login</p>
           <Auth
             supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}
-            providers={["google"]}
+            providers={["google", "facebook"]}
+            socialLayout="horizontal"
           />
         </div>
       </div>

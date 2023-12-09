@@ -1,8 +1,8 @@
-import Carousal from "./Carousal";
-import Products from "../Shared/Products";
-import Category from "../Shared/Category";
+import Carousal from "../components/Carousal";
+import Products from "../components/Products";
+import Category from "../components/Category";
 
-const DashboardView = () => {
+const Dashboard = () => {
   const slideImages = [
     "https://images.unsplash.com/photo-1697807650304-907257330a3e?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://plus.unsplash.com/premium_photo-1697537045318-3510d37ca3c6?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -49,4 +49,4 @@ const DashboardView = () => {
   );
 };
 
-export default DashboardView;
+export default Dashboard;

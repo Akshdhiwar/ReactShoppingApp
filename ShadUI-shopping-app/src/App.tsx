@@ -1,15 +1,15 @@
 import "./App.css";
-import Dashboard from "./component/Dashboard/Dashboard";
-import Login from "./component/Login";
+import Login from "./pages/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Search from "./component/Shared/Search";
-import DashboardView from "./component/Dashboard/DashboardView";
-import ProductView from "./component/Product/ProductView";
+import Search from "./pages/Search";
+import DashboardView from "./pages/Dashboard";
+import ProductView from "./pages/ProductView";
 import { useState } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/toaster";
-import { ThemeProvider } from "./component/Theme-provider";
+import { ThemeProvider } from "./Context/Theme-provider";
+import Home from "./pages/Home";
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
@@ -34,7 +34,7 @@ function App() {
       <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
         {/* <Login></Login> */}
         <Routes>
-          <Route path="/" Component={Dashboard}>
+          <Route path="/" Component={Home}>
             <Route index element={<Navigate to="dashboard" />}></Route>
             <Route path="dashboard" Component={DashboardView}></Route>
             <Route path="product" Component={ProductView}></Route>

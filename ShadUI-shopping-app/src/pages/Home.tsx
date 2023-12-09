@@ -1,9 +1,9 @@
-import Toolbar from "./Toolbar";
+import Toolbar from "../components/Toolbar";
 import { useEffect, useState } from "react";
-import CheckoutBag from "./CheckoutBag";
+import CheckoutBag from "../components/CheckoutBag";
 import { Outlet } from "react-router";
 
-const Dashboard = () => {
+const Home = () => {
   const [right, setRight] = useState(0);
 
   useEffect(() => {
@@ -34,4 +34,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Home;

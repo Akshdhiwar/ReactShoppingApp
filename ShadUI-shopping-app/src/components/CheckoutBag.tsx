@@ -1,6 +1,6 @@
 import { BackpackIcon } from "@radix-ui/react-icons";
-import { Button } from "../../components/ui/button";
-import { Separator } from "../../components/ui/separator";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/dialog";
+} from "./ui/dialog";
 import { useContext } from "react";
-import { CartContext } from "../../Context/CartContext";
+import { CartContext } from "../Context/CartContext";
 
 const CheckoutBag = () => {
   const cartItems = useContext(CartContext);
