@@ -2,7 +2,6 @@ import "./App.css";
 import Login from "./pages/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Search from "./pages/Search";
-import DashboardView from "./pages/Dashboard";
 import ProductView from "./pages/ProductView";
 import { useState } from "react";
 import { CartContext } from "./Context/CartContext";
@@ -10,6 +9,7 @@ import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/toaster";
 import { ThemeProvider } from "./Context/Theme-provider";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
@@ -36,9 +36,9 @@ function App() {
         <Routes>
           <Route path="/" Component={Home}>
             <Route index element={<Navigate to="dashboard" />}></Route>
-            <Route path="dashboard" Component={DashboardView}></Route>
+            <Route path="dashboard" Component={Dashboard}></Route>
             <Route path="product" Component={ProductView}></Route>
-            <Route path="explore" Component={DashboardView}></Route>
+            <Route path="explore" Component={Dashboard}></Route>
           </Route>
           <Route path="/login" Component={Login}></Route>
           <Route path="/search" Component={Search}></Route>

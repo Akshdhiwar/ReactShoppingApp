@@ -25,3 +25,21 @@ body {
   border-radius: 10px;
   border: 4px solid #ffffff;
 }
+
+.content-grid {
+  display: grid;
+  grid-template-columns:
+    [fullwidth-start] minmax(1rem, 1fr) [content-start] min(
+      100% - (1rem * 2),
+      1536px
+    ) [content-end] minmax(1rem, 1fr)
+    [fullwidth-end];
+}
+
+.content-grid > * {
+  grid-column: content;
+}
+
+.content-grid > .fullwidth {
+  grid-column: fullwidth;
+}

@@ -1,32 +1,22 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import iProduct from "../Interfaces/Products";
 import { Button } from "./ui/button";
 import { CartContext } from "../Context/CartContext";
 import { useToast } from "./ui/use-toast";
 
-const Products = () => {
-  const [data, setData] = useState<iProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+type ProductProps = {
+  products: iProduct[];
+};
+
+const Products: React.FC<ProductProps> = ({ products }) => {
+  const [loading, setLoading] = useState(products.length < 1);
   const cart = useContext(CartContext);
   const { toast } = useToast();
+
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products?limit=8")
-      .then((data) => {
-        const productsWithIsAdded = data.data.map((item: iProduct) => ({
-          ...item,
-          isAddedToCart: false,
-        }));
-        setData(productsWithIsAdded);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
-  }, []);
+    setLoading(products.length < 1);
+  }, [products]);
 
   function addProduct(items: iProduct) {
     items.isAddedToCart = true;
@@ -45,7 +35,7 @@ const Products = () => {
         </p>
       ) : (
         <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
-          {data.map((items: iProduct) => {
+          {products.map((items: iProduct) => {
             return (
               <div
                 key={items.id}

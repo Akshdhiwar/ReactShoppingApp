@@ -1,8 +1,12 @@
 import Carousal from "../components/Carousal";
 import Products from "../components/Products";
 import Category from "../components/Category";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import iProduct from "../Interfaces/Products";
 
 const Dashboard = () => {
+  const [data, setData] = useState([]);
   const slideImages = [
     "https://images.unsplash.com/photo-1697807650304-907257330a3e?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://plus.unsplash.com/premium_photo-1697537045318-3510d37ca3c6?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -31,20 +35,33 @@ const Dashboard = () => {
       style: "lg:col-span-2  hover:scale-[101%] transition-all",
     },
   ];
+
+  useEffect(() => {
+    axios
+      .get("https://fakestoreapi.com/products?limit=8")
+      .then((data) => {
+        const productsWithIsAdded = data.data.map((item: iProduct) => ({
+          ...item,
+          isAddedToCart: false,
+        }));
+        setData(productsWithIsAdded);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   return (
-    <div>
-      <div className="lg:h-screen h-[70vh]">
+    <div className=" content-grid">
+      <div className="lg:h-screen h-[70vh] fullwidth">
         <Carousal slideImages={slideImages}></Carousal>
       </div>
 
-      <div className="flex flex-col w-full justify-center m-auto items-center max-w-screen-2xl px-3 xl:p-0">
-        <h1 className="font-bold text-4xl my-4">Products</h1>
-        <Products />
-        <h1 className="font-bold text-4xl my-4">Category</h1>
-        <Category data={categoryList} />
-        <h1 className="font-bold text-4xl my-4">Explore More</h1>
-        <Products />
-      </div>
+      <h1 className="font-bold text-4xl my-4">Products</h1>
+      <Products products={data} />
+      <h1 className="font-bold text-4xl my-4">Category</h1>
+      <Category data={categoryList} />
+      <h1 className="font-bold text-4xl my-4">Explore More</h1>
+      <Products products={data} />
     </div>
   );
 };
