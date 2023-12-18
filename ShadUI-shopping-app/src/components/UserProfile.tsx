@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
+} from "./ui/dropdown-menu";
 import { HeartIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { DropdownMenuShortcut } from "./ui/dropdown-menu";
