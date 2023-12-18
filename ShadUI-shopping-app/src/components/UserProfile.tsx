@@ -8,7 +8,6 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
 } from "./ui/dropdown-menu";
-import { HeartIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { DropdownMenuShortcut } from "./ui/dropdown-menu";
 import Userprofile from "../Interfaces/UserProfile";
@@ -27,9 +26,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, setUser }) => {
 
   return (
     <div className="flex gap-1">
-      <Button variant={"ghost"} size={"icon"} className="rounded-full">
-        <HeartIcon width={25} height={25}></HeartIcon>
-      </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
