@@ -14,12 +14,6 @@ import Dashboard from "./pages/Dashboard";
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
 
-  let arr = [1, 2, 3];
-
-  const [firstval, secondval, th] = arr;
-
-  console.log(firstval, secondval, th);
-
   const addToCart = (product: iProduct) => {
     if (checkCart(product.id)) return;
     setCart((prevCart) => [...prevCart, product]);
@@ -38,7 +32,6 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-        {/* <Login></Login> */}
         <Routes>
           <Route path="/" Component={Home}>
             <Route index element={<Navigate to="dashboard" />}></Route>

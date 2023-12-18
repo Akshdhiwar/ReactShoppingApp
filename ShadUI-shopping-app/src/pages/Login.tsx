@@ -59,15 +59,18 @@ const Login = () => {
           <ChevronRightIcon height={30} width={30} />
         </Button>
         <div className="w-[350px] py-6 box-border">
-          <p className="text-3xl font-bold tracking-tight my-2 text-center lg:hidden text-orange-500">
+          <p className="text-2xl font-bold leading-tight tracking-tighter md:text-3xl lg:leading-[1.1] text-orange-500">
             Dumbles.shop
           </p>
-          <p className="text-center text-2xl tracking-tight my-6">Login</p>
+          <p className=" text-base text-muted-foreground">
+            Login to get your home gym setup now.
+          </p>
           <Auth
             supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}
-            providers={["google", "facebook"]}
+            providers={["google", "facebook", "apple"]}
             socialLayout="horizontal"
+            theme="dark"
           />
         </div>
       </div>
