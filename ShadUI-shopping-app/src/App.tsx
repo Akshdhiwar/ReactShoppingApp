@@ -14,6 +14,12 @@ import Dashboard from "./pages/Dashboard";
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
 
+  let arr = [1, 2, 3];
+
+  const [firstval, secondval, th] = arr;
+
+  console.log(firstval, secondval, th);
+
   const addToCart = (product: iProduct) => {
     if (checkCart(product.id)) return;
     setCart((prevCart) => [...prevCart, product]);

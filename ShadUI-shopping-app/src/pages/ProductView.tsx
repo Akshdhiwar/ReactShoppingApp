@@ -13,7 +13,6 @@ const ProductView = () => {
   return (
     <div className="content-grid">
       <Products products={data} />
-      <div className="border-2 border-red-600 h-6 fullwidth"></div>
     </div>
   );
 };
