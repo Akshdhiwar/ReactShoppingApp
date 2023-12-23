@@ -6,10 +6,11 @@ import { CartContext } from "../Context/CartContext";
 import { useToast } from "./ui/use-toast";
 
 type ProductProps = {
-  products: iProduct[];
+  products: iProduct[] | null;
 };
 
 const Products: React.FC<ProductProps> = ({ products }) => {
+  if (products == null) return;
   const [loading, setLoading] = useState(products.length < 1);
   const cart = useContext(CartContext);
   const { toast } = useToast();

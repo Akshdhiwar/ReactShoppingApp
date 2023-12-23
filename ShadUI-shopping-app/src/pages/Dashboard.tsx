@@ -6,7 +6,7 @@ import axios from "axios";
 import iProduct from "../Interfaces/Products";
 
 const Dashboard = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<iProduct[]>([]);
   const slideImages = [
     "https://images.unsplash.com/photo-1697807650304-907257330a3e?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://plus.unsplash.com/premium_photo-1697537045318-3510d37ca3c6?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -37,18 +37,30 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/products?limit=8")
-      .then((data) => {
-        const productsWithIsAdded = data.data.map((item: iProduct) => ({
-          ...item,
-          isAddedToCart: false,
-        }));
-        setData(productsWithIsAdded);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    const sessionDataString = sessionStorage.getItem("products");
+
+    if (sessionDataString !== null) {
+      const sessionData: iProduct[] = JSON.parse(sessionDataString);
+      setData(sessionData);
+      console.log("in local");
+    } else {
+      axios
+        .get("https://fakestoreapi.com/products?limit=8")
+        .then((data) => {
+          const productsWithIsAdded = data.data.map((item: iProduct) => ({
+            ...item,
+            isAddedToCart: false,
+          }));
+          setData(productsWithIsAdded);
+          sessionStorage.setItem(
+            "products",
+            JSON.stringify(productsWithIsAdded)
+          );
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
   }, []);
   return (
     <div className=" content-grid">
