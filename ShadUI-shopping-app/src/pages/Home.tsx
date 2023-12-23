@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Toolbar from "../components/Toolbar";
 import { useEffect, useState } from "react";
 import CheckoutBag from "../components/CheckoutBag";
@@ -23,7 +24,9 @@ const Home = () => {
   return (
     <div className="flex flex-col justify-center">
       <Toolbar />
-      <Outlet></Outlet>
+      <Suspense>
+        <Outlet></Outlet>
+      </Suspense>
       <div
         className="fixed bottom-0 m-4 border-white border-2 rounded-full"
         style={{ right: right }}

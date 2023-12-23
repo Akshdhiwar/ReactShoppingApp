@@ -1,15 +1,16 @@
 import "./App.css";
 import Login from "./pages/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Search from "./pages/Search";
-import ProductView from "./pages/ProductView";
-import { useState } from "react";
+import { useState, lazy } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/toaster";
 import { ThemeProvider } from "./Context/Theme-provider";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+
+const Search = lazy(() => import("./pages/Search"));
+const ProductView = lazy(() => import("./pages/ProductView"));
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
