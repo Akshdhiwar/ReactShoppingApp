@@ -41,7 +41,7 @@ const Search = () => {
             </Button>
           </div>
         </div>
-        <div className="flex text-white p-3 px-6 flex-col">
+        <div className="flex dark:text-white text-black p-3 px-6 flex-col">
           <p className="font-semibold text-slate-400">Suggestions</p>
           <div className="text-lg font-bold">
             <p className="my-2">Bakpack</p>
