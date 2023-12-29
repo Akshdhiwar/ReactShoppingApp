@@ -45,7 +45,7 @@ const Dashboard = () => {
       console.log("in local");
     } else {
       axios
-        .get("https://fakestoreapi.com/products?limit=8")
+        .get("https://fakestoreapi.com/products?limit=16")
         .then((data) => {
           const productsWithIsAdded = data.data.map((item: iProduct) => ({
             ...item,
