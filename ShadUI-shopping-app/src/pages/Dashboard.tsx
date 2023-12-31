@@ -8,10 +8,21 @@ import iProduct from "../Interfaces/Products";
 const Dashboard = () => {
   const [data, setData] = useState<iProduct[]>([]);
   const slideImages = [
-    "https://images.unsplash.com/photo-1697807650304-907257330a3e?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://plus.unsplash.com/premium_photo-1697537045318-3510d37ca3c6?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1697909622972-3212d9dde7b5?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1697432123723-9bcdfaab7878?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    {
+      src: `//www.layers.shop/cdn/shop/files/8_eff7d432-be32-4b96-aa9e-95e881cb6cb4.png?v=1681994691`,
+      mobile:
+        "//www.layers.shop/cdn/shop/files/Mobile_banner_9d19fcd2-2263-449f-8bc2-f96ae04fbc88.png?v=1682934045",
+    },
+    {
+      src: "//www.layers.shop/cdn/shop/files/collection_banners_1_1.jpg?v=1693591120",
+      mobile:
+        "//www.layers.shop/cdn/shop/files/collection_banners_1_1.jpg?v=1693591120",
+    },
+    {
+      src: "//www.layers.shop/cdn/shop/files/collection_banners_3_1.jpg?v=1693573648",
+      mobile:
+        "//www.layers.shop/cdn/shop/files/collection_banners_Mobile_3_1.jpg?v=1693573679",
+    },
   ];
   const categoryList = [
     {

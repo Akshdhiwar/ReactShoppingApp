@@ -1,7 +1,10 @@
 import { FC, useEffect, useState } from "react";
-
+interface CarousalImageType {
+  src: string;
+  mobile: string;
+}
 interface CarousalType {
-  slideImages: Array<string>;
+  slideImages: Array<CarousalImageType>;
 }
 
 const Carousal: FC<CarousalType> = ({ slideImages }): JSX.Element => {
@@ -33,12 +36,12 @@ const Carousal: FC<CarousalType> = ({ slideImages }): JSX.Element => {
         {slideImages.map((ele, index) => {
           return (
             <img
-              src={ele}
+              src={window.innerWidth > 450 ? ele.src : ele.mobile}
               key={index}
               alt=""
               loading="lazy"
               id="image"
-              className="h-full min-w-full object-cover aspect-video"
+              className="h-full min-w-full w-full object-cover aspect-video"
             />
           );
         })}
