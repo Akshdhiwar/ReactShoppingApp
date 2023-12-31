@@ -1,5 +1,4 @@
 import "./App.css";
-import Login from "./pages/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useState, lazy, Suspense } from "react";
 import { CartContext } from "./Context/CartContext";
@@ -11,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 
 const Search = lazy(() => import("./pages/Search"));
 const ProductView = lazy(() => import("./pages/ProductView"));
+const Login = lazy(() => import("./pages/Login"));
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
