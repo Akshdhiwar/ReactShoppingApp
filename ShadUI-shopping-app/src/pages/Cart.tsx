@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
 import { Separator } from "../components/ui/separator";
+import { Button } from "../components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const Cart = () => {
   const cartItems = useContext(CartContext);
@@ -15,8 +17,11 @@ const Cart = () => {
   return (
     <div className=" content-grid">
       <div>
+        <Button variant={"ghost"}>
+          <ArrowLeft></ArrowLeft> Back
+        </Button>
         <div>
-          <div>
+          <div className="py-4">
             {cartItems?.cart.length == 0 ? (
               <div className="text-center">
                 <h1 className="text-2xl font-semibold">No items in cart</h1>
@@ -53,7 +58,7 @@ const Cart = () => {
                   );
                 })}
                 <Separator className="h-[1px] bg-black"></Separator>
-                <div className="flex justify-between px-4">
+                <div className="flex justify-between p-4">
                   <p className="font-semibold">Total</p>
                   <p className="font-semibold">${totalPrice.toFixed(2)}</p>
                 </div>

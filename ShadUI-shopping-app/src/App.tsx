@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 const Search = lazy(() => import("./pages/Search"));
 const ProductView = lazy(() => import("./pages/ProductView"));
 const Login = lazy(() => import("./pages/Login"));
+const Cart = lazy(() => import("./pages/Cart"));
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
@@ -40,6 +41,7 @@ function App() {
               <Route path="dashboard" Component={Dashboard}></Route>
               <Route path="product" Component={ProductView}></Route>
               <Route path="explore" Component={Dashboard}></Route>
+              <Route path="cart" Component={Cart}></Route>
             </Route>
             <Route path="/login" Component={Login}></Route>
             <Route path="/search" Component={Search}></Route>
