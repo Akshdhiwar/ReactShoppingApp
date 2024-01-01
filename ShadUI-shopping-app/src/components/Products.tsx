@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import iProduct from "../Interfaces/Products";
 import { Button } from "./ui/button";
 import { CartContext } from "../Context/CartContext";
-import { useToast } from "./ui/use-toast";
+import { toast } from "sonner";
 
 type ProductProps = {
   products: iProduct[] | null;
@@ -13,7 +13,6 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   if (products == null) return;
   const [loading, setLoading] = useState(products.length < 1);
   const cart = useContext(CartContext);
-  const { toast } = useToast();
 
   useEffect(() => {
     setLoading(products.length < 1);
@@ -22,9 +21,8 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   function addProduct(items: iProduct) {
     items.isAddedToCart = true;
     cart?.addToCart(items);
-    toast({
-      title: `Product Added to Cart!`,
-      description: `${items.title} was added to the cart! Enjoy shopping`,
+    toast(`Product Added to Cart!`, {
+      description: `"${items.title}" was added to the cart! Enjoy shopping`,
     });
   }
 

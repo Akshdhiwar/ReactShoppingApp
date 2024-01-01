@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useState, lazy, Suspense } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
-import { Toaster } from "./components/ui/toaster";
+import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./Context/Theme-provider";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";

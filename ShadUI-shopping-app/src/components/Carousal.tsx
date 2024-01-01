@@ -39,7 +39,6 @@ const Carousal: FC<CarousalType> = ({ slideImages }): JSX.Element => {
               src={window.innerWidth > 450 ? ele.src : ele.mobile}
               key={index}
               alt=""
-              loading="lazy"
               id="image"
               className="h-full min-w-full w-full object-cover aspect-video"
             />

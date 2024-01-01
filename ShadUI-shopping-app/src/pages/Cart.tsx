@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
 import { Separator } from "../components/ui/separator";
 import { Button } from "../components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Backpack } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useContext(CartContext);
+  const navigate = useNavigate();
   let totalPrice = 0;
 
   if (cartItems?.cart) {
@@ -17,9 +19,21 @@ const Cart = () => {
   return (
     <div className=" content-grid">
       <div>
-        <Button variant={"ghost"}>
-          <ArrowLeft></ArrowLeft> Back
-        </Button>
+        <div className="flex w-full relative">
+          <Button
+            variant={"ghost"}
+            className="absolute flex gap-1"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <ArrowLeft height={20} width={20}></ArrowLeft> <p>Back</p>
+          </Button>
+          <div className="flex items-center font-semibold text-xl self-center w-full justify-center gap-2">
+            <Backpack width={24} height={24}></Backpack>
+            My Cart
+          </div>
+        </div>
         <div>
           <div className="py-4">
             {cartItems?.cart.length == 0 ? (
@@ -31,7 +45,7 @@ const Cart = () => {
                 {cartItems?.cart.map((ele) => {
                   return (
                     <div>
-                      <Separator className="h-[1px] bg-black"></Separator>
+                      <Separator className="h-[1px] bg-slate-600"></Separator>
                       <div
                         className="flex justify-between items-center p-4"
                         key={ele.id}
