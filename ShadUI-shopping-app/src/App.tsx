@@ -7,6 +7,7 @@ import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./Context/Theme-provider";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Loader from "./components/ui/loader";
 
 const Search = lazy(() => import("./pages/Search"));
 const ProductView = lazy(() => import("./pages/ProductView"));
@@ -19,12 +20,16 @@ function App() {
   const addToCart = (product: iProduct) => {
     if (checkCart(product.id)) return;
     setCart((prevCart) => [...prevCart, product]);
+    const newCart = [...cart, product];
+    localStorage.setItem("cart", JSON.stringify(newCart));
   };
 
   const removeFromCart = (productId: number) => {
     setCart((prevCart) =>
       prevCart.filter((product) => product.id !== productId)
     );
+
+    localStorage.setItem("cart", JSON.stringify(cart));
   };
 
   const checkCart = (productId: number): boolean => {
@@ -34,7 +39,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-        <Suspense fallback="<h1>Loading...</h1>">
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" Component={Home}>
               <Route index element={<Navigate to="dashboard" />}></Route>

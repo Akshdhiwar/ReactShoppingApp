@@ -1,17 +1,17 @@
-import { useContext } from "react";
-import { CartContext } from "../Context/CartContext";
 import { Separator } from "../components/ui/separator";
 import { Button } from "../components/ui/button";
 import { ArrowLeft, Backpack } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import iProduct from "../Interfaces/Products";
 
 const Cart = () => {
-  const cartItems = useContext(CartContext);
+  const cartString = localStorage.getItem("cart") as string;
+  const cart = JSON.parse(cartString);
   const navigate = useNavigate();
   let totalPrice = 0;
 
-  if (cartItems?.cart) {
-    for (const item of cartItems.cart) {
+  if (cart.length > 0) {
+    for (const item of cart) {
       totalPrice += item.price;
     }
   }
@@ -36,13 +36,13 @@ const Cart = () => {
         </div>
         <div>
           <div className="py-4">
-            {cartItems?.cart.length == 0 ? (
+            {cart.length == 0 ? (
               <div className="text-center">
                 <h1 className="text-2xl font-semibold">No items in cart</h1>
               </div>
             ) : (
               <div className="flex gap-2 flex-col">
-                {cartItems?.cart.map((ele) => {
+                {cart.map((ele: iProduct) => {
                   return (
                     <div>
                       <Separator className="h-[1px] bg-slate-600"></Separator>
