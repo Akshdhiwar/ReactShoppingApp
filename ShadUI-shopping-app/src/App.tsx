@@ -6,13 +6,15 @@ import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./Context/Theme-provider";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
 import Loader from "./components/ui/loader";
 
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Search = lazy(() => import("./pages/Search"));
 const ProductView = lazy(() => import("./pages/ProductView"));
 const Login = lazy(() => import("./pages/Login"));
 const Cart = lazy(() => import("./pages/Cart"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const NoMatch = lazy(() => import("./components/NoMatch"));
 
 function App() {
   const [cart, setCart] = useState<iProduct[]>([]);
@@ -43,13 +45,14 @@ function App() {
           <Routes>
             <Route path="/" Component={Home}>
               <Route index element={<Navigate to="dashboard" />}></Route>
-              <Route path="dashboard" Component={Dashboard}></Route>
-              <Route path="product" Component={ProductView}></Route>
-              <Route path="explore" Component={Dashboard}></Route>
-              <Route path="cart" Component={Cart}></Route>
+              <Route path="dashboard" element={<Dashboard />}></Route>
+              <Route path="product" element={<ProductView />}></Route>
+              <Route path="productDetail" element={<ProductDetails />}></Route>
+              <Route path="cart" element={<Cart />}></Route>
             </Route>
-            <Route path="/login" Component={Login}></Route>
-            <Route path="/search" Component={Search}></Route>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="search" element={<Search />}></Route>
+            <Route path="*" element={<NoMatch />} />
           </Routes>
         </Suspense>
         <Toaster />

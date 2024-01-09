@@ -78,7 +78,6 @@ const Dashboard = () => {
       <div className="lg:h-screen h-[70vh] fullwidth">
         <Carousal slideImages={slideImages}></Carousal>
       </div>
-
       <h1 className="font-bold text-4xl my-4">Products</h1>
       <Products products={data} />
       <h1 className="font-bold text-4xl my-4">Category</h1>

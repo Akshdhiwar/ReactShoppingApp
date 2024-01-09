@@ -4,12 +4,15 @@ import iProduct from "../Interfaces/Products";
 import { Button } from "./ui/button";
 import { CartContext } from "../Context/CartContext";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 type ProductProps = {
   products: iProduct[] | null;
 };
 
 const Products: React.FC<ProductProps> = ({ products }) => {
+  const navigate = useNavigate();
+
   if (products == null) return;
   const [loading, setLoading] = useState(products.length < 1);
   const cart = useContext(CartContext);
@@ -51,7 +54,12 @@ const Products: React.FC<ProductProps> = ({ products }) => {
                     -25%
                   </div>
                   <div className="group-hover/img:flex absolute top-0 left-0 bg-slate-300/50 w-full h-full gap-2 items-center hidden justify-center rounded-lg">
-                    <p>View Product</p>
+                    <Button
+                      variant={"secondary"}
+                      onClick={() => navigate("/productDetail")}
+                    >
+                      View Product
+                    </Button>
                     <ArrowRightIcon width={20} height={20}></ArrowRightIcon>
                   </div>
                 </div>
