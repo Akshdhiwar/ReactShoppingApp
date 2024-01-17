@@ -1,4 +1,4 @@
-import { ArrowLeft, ChevronRightSquareIcon, Link } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Products from "../components/Products";
 import iProduct from "../Interfaces/Products";
+import Filter from "../components/Filter";
 
 const ProductView = () => {
   const [data, setData] = useState<iProduct[] | null>([]);
@@ -21,6 +22,7 @@ const ProductView = () => {
 
   return (
     <div className="content-grid">
+      <Filter products={data} />
       <Products products={data} />
     </div>
   );
