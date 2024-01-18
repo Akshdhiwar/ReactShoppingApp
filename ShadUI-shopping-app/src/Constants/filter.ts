@@ -1,6 +1,7 @@
 export const FilterList = [
   {
     filterName: "Category",
+    filterFormName: "category",
     filterLabel: "Select Category",
     filterItems: [
       {
@@ -19,6 +20,7 @@ export const FilterList = [
   },
   {
     filterName: "Sort",
+    filterFormName: "sort",
     filterLabel: "Select Sort",
     filterItems: [
       {
@@ -33,6 +35,7 @@ export const FilterList = [
   },
   {
     filterName: "Range",
+    filterFormName: "range",
     filterLabel: "Select Price Range",
     filterItems: [
       {
@@ -41,7 +44,22 @@ export const FilterList = [
       },
       {
         label: "under 1000",
-        value: "100",
+        value: "1000",
+      },
+    ],
+  },
+  {
+    filterName: "Brand",
+    filterFormName: "brand",
+    filterLabel: "Select brands",
+    filterItems: [
+      {
+        label: "WD",
+        value: "wd",
+      },
+      {
+        label: "Sandisk",
+        value: "sandisk",
       },
     ],
   },
