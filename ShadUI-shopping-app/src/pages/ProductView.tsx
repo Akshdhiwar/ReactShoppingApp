@@ -20,9 +20,13 @@ const ProductView = () => {
     }
   }, []);
 
+  function handleFilter(data: iProduct[]): void {
+    setData(data);
+  }
+
   return (
     <div className="content-grid">
-      <Filter products={data} />
+      <Filter handleFilterData={handleFilter} />
       <Products products={data} />
     </div>
   );

@@ -6,15 +6,15 @@ export const FilterList = [
     filterItems: [
       {
         label: "Mens",
-        value: "mens'clothing",
+        value: "men's clothing",
       },
       {
         label: "Womens",
-        value: "womens'clothing",
+        value: "women's clothing",
       },
       {
         label: "Electronics",
-        value: "electronic",
+        value: "electronics",
       },
     ],
   },
@@ -40,11 +40,11 @@ export const FilterList = [
     filterItems: [
       {
         label: "under 500",
-        value: "500",
+        value: 500,
       },
       {
         label: "under 1000",
-        value: "1000",
+        value: 1000,
       },
     ],
   },
