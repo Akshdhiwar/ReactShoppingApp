@@ -34,7 +34,6 @@ const FilterByCategory: React.FC<FilterCategoryProps> = ({
         }));
         setCategory(value);
       }}
-      defaultValue="Category"
     >
       <SelectTrigger className="w-full">
         <SelectValue placeholder={category !== "" ? category : "Category"} />
