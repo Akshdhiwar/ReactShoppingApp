@@ -1,6 +1,6 @@
 interface iFilter {
   category: string;
-  range: number;
+  range: string;
   sort: string;
   brand: string[];
 }

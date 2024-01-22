@@ -1,4 +1,3 @@
-import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { useContext, useEffect, useState } from "react";
 import iProduct from "../Interfaces/Products";
 import { Button } from "./ui/button";
@@ -22,6 +21,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   }, [products]);
 
   function addProduct(items: iProduct) {
+    event?.stopImmediatePropagation();
     items.isAddedToCart = true;
     cart?.addToCart(items);
     toast(`Product Added to Cart!`, {
@@ -42,25 +42,17 @@ const Products: React.FC<ProductProps> = ({ products }) => {
               <div
                 key={items.id}
                 className="group flex flex-col hover:scale-105 hover:shadow-2xl hover:p-2 transition-all box-border hover:rounded-xl hover:cursor-pointer border-slate-300 hover:border-2"
+                onClick={() => navigate("/productDetail")}
               >
-                <div className="relative transition-all rounded-lg group/img">
+                <div className="relative transition-all rounded-lg">
                   <img
                     src={items.image}
                     alt=""
                     loading="lazy"
-                    className=" w-full object-cover aspect-square group-hover:rounded-lg transition p-6"
+                    className=" w-full object-cover aspect-square transition p-6"
                   />
                   <div className="p-1 bg-red-500 text-xs text-white absolute rounded-2xl top-2 right-2">
                     -25%
-                  </div>
-                  <div className="group-hover/img:flex absolute top-0 left-0 bg-slate-300/50 w-full h-full gap-2 items-center hidden justify-center rounded-lg">
-                    <Button
-                      variant={"secondary"}
-                      onClick={() => navigate("/productDetail")}
-                    >
-                      View Product
-                    </Button>
-                    <ArrowRightIcon width={20} height={20}></ArrowRightIcon>
                   </div>
                 </div>
                 <h2 className="text-xl font-semibold mt-2 flex-1 line-clamp-2">
@@ -69,29 +61,38 @@ const Products: React.FC<ProductProps> = ({ products }) => {
                 <p className="line-clamp-2 text-sm text-slate-500">
                   {items.description}
                 </p>
-                <div className="my-2 flex gap-2">
+                <div className="my-2 flex gap-2 mb-9 group-hover:mb-0">
                   <p className="font-semibold text-xl">${items.price}</p>
                   <p className="line-through text-sm">
                     ${items.price.toFixed(2)}
                   </p>
                 </div>
-                {items.isAddedToCart ? (
-                  <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg">
-                    <p>
-                      ADDED TO CART
-                      <span className=" text-green-500">&#x2714;</span>
-                    </p>
-                  </div>
-                ) : (
+                <div className="gap-1 lg:hidden group-hover:flex">
                   <Button
-                    className="w-full"
-                    onClick={() => {
-                      addProduct(items);
-                    }}
+                    variant={"outline"}
+                    className="w-full border border-orange-500 hidden lg:block"
                   >
-                    Add to Cart
+                    Add to Wishlish
                   </Button>
-                )}
+                  {items.isAddedToCart ? (
+                    <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg">
+                      <p>
+                        ADDED TO CART
+                        <span className=" text-green-500">&#x2714;</span>
+                      </p>
+                    </div>
+                  ) : (
+                    <Button
+                      className="w-full border border-orange-500"
+                      variant={"outline"}
+                      onClick={() => {
+                        addProduct(items);
+                      }}
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
+                </div>
               </div>
             );
           })}

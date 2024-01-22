@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { FilterList } from "../../Constants/filter";
 import iFilter from "../../Interfaces/Filter";
 import {
@@ -19,6 +20,11 @@ const FilterByCategory: React.FC<FilterCategoryProps> = ({
   getCategory,
   filter,
 }) => {
+  const [category, setCategory] = useState<string>(filter.category);
+
+  useEffect(() => {
+    setCategory(filter.category);
+  }, [filter.category]);
   return (
     <Select
       onValueChange={(value) => {
@@ -26,14 +32,12 @@ const FilterByCategory: React.FC<FilterCategoryProps> = ({
           ...prev,
           category: value,
         }));
+        setCategory(value);
       }}
+      defaultValue="Category"
     >
       <SelectTrigger className="w-full">
-        <SelectValue
-          placeholder={
-            filter.category == "" ? FilterList[0].filterName : filter.category
-          }
-        />
+        <SelectValue placeholder={category !== "" ? category : "Category"} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

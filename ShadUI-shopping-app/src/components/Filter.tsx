@@ -16,7 +16,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
 
   const [filter, setFilter] = useState<iFilter>({
     category: "",
-    range: 0,
+    range: "",
     sort: "",
     brand: [],
   });
@@ -40,9 +40,9 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
 
   function onSubmit() {
     let filteredProducts = products;
-    if (filter.range !== 0) {
+    if (filter.range !== "") {
       filteredProducts = filteredProducts!.filter((product) => {
-        return product.price < filter.range;
+        return product.price < Number(filter.range!);
       });
     }
 
@@ -53,7 +53,6 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     }
 
     if (filter.brand?.length !== 0) {
-      debugger;
       filteredProducts = filteredProducts!.filter((product) => {
         return filter.brand.some((brand: string) =>
           product.title.toLowerCase().includes(brand)
@@ -62,7 +61,6 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     }
 
     handleFilterData(filteredProducts!);
-    console.log(filter, filteredProducts);
   }
 
   function setData(data: iFilter) {
@@ -70,23 +68,20 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
   }
 
   function resetFilter() {
-    console.log("hello");
     setFilter({
       category: "",
       sort: "",
-      range: 0,
+      range: "",
       brand: [],
     });
-
-    console.log(filter);
   }
 
   return (
     <div className="grid lg:grid-cols-4 gap-2 grid-cols-2">
       <FilterByCategory getCategory={setData} filter={filter} />
-      <FilterByRange getRange={setData} />
+      <FilterByRange getRange={setData} filter={filter} />
       <FilterByBrand getBrand={setData} filter={filter} />
-      <div>
+      <div className="flex justify-end">
         <Button onClick={resetFilter}>Reset</Button>
       </div>
     </div>

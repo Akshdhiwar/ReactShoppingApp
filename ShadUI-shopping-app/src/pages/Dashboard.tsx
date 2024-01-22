@@ -53,7 +53,6 @@ const Dashboard = () => {
     if (sessionDataString !== null) {
       const sessionData: iProduct[] = JSON.parse(sessionDataString);
       setData(sessionData);
-      console.log("in local");
     } else {
       axios
         .get("https://fakestoreapi.com/products?limit=16")

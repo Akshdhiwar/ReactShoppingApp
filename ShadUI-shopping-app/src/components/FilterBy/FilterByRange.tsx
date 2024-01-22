@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { FilterList } from "../../Constants/filter";
 import iFilter from "../../Interfaces/Filter";
 import {
@@ -12,30 +13,47 @@ import {
 
 interface FilterCategoryProps {
   getRange: (data: any) => void;
+  filter: iFilter;
 }
-const FilterByRange: React.FC<FilterCategoryProps> = ({ getRange }) => {
+
+const FilterByRange: React.FC<FilterCategoryProps> = ({ getRange, filter }) => {
+  const [selectedRange, setSelectedRange] = useState<string | null>(
+    filter.range
+  );
+
+  useEffect(() => {
+    // Update the selected range when the filter prop changes
+    setSelectedRange(filter.range);
+  }, [filter.range]);
+
+  const handleRangeChange = (value: string) => {
+    // Update the selected range and call the getRange function
+    setSelectedRange(value);
+    getRange((prev: iFilter) => ({
+      ...prev,
+      range: value,
+    }));
+  };
+
   return (
-    <Select
-      onValueChange={(value) => {
-        getRange((prev: iFilter) => ({
-          ...prev,
-          range: value,
-        }));
-      }}
-    >
+    <Select onValueChange={handleRangeChange}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder={FilterList[2].filterName} />
+        <SelectValue
+          placeholder={
+            selectedRange != null && selectedRange !== ""
+              ? selectedRange
+              : "Range"
+          }
+        />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{FilterList[2].filterLabel}</SelectLabel>
-          {FilterList[2].filterItems.map((item) => {
-            return (
-              <SelectItem value={String(item.value)} key={item.value}>
-                {item.label}
-              </SelectItem>
-            );
-          })}
+          {FilterList[2].filterItems.map((item) => (
+            <SelectItem value={String(item.value)} key={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

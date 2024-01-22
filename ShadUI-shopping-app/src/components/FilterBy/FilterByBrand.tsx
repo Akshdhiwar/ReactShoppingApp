@@ -19,7 +19,9 @@ const FilterByBrand: React.FC<FilterCategoryProps> = ({ getBrand, filter }) => {
   return (
     <Select>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Brand" />
+        <SelectValue
+          placeholder={filter.brand.length == 0 ? "Brand" : filter.brand}
+        />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
