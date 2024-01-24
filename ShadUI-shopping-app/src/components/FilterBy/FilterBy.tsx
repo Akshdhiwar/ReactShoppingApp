@@ -15,22 +15,20 @@ import {
 } from "../ui/command";
 import iFilter from "../../Interfaces/Filter";
 
-interface FilterByBrandProps {
+interface FilterByProps {
   updateFilter: (data: any) => void;
-  filter: string[];
+  filter: string;
   FilterData: any;
 }
 
-const FilterByBrand: React.FC<FilterByBrandProps> = ({
+const FilterBy: React.FC<FilterByProps> = ({
   filter,
   updateFilter,
   FilterData,
 }) => {
-  const Filtername = FilterData.filterItems.filter((option: any) =>
-    filter.includes(option.value)
+  const Filtername = FilterData.filterItems.filter(
+    (option: any) => option.value === filter
   );
-
-  console.log(Filtername);
 
   return (
     <Popover>
@@ -38,31 +36,22 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
         <Button variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {FilterData.filterName}
-          {filter.length !== 0 && (
+          {filter !== "" && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden"
               >
-                {filter.length}
+                1
               </Badge>
               <div className="hidden space-x-1 lg:flex">
-                {Filtername.length > 0 && (
-                  <>
-                    {FilterData.filterItems
-                      .filter((option: any) => filter.includes(option.value))
-                      .map((ele: any) => (
-                        <Badge
-                          key={ele.value}
-                          variant="secondary"
-                          className="rounded-sm px-1 font-normal flex text-nowrap"
-                        >
-                          {ele.label}
-                        </Badge>
-                      ))}
-                  </>
-                )}
+                <Badge
+                  variant="secondary"
+                  className="rounded-sm px-1 font-normal flex text-nowrap"
+                >
+                  {Filtername.length > 0 ? Filtername[0].label : ""}
+                </Badge>
               </div>
             </>
           )}
@@ -75,29 +64,20 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {FilterData.filterItems.map((option: any) => {
-                const isSelected = filter.includes(option.value);
+                const isSelected = filter == option.value;
                 return (
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
                       if (isSelected) {
-                        console.log("if");
                         updateFilter((prev: iFilter) => ({
                           ...prev,
-                          [FilterData.filterFormName]: prev.brand.filter(
-                            (brand) => {
-                              return brand !== option.value;
-                            }
-                          ),
+                          [FilterData.filterFormName]: "",
                         }));
                       } else {
-                        console.log("else");
                         updateFilter((prev: iFilter) => ({
                           ...prev,
-                          [FilterData.filterFormName]: [
-                            ...prev.brand,
-                            option.value,
-                          ],
+                          [FilterData.filterFormName]: option.value,
                         }));
                       }
                     }}
@@ -117,7 +97,7 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
                 );
               })}
             </CommandGroup>
-            {filter.length !== 0 && (
+            {filter !== "" && (
               <>
                 <CommandSeparator />
                 <CommandGroup>
@@ -125,7 +105,7 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
                     onSelect={() =>
                       updateFilter((prev: iFilter) => ({
                         ...prev,
-                        [FilterData.filterFormName]: [],
+                        [FilterData.filterFormName]: "",
                       }))
                     }
                     className="justify-center text-center"
@@ -142,4 +122,4 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
   );
 };
 
-export default FilterByBrand;
+export default FilterBy;

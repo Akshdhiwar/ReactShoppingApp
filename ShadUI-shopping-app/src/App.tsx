@@ -9,7 +9,6 @@ import Home from "./pages/Home";
 import Loader from "./components/ui/loader";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const Search = lazy(() => import("./pages/Search"));
 const ProductView = lazy(() => import("./pages/ProductView"));
 const Login = lazy(() => import("./pages/Login"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -51,7 +50,6 @@ function App() {
               <Route path="cart" element={<Cart />}></Route>
             </Route>
             <Route path="login" element={<Login />}></Route>
-            <Route path="search" element={<Search />}></Route>
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </Suspense>

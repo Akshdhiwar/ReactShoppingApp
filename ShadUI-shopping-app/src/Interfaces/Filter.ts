@@ -3,6 +3,7 @@ interface iFilter {
   range: string;
   sort: string;
   brand: string[];
+  search: string;
 }
 
 export default iFilter;
