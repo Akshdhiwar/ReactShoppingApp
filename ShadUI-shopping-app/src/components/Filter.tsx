@@ -118,7 +118,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
         </Button>
       </div>
       <div
-        className={`w-full items-center transition gap-2 justify-between ${dynamicClass}`}
+        className={`w-full lg:flex items-center transition gap-2 justify-between ${dynamicClass}`}
       >
         <FilterBy
           updateFilter={setData}
