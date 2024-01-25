@@ -33,28 +33,33 @@ const FilterBy: React.FC<FilterByProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 border-dashed">
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 border-dashed relative"
+        >
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {FilterData.filterName}
           {filter !== "" && (
-            <>
-              <Separator orientation="vertical" className="mx-2 h-4" />
+              <div className="hidden lg:flex">
+                <Separator orientation="vertical" className="mx-2 h-4" />
+                <div className="space-x-1 flex">
+                  <Badge
+                    variant="secondary"
+                    className="rounded-sm px-1 font-normal flex text-nowrap"
+                  >
+                    {Filtername.length > 0 ? Filtername[0].label : ""}
+                  </Badge>
+                </div>
+              </div>
+            ) && (
               <Badge
                 variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
+                className="rounded-sm px-1 font-normal lg:hidden absolute -right-2 -top-2 text-[10px]"
               >
                 1
               </Badge>
-              <div className="hidden space-x-1 lg:flex">
-                <Badge
-                  variant="secondary"
-                  className="rounded-sm px-1 font-normal flex text-nowrap"
-                >
-                  {Filtername.length > 0 ? Filtername[0].label : ""}
-                </Badge>
-              </div>
-            </>
-          )}
+            )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">

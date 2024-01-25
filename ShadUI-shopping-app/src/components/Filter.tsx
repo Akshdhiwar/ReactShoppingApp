@@ -118,7 +118,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
         </Button>
       </div>
       <div
-        className={`w-full lg:flex items-center transition gap-2 justify-between ${dynamicClass}`}
+        className={`w-full lg:flex items-center transition gap-3 justify-between ${dynamicClass}`}
       >
         <FilterBy
           updateFilter={setData}
@@ -150,7 +150,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
           </Button>
           <Button
             variant={"outline"}
-            className="border-orange-500 h-8 lg:hidden"
+            className="h-8 lg:hidden"
             onClick={resetFilter}
             size={"icon"}
           >
