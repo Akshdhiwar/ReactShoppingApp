@@ -21,8 +21,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   }, [products]);
 
   function addProduct(items: iProduct) {
-    event?.stopImmediatePropagation();
-    items.isAddedToCart = true;
+    event?.stopPropagation();
     cart?.addToCart(items);
     toast(`Product Added to Cart!`, {
       description: `"${items.title}" was added to the cart! Enjoy shopping`,

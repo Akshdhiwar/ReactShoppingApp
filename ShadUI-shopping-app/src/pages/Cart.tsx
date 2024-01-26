@@ -4,6 +4,7 @@ import { Separator } from "../components/ui/separator";
 import { Button } from "../components/ui/button";
 import { ArrowLeft, Backpack } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 
 const Cart = () => {
   const cartItems = useContext(CartContext);
@@ -50,7 +51,7 @@ const Cart = () => {
                         className="flex justify-between items-center p-4"
                         key={ele.id}
                       >
-                        <div className="flex gap-2 items-center">
+                        <div className="flex gap-2 items-center w-1/2">
                           <img
                             src={ele.image}
                             alt=""
@@ -59,12 +60,33 @@ const Cart = () => {
                           <div className="flex flex-col">
                             <p className="font-semibold">{ele.title}</p>
                             <p className="flex font-light text-sm">
-                              Quantity : 1
-                            </p>
-                            <p className="flex font-light text-sm">
                               Color : Blue
                             </p>
                           </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant={"outline"}
+                            size={"icon"}
+                            className="h-7 w-7"
+                          >
+                            <PlusIcon />
+                          </Button>
+                          1
+                          <Button
+                            variant={"outline"}
+                            size={"icon"}
+                            className="h-7 w-7"
+                          >
+                            <MinusIcon />
+                          </Button>
+                          <Button
+                            variant={"outline"}
+                            size={"icon"}
+                            className="h-7 w-7 hover:border-red-500"
+                          >
+                            <TrashIcon color="red" />
+                          </Button>
                         </div>
                         <p className="font-semibold">${ele.price.toFixed(2)}</p>
                       </div>
