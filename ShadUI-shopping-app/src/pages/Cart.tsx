@@ -13,7 +13,7 @@ const Cart = () => {
 
   if (cartItems?.cart) {
     for (const item of cartItems.cart) {
-      totalPrice += item.price;
+      totalPrice += item.price * item.quantity!;
     }
   }
 
@@ -48,10 +48,10 @@ const Cart = () => {
                     <div>
                       <Separator className="h-[1px] bg-slate-600"></Separator>
                       <div
-                        className="flex justify-between items-center p-4"
+                        className="flex justify-between items-center p-4 flex-wrap"
                         key={ele.id}
                       >
-                        <div className="flex gap-2 items-center w-1/2">
+                        <div className="flex gap-2 items-center sm:w-1/2 w-[80%] order-1">
                           <img
                             src={ele.image}
                             alt=""
@@ -64,31 +64,40 @@ const Cart = () => {
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant={"outline"}
-                            size={"icon"}
-                            className="h-7 w-7"
-                          >
-                            <PlusIcon />
-                          </Button>
-                          1
-                          <Button
-                            variant={"outline"}
-                            size={"icon"}
-                            className="h-7 w-7"
-                          >
-                            <MinusIcon />
-                          </Button>
+                        <div className="flex flex-1 items-center sm:justify-center justify-between gap-2 sm:order-2 order-3 sm:mt-0 mt-2">
+                          <div className="flex gap-2 items-center">
+                            <Button
+                              variant={"outline"}
+                              size={"icon"}
+                              className="h-7 w-7"
+                              disabled={ele.quantity === 1}
+                              onClick={() => cartItems.removeQuantity(ele)}
+                            >
+                              <MinusIcon />
+                            </Button>
+                            {ele.quantity}
+                            <Button
+                              variant={"outline"}
+                              size={"icon"}
+                              className="h-7 w-7"
+                              onClick={() => cartItems.addQuantity(ele)}
+                            >
+                              <PlusIcon />
+                            </Button>
+                          </div>
+
                           <Button
                             variant={"outline"}
                             size={"icon"}
                             className="h-7 w-7 hover:border-red-500"
+                            onClick={() => cartItems.removeFromCart(ele.id)}
                           >
                             <TrashIcon color="red" />
                           </Button>
                         </div>
-                        <p className="font-semibold">${ele.price.toFixed(2)}</p>
+                        <p className="font-semibold sm:w-[10%] flex justify-end sm:order-3 order-2">
+                          ${ele.price.toFixed(2)}
+                        </p>
                       </div>
                     </div>
                   );

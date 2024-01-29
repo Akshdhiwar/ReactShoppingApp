@@ -40,39 +40,37 @@ const Products: React.FC<ProductProps> = ({ products }) => {
             return (
               <div
                 key={items.id}
-                className="group flex flex-col hover:scale-105 hover:shadow-2xl hover:p-2 transition-all box-border hover:rounded-xl hover:cursor-pointer border-slate-300 hover:border-2"
-                onClick={() => navigate("/productDetail")}
+                className="group transition-all box-border hover:scale-105 hover:shadow-2xl hover:p-2 hover:rounded-xl hover:cursor-pointer hover:border-2"
               >
-                <div className="relative transition-all rounded-lg">
-                  <img
-                    src={items.image}
-                    alt=""
-                    loading="lazy"
-                    className=" w-full object-cover aspect-square transition p-6"
-                  />
-                  <div className="p-1 bg-red-500 text-xs text-white absolute rounded-2xl top-2 right-2">
-                    -25%
+                <div
+                  className=" flex flex-col h-full"
+                  onClick={() => navigate("/productDetail")}
+                >
+                  <div className="relative transition-all rounded-lg">
+                    <img
+                      src={items.image}
+                      alt=""
+                      loading="lazy"
+                      className=" w-full object-cover aspect-square transition p-6"
+                    />
+                    <div className="p-1 bg-red-500 text-xs text-white absolute rounded-2xl top-2 right-2">
+                      -25%
+                    </div>
+                  </div>
+                  <h2 className="text-xl font-semibold mt-2 flex-1 line-clamp-2">
+                    {items.title}
+                  </h2>
+                  <p className="line-clamp-2 text-sm text-slate-500">
+                    {items.description}
+                  </p>
+                  <div className="my-2 flex gap-2 lg:mb-0 mb-9 lg:group-hover:mb-0 group-hover:mb-2">
+                    <p className="font-semibold text-xl">${items.price}</p>
+                    <p className="line-through text-sm">
+                      ${items.price.toFixed(2)}
+                    </p>
                   </div>
                 </div>
-                <h2 className="text-xl font-semibold mt-2 flex-1 line-clamp-2">
-                  {items.title}
-                </h2>
-                <p className="line-clamp-2 text-sm text-slate-500">
-                  {items.description}
-                </p>
-                <div className="my-2 flex gap-2 mb-9 group-hover:mb-0">
-                  <p className="font-semibold text-xl">${items.price}</p>
-                  <p className="line-through text-sm">
-                    ${items.price.toFixed(2)}
-                  </p>
-                </div>
-                <div className="gap-1 lg:hidden group-hover:flex">
-                  <Button
-                    variant={"outline"}
-                    className="w-full border border-orange-500 hidden lg:block"
-                  >
-                    Add to Wishlish
-                  </Button>
+                <div className="lg:hidden">
                   {items.isAddedToCart ? (
                     <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg">
                       <p>

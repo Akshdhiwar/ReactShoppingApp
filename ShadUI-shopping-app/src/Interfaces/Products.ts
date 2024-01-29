@@ -9,7 +9,7 @@ interface iProduct {
     rate: number;
     count: number;
   };
-
+  quantity?: number;
   isAddedToCart: boolean;
 }
 
