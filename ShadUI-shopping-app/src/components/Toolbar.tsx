@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Userprofile from "../Interfaces/UserProfile";
 import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import { ModeToggle } from "./Mode-toggle";
 import UserProfile from "./UserProfile";
 
 const Toolbar = () => {
@@ -78,7 +77,6 @@ const Toolbar = () => {
           </Tabs>
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
-          <ModeToggle />
           <Button
             variant={"ghost"}
             size={"icon"}

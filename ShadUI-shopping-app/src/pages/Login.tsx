@@ -9,7 +9,6 @@ import { Button } from "../components/ui/button";
 const Login = () => {
   let navigate = useNavigate();
   const [session, setSession] = useState<unknown>(null);
-  const theme = localStorage.getItem("vite-ui-theme") as string;
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -70,7 +69,7 @@ const Login = () => {
             appearance={{ theme: ThemeSupa }}
             providers={["google", "facebook", "apple"]}
             socialLayout="horizontal"
-            theme={theme}
+            theme="light"
           />
         </div>
       </div>

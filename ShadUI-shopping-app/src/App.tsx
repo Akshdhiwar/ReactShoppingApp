@@ -4,7 +4,6 @@ import { useState, lazy, Suspense, useEffect } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/sonner";
-import { ThemeProvider } from "./Context/Theme-provider";
 import Home from "./pages/Home";
 import Loader from "./components/ui/loader";
 
@@ -70,26 +69,24 @@ function App() {
   }, [cart]);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <CartContext.Provider
-        value={{ cart, addToCart, removeFromCart, addQuantity, removeQuantity }}
-      >
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" Component={Home}>
-              <Route index element={<Navigate to="dashboard" />}></Route>
-              <Route path="dashboard" element={<Dashboard />}></Route>
-              <Route path="product" element={<ProductView />}></Route>
-              <Route path="productDetail" element={<ProductDetails />}></Route>
-              <Route path="cart" element={<Cart />}></Route>
-            </Route>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="*" element={<NoMatch />} />
-          </Routes>
-        </Suspense>
-        <Toaster />
-      </CartContext.Provider>
-    </ThemeProvider>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, addQuantity, removeQuantity }}
+    >
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" Component={Home}>
+            <Route index element={<Navigate to="dashboard" />}></Route>
+            <Route path="dashboard" element={<Dashboard />}></Route>
+            <Route path="product" element={<ProductView />}></Route>
+            <Route path="productDetail" element={<ProductDetails />}></Route>
+            <Route path="cart" element={<Cart />}></Route>
+          </Route>
+          <Route path="login" element={<Login />}></Route>
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </Suspense>
+      <Toaster />
+    </CartContext.Provider>
   );
 }
 
