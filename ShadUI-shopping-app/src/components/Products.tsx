@@ -43,7 +43,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
                 className="group transition-all box-border hover:scale-105 hover:shadow-2xl hover:p-2 hover:rounded-xl hover:cursor-pointer hover:border-2"
               >
                 <div
-                  className=" flex flex-col h-full"
+                  className=" flex flex-col lg:h-full"
                   onClick={() => navigate("/productDetail")}
                 >
                   <div className="relative transition-all rounded-lg">
@@ -63,7 +63,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
                   <p className="line-clamp-2 text-sm text-slate-500">
                     {items.description}
                   </p>
-                  <div className="my-2 flex gap-2 lg:mb-0 mb-9 lg:group-hover:mb-0 group-hover:mb-2">
+                  <div className="my-2 flex gap-2 lg:mb-0 lg:group-hover:mb-0 group-hover:mb-2">
                     <p className="font-semibold text-xl">${items.price}</p>
                     <p className="line-through text-sm">
                       ${items.price.toFixed(2)}
