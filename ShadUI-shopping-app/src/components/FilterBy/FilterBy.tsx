@@ -41,7 +41,8 @@ const FilterBy: React.FC<FilterByProps> = ({
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {FilterData.filterName}
           {filter !== "" && (
-              <div className="hidden lg:flex">
+            <div>
+              <div className="lg:flex items-center hidden">
                 <Separator orientation="vertical" className="mx-2 h-4" />
                 <div className="space-x-1 flex">
                   <Badge
@@ -52,14 +53,14 @@ const FilterBy: React.FC<FilterByProps> = ({
                   </Badge>
                 </div>
               </div>
-            ) && (
               <Badge
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden absolute -right-2 -top-2 text-[10px]"
               >
                 1
               </Badge>
-            )}
+            </div>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">
