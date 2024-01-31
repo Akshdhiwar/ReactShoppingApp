@@ -45,7 +45,6 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
   useEffect(() => {
     // Run the onSubmit function whenever form values change
     onSubmit();
-    console.log(filter);
   }, [filter]); // Watch for changes in form values
 
   function onSubmit() {
@@ -95,7 +94,6 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
 
   function searchProduct(event: React.ChangeEvent<HTMLInputElement>) {
     const searchTerm = event.target.value.toLowerCase();
-    console.log(searchTerm);
     setFilter((prev: iFilter) => ({ ...prev, search: searchTerm }));
   }
 

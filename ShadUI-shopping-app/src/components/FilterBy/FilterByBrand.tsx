@@ -85,7 +85,6 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
                     key={option.value}
                     onSelect={() => {
                       if (isSelected) {
-                        console.log("if");
                         updateFilter((prev: iFilter) => ({
                           ...prev,
                           [FilterData.filterFormName]: prev.brand.filter(
@@ -95,7 +94,6 @@ const FilterByBrand: React.FC<FilterByBrandProps> = ({
                           ),
                         }));
                       } else {
-                        console.log("else");
                         updateFilter((prev: iFilter) => ({
                           ...prev,
                           [FilterData.filterFormName]: [

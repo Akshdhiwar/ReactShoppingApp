@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { supabase } from "../Constants/supabase";
-import { useNavigate } from "react-router-dom";
+import { matchPath, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Userprofile from "../Interfaces/UserProfile";
 import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
@@ -9,6 +9,9 @@ import UserProfile from "./UserProfile";
 
 const Toolbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const routes = ["/dashboard", "/productlist"];
+
   const [selected, setSelected] = useState("dashboard");
   const [user, setUser] = useState<Userprofile | null>(null);
 
@@ -23,6 +26,16 @@ const Toolbar = () => {
       return null;
     }
   }
+
+  useEffect(() => {
+    const matchedRoute = routes.find((route) =>
+      matchPath(route, location.pathname)
+    );
+    console.log(matchedRoute);
+    if (matchedRoute) {
+      setSelected(matchedRoute.slice(1)); // Remove the leading '/' from the route
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     getUser().then((res: Userprofile | any) => {
@@ -62,10 +75,10 @@ const Toolbar = () => {
                 Dashboard
               </TabsTrigger>
               <TabsTrigger
-                value="products"
+                value="productlist"
                 className="flex-1"
                 onClick={() => {
-                  navigate("product");
+                  navigate("productlist");
                 }}
               >
                 Products

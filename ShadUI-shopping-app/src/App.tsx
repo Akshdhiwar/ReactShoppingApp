@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState, lazy, Suspense, useEffect } from "react";
+import { useState, lazy, Suspense } from "react";
 import { CartContext } from "./Context/CartContext";
 import iProduct from "./Interfaces/Products";
 import { Toaster } from "./components/ui/sonner";
@@ -64,10 +64,6 @@ function App() {
     return cart.some((item) => item.id === productId);
   };
 
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
-
   return (
     <CartContext.Provider
       value={{ cart, addToCart, removeFromCart, addQuantity, removeQuantity }}
@@ -77,8 +73,8 @@ function App() {
           <Route path="/" Component={Home}>
             <Route index element={<Navigate to="dashboard" />}></Route>
             <Route path="dashboard" element={<Dashboard />}></Route>
-            <Route path="product" element={<ProductView />}></Route>
-            <Route path="productDetail" element={<ProductDetails />}></Route>
+            <Route path="productlist" element={<ProductView />}></Route>
+            <Route path="product" element={<ProductDetails />}></Route>
             <Route path="cart" element={<Cart />}></Route>
           </Route>
           <Route path="login" element={<Login />}></Route>
