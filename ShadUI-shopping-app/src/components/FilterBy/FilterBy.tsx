@@ -41,7 +41,7 @@ const FilterBy: React.FC<FilterByProps> = ({
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {FilterData.filterName}
           {filter !== "" && (
-              <div className="hidden lg:flex">
+              <div className="lg:flex hidden">
                 <Separator orientation="vertical" className="mx-2 h-4" />
                 <div className="space-x-1 flex">
                   <Badge
