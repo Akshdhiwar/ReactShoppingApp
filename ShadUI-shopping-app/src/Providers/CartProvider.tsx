@@ -20,35 +20,42 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   const removeFromCart = (productId: number) => {
-    setCart((prevCart) =>
-      prevCart.filter((product) => product.id !== productId)
-    );
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter(
+        (product) => product.id !== productId
+      );
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
   };
 
   const addQuantity = (product: iProduct) => {
     if (checkCart(product.id)) {
-      const updatedCart = cart.map((item) => {
-        if (item.id === product.id) {
-          return { ...item, quantity: item.quantity! + 1 };
-        }
-        return item;
+      setCart((prevCart) => {
+        const updatedCart = prevCart.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, quantity: item.quantity! + 1 };
+          }
+          return item;
+        });
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return updatedCart;
       });
-      setCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(cart));
     }
   };
+
   const removeQuantity = (product: iProduct) => {
     if (checkCart(product.id)) {
-      const updatedCart = cart.map((item) => {
-        if (item.id === product.id) {
-          return { ...item, quantity: item.quantity! - 1 };
-        }
-        return item;
+      setCart((prevCart) => {
+        const updatedCart = prevCart.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, quantity: item.quantity! - 1 };
+          }
+          return item;
+        });
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return updatedCart;
       });
-      setCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(cart));
     }
   };
 
