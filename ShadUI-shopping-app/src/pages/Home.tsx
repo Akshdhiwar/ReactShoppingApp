@@ -6,7 +6,7 @@ import { Button } from "../components/ui/button";
 import { BackpackIcon } from "@radix-ui/react-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../Context/CartContext";
-import Loader from "../components/ui/loader";
+import Loader from "../components/ui/Loader";
 
 const Home = () => {
   const [right, setRight] = useState(0);

@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Toaster } from "./components/ui/sonner";
 import Home from "./pages/Home";
-import Loader from "./components/ui/loader";
+import Loader from "./components/ui/Loader";
 import CartProvider from "./Providers/CartProvider";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -22,7 +22,7 @@ function App() {
             <Route index element={<Navigate to="dashboard" />}></Route>
             <Route path="dashboard" element={<Dashboard />}></Route>
             <Route path="productlist" element={<ProductView />}></Route>
-            <Route path="product" element={<ProductDetails />}></Route>
+            <Route path="product/:id" element={<ProductDetails />}></Route>
             <Route path="cart" element={<Cart />}></Route>
           </Route>
           <Route path="login" element={<Login />}></Route>

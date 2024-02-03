@@ -44,7 +44,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
               >
                 <div
                   className=" flex flex-col lg:h-full"
-                  onClick={() => navigate("/product")}
+                  onClick={() => navigate(`/product/${items.id}`)}
                 >
                   <div className="relative transition-all rounded-lg">
                     <img
