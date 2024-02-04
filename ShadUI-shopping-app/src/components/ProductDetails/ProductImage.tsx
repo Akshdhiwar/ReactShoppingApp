@@ -7,10 +7,15 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 
-const ProductImage = () => {
+interface ProductImageProps {
+  productImage: string | undefined;
+}
+
+const ProductImage: React.FC<ProductImageProps> = ({ productImage }) => {
   const [selectedImage, setSelectedImage] = useState(0);
 
   let imageArray = [
+    productImage,
     "https://images.unsplash.com/photo-1706016868884-4d0e348a1647?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://plus.unsplash.com/premium_photo-1684164601910-e4e179d574f0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://images.unsplash.com/photo-1706441919995-d0d0320b4fe5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -21,7 +26,7 @@ const ProductImage = () => {
 
   return (
     <div className="flex sm:flex-row flex-col-reverse">
-      <div className="sm:w-[120px] sm:py-12 lg:px-0 px-12 w-full">
+      <div className="sm:w-[120px] sm:py-14 sm:px-0 px-12 w-full">
         <Carousel
           opts={{
             align: "start",

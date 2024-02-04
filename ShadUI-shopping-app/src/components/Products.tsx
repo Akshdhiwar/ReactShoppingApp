@@ -65,9 +65,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
                   </p>
                   <div className="my-2 flex gap-2 lg:mb-0 lg:group-hover:mb-0 group-hover:mb-2">
                     <p className="font-semibold text-xl">${items.price}</p>
-                    <p className="line-through text-sm">
-                      ${items.price.toFixed(2)}
-                    </p>
+                    <p className="line-through text-sm">${items.price}</p>
                   </div>
                 </div>
                 <div className="lg:hidden">

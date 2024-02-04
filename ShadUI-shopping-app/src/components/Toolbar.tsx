@@ -3,7 +3,7 @@ import { supabase } from "../Constants/supabase";
 import { matchPath, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Userprofile from "../Interfaces/UserProfile";
-import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, HeartIcon } from "@radix-ui/react-icons";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import UserProfile from "./UserProfile";
 
@@ -90,13 +90,8 @@ const Toolbar = () => {
           </Tabs>
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
-          <Button
-            variant={"ghost"}
-            size={"icon"}
-            className="rounded-full"
-            onClick={() => navigate("/search")}
-          >
-            <MagnifyingGlassIcon width={25} height={25}></MagnifyingGlassIcon>
+          <Button variant={"ghost"} size={"icon"} className="rounded-full">
+            <HeartIcon width={25} height={25}></HeartIcon>
           </Button>
 
           {user != null ? (
