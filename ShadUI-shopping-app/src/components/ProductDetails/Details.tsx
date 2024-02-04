@@ -12,7 +12,9 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
       <p className="text-lg text-muted-foreground">{product?.description}</p>
       <div className="flex gap-1">
         <p className="text-4xl font-bold tracking-tight">${product?.price}</p>
-        <p className="font-thin line-through">{Number(product?.price) + 5}</p>
+        <p className="font-thin line-through">
+          {(Number(product?.price) + 5).toFixed(2)}
+        </p>
       </div>
     </div>
   );
