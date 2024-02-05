@@ -33,7 +33,8 @@ const Home = () => {
       <Suspense fallback={<Loader></Loader>}>
         <Outlet></Outlet>
       </Suspense>
-      {location.pathname.includes("cart") ? null : (
+      {location.pathname.includes("cart") ||
+      location.pathname.includes("product") ? null : (
         <div
           className="fixed bottom-0 m-4 border-white border-2 rounded-full"
           style={{ right: right }}
