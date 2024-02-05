@@ -90,7 +90,11 @@ const Toolbar = () => {
           </Tabs>
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
-          <Button variant={"ghost"} size={"icon"} className="rounded-full">
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="rounded-full hover:text-red-500"
+          >
             <HeartIcon width={25} height={25}></HeartIcon>
           </Button>
 
