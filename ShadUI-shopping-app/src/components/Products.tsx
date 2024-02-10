@@ -38,9 +38,10 @@ const Products: React.FC<ProductProps> = ({ products }) => {
         <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
           {products.map((items: iProduct) => {
             return (
-              <div
+              <a
+                href="#"
                 key={items.id}
-                className="group transition-all box-border hover:scale-105 hover:shadow-2xl hover:p-2 hover:rounded-xl hover:cursor-pointer hover:border-2"
+                className="group transition-all box-border hover:scale-105 hover:shadow-2xl hover:p-2 hover:rounded-xl hover:border-2 hover:cursor-pointer focus:scale-105 focus:shadow-2xl focus:p-2 focus:rounded-xl focus:border-2"
               >
                 <div
                   className=" flex flex-col lg:h-full"
@@ -88,7 +89,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
                     </Button>
                   )}
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>
