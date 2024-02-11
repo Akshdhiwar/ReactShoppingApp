@@ -4,6 +4,7 @@ import Category from "../components/Category";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import iProduct from "../Interfaces/Products";
+import Review from "../components/Review";
 
 const Dashboard = () => {
   const [data, setData] = useState<iProduct[]>([]);
@@ -83,6 +84,8 @@ const Dashboard = () => {
       <Category data={categoryList} />
       <h1 className="font-bold text-4xl my-4">Explore More</h1>
       <Products products={data} />
+      <h1 className="font-bold text-4xl my-4">Explore More</h1>
+      <Review />
     </div>
   );
 };

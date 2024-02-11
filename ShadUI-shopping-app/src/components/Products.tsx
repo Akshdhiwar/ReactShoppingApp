@@ -44,7 +44,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   }
 
   return (
-    <div className="w-full grid lg:grid-cols-4 gap-6 py-4 grid-cols-2">
+    <div className="w-full grid lg:grid-cols-4 gap-6 pt-4 pb-6 grid-cols-2">
       {products.map((item: iProduct) => (
         <Link
           to={`/product/${item.id}`}
