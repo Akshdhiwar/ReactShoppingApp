@@ -18,7 +18,7 @@ const Cart = () => {
   }
 
   return (
-    <div className=" content-grid">
+    <div className="content-grid">
       <div>
         <div className="flex w-full relative">
           <Button

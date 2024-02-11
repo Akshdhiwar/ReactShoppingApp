@@ -7,6 +7,7 @@ import { BackpackIcon } from "@radix-ui/react-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../Context/CartContext";
 import Loader from "../components/ui/Loader";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [right, setRight] = useState(0);
@@ -28,13 +29,16 @@ const Home = () => {
   });
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center min-h-screen">
       <Toolbar />
-      <Suspense fallback={<Loader></Loader>}>
-        <Outlet></Outlet>
-      </Suspense>
-      {location.pathname.includes("cart") ||
-      location.pathname.includes("product") ? null : (
+      <div className="flex-1">
+        <Suspense fallback={<Loader></Loader>}>
+          <Outlet></Outlet>
+        </Suspense>
+      </div>
+
+      <Footer />
+      {location.pathname.includes("cart") ? null : (
         <div
           className="fixed bottom-0 m-4 border-white border-2 rounded-full"
           style={{ right: right }}
