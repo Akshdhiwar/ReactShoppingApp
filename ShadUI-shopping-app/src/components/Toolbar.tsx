@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { supabase } from "../Constants/supabase";
-import { matchPath, useLocation, useNavigate } from "react-router-dom";
+import { Link, matchPath, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Userprofile from "../Interfaces/UserProfile";
 import { ArrowRightIcon, HeartIcon } from "@radix-ui/react-icons";
@@ -55,9 +55,12 @@ const Toolbar = () => {
         </div>
       </div>
       <div className="flex items-center w-full sm:py-2 flex-wrap pt-0 pb-2">
-        <p className="my-2 font-extrabold text-2xl sm:flex-none text-orange-500 flex-1 order-1">
+        <Link
+          className="my-2 font-extrabold text-2xl sm:flex-none text-orange-500 flex-1 order-1"
+          to={"/dashboard"}
+        >
           DUMBLES.IO
-        </p>
+        </Link>
         <div className="flex-1 flex items-center justify-center gap-1 order-3 sm:order-2 sm:basis-4/12">
           <Tabs
             value={selected}
