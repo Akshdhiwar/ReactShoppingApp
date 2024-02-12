@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import iProduct from "../Interfaces/Products";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Loader from "../components/ui/Loader";
 import ProductImage from "../components/ProductDetails/ProductImage";
@@ -8,27 +7,34 @@ import Breadcrum from "../components/ProductDetails/Breadcrum";
 import Details from "../components/ProductDetails/Details";
 
 export interface ProductDetailsProps {
-  product: iProduct;
+  product: iProduct | undefined;
 }
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState<iProduct | null>(null);
+  const [product, setProduct] = useState<iProduct | undefined>();
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`https://fakestoreapi.com/products/${id}`)
-      .then((response) => {
+
+    const sessionDataString = sessionStorage.getItem("products") as string;
+
+    if (sessionDataString !== null) {
+      const sessionData: iProduct[] = JSON.parse(sessionDataString);
+
+      // Filter products based on the id
+      const filteredProduct = sessionData.find((ele) => ele.id === Number(id));
+
+      // If a matching product is found, set it, otherwise set undefined
+      if (filteredProduct) {
+        setProduct(filteredProduct);
         setLoading(false);
-        setProduct(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching product:", error);
-        setLoading(false);
-      });
-  }, [id]);
+      } else {
+        setProduct(undefined);
+      }
+    }
+  }, []);
 
   return (
     <div className="content-grid py-2 min-h-full ">

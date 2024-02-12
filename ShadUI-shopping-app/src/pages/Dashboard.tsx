@@ -61,6 +61,7 @@ const Dashboard = () => {
           const productsWithIsAdded = data.data.map((item: iProduct) => ({
             ...item,
             isAddedToCart: false,
+            quantity: 1,
           }));
           setData(productsWithIsAdded);
           sessionStorage.setItem(

@@ -14,9 +14,6 @@ const Products: React.FC<ProductProps> = ({ products }) => {
     products === null || products.length < 1
   );
   const cart = useContext(CartContext);
-  const [addedToCart, setAddedToCart] = useState<{ [key: string]: boolean }>(
-    {}
-  );
 
   useEffect(() => {
     setLoading(products === null || products.length < 1);
@@ -29,10 +26,13 @@ const Products: React.FC<ProductProps> = ({ products }) => {
     event.stopPropagation();
     cart?.addToCart(item);
     item.isAddedToCart = true;
-    setAddedToCart((prev) => ({ ...prev, [item.id]: true }));
     toast(`Product Added to Cart!`, {
       description: `"${item.title}" was added to the cart! Enjoy shopping`,
     });
+  }
+
+  function checkProductInCart(productId: number) {
+    return cart?.cart.some((ele) => ele.id === productId);
   }
 
   if (products === null || loading) {
@@ -75,7 +75,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
             </div>
           </div>
           <div className="lg:hidden">
-            {addedToCart[item.id] ? (
+            {checkProductInCart(item.id) ? (
               <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg">
                 <p>
                   ADDED TO CART
