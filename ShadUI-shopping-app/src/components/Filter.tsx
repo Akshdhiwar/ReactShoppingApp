@@ -12,6 +12,7 @@ import {
   MixerHorizontalIcon,
   ResetIcon,
 } from "@radix-ui/react-icons";
+import { useSessionStorage } from "../Custom hook/useSessionStorage";
 
 interface FilterProps {
   handleFilterData: (data: iProduct[]) => void;
@@ -19,6 +20,7 @@ interface FilterProps {
 
 const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
   let products: iProduct[] | null = [];
+  const { getItem, setItem } = useSessionStorage("products");
 
   const [showFilter, setShowFilter] = useState<boolean>(false);
   let dynamicClass = showFilter ? "flex" : "hidden";
@@ -30,15 +32,15 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     search: "",
   });
 
-  const sessionDataString = sessionStorage.getItem("products");
+  const sessionDataString = getItem();
 
-  if (sessionDataString !== null) {
-    const sessionData: iProduct[] = JSON.parse(sessionDataString);
+  if (sessionDataString !== undefined) {
+    const sessionData: iProduct[] = sessionDataString;
     products = sessionData;
   } else {
     axios.get("https://fakestoreapi.com/products").then((data) => {
       products = data.data;
-      sessionStorage.setItem("products", JSON.stringify(data.data));
+      setItem(data.data);
     });
   }
 

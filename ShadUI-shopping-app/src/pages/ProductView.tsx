@@ -3,19 +3,22 @@ import { useEffect, useState } from "react";
 import Products from "../components/Products";
 import iProduct from "../Interfaces/Products";
 import Filter from "../components/Filter";
+import { useSessionStorage } from "../Custom hook/useSessionStorage";
 
 const ProductView = () => {
   const [data, setData] = useState<iProduct[] | null>([]);
-  useEffect(() => {
-    const sessionDataString = sessionStorage.getItem("products");
+  const { getItem, setItem } = useSessionStorage("products");
 
-    if (sessionDataString !== null) {
-      const sessionData: iProduct[] = JSON.parse(sessionDataString);
+  useEffect(() => {
+    const sessionDataString = getItem();
+
+    if (sessionDataString !== undefined) {
+      const sessionData: iProduct[] = sessionDataString;
       setData(sessionData);
     } else {
       axios.get("https://fakestoreapi.com/products").then((data) => {
         setData(data.data);
-        sessionStorage.setItem("products", JSON.stringify(data.data));
+        setItem(data.data);
       });
     }
   }, []);
