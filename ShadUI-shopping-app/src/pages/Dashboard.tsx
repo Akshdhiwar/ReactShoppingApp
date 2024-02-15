@@ -5,11 +5,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import iProduct from "../Interfaces/Products";
 import Review from "../components/Review";
-import { useSessionStorage } from "../Custom hooks/useSessionStorage";
 
 const Dashboard = () => {
   const [data, setData] = useState<iProduct[]>([]);
-  const { getItem, setItem } = useSessionStorage("products");
   const slideImages = [
     {
       src: `//www.layers.shop/cdn/shop/files/8_eff7d432-be32-4b96-aa9e-95e881cb6cb4.png?v=1681994691`,
@@ -51,10 +49,10 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
-    const sessionDataString = getItem();
+    const sessionDataString = sessionStorage.getItem("products");
 
     if (sessionDataString !== null) {
-      const sessionData: iProduct[] = sessionDataString;
+      const sessionData: iProduct[] = JSON.parse(sessionDataString);
       setData(sessionData);
     } else {
       axios
@@ -66,7 +64,10 @@ const Dashboard = () => {
             quantity: 1,
           }));
           setData(productsWithIsAdded);
-          setItem(productsWithIsAdded);
+          sessionStorage.setItem(
+            "products",
+            JSON.stringify(productsWithIsAdded)
+          );
         })
         .catch((error) => {
           console.error("Error fetching data:", error);

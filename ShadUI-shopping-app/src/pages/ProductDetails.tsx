@@ -5,7 +5,6 @@ import Loader from "../components/ui/Loader";
 import ProductImage from "../components/ProductDetails/ProductImage";
 import Breadcrum from "../components/ProductDetails/Breadcrum";
 import Details from "../components/ProductDetails/Details";
-import { useSessionStorage } from "../Custom hooks/useSessionStorage";
 
 export interface ProductDetailsProps {
   product: iProduct | undefined;
@@ -15,15 +14,14 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState<iProduct | undefined>();
-  const { getItem } = useSessionStorage("products");
 
   useEffect(() => {
     setLoading(true);
 
-    const sessionDataString = getItem();
+    const sessionDataString = sessionStorage.getItem("products") as string;
 
     if (sessionDataString !== null) {
-      const sessionData: iProduct[] = sessionDataString;
+      const sessionData: iProduct[] = JSON.parse(sessionDataString);
 
       // Filter products based on the id
       const filteredProduct = sessionData.find((ele) => ele.id === Number(id));
