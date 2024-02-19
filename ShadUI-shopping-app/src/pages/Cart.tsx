@@ -6,6 +6,8 @@ import { ArrowLeft, Backpack } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 
+//hello 
+
 const Cart = () => {
   const cartItems = useContext(CartContext);
   const navigate = useNavigate();
