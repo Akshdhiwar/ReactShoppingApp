@@ -15,7 +15,7 @@ const Cart = () => {
 
   if (cartItems?.cart) {
     for (const item of cartItems.cart) {
-      totalPrice += item.price * item.quantity!;
+      totalPrice += item.Price * item.quantity!;
     }
   }
 
@@ -51,16 +51,16 @@ const Cart = () => {
                       <Separator className="h-[1px] bg-slate-600"></Separator>
                       <div
                         className="flex justify-between items-center p-4 flex-wrap"
-                        key={ele.id}
+                        key={ele.ID}
                       >
                         <div className="flex gap-2 items-center sm:w-1/2 w-[80%] order-1">
                           <img
-                            src={ele.image}
+                            src={ele.Image}
                             alt=""
                             className=" w-24 aspect-square object-cover hover:scale-110 transition bg-slate-500 rounded-md"
                           />
                           <div className="flex flex-col">
-                            <p className="font-semibold">{ele.title}</p>
+                            <p className="font-semibold">{ele.Title}</p>
                             <p className="flex font-light text-sm">
                               Color : Blue
                             </p>
@@ -92,13 +92,13 @@ const Cart = () => {
                             variant={"outline"}
                             size={"icon"}
                             className="h-7 w-7 hover:border-red-500"
-                            onClick={() => cartItems.removeFromCart(ele.id)}
+                            onClick={() => cartItems.removeFromCart(ele.ID)}
                           >
                             <TrashIcon color="red" />
                           </Button>
                         </div>
                         <p className="font-semibold sm:w-[10%] flex justify-end sm:order-3 order-2">
-                          ${ele.price.toFixed(2)}
+                          ${ele.Price.toFixed(2)}
                         </p>
                       </div>
                     </div>

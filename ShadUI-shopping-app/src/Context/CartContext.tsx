@@ -4,7 +4,7 @@ import iProduct from "../Interfaces/Products";
 interface CartContextValue {
   cart: iProduct[];
   addToCart: (product: iProduct) => void;
-  removeFromCart: (productId: number) => void;
+  removeFromCart: (productId: string) => void;
   addQuantity: (product: iProduct) => void;
   removeQuantity: (product: iProduct) => void;
 }

@@ -15,17 +15,17 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<iProduct[]>(cartString);
 
   const addToCart = (product: iProduct) => {
-    if (checkCart(product.id)) return;
+    if (checkCart(product.ID)) return;
     product.quantity = 1;
     setCart((prevCart) => [...prevCart, product]);
     const newCart = [...cart, product];
     setItem(newCart);
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.filter(
-        (product) => product.id !== productId
+        (product) => product.ID !== productId
       );
       setItem(updatedCart);
       return updatedCart;
@@ -33,10 +33,10 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   const addQuantity = (product: iProduct) => {
-    if (checkCart(product.id)) {
+    if (checkCart(product.ID)) {
       setCart((prevCart) => {
         const updatedCart = prevCart.map((item) => {
-          if (item.id === product.id) {
+          if (item.ID === product.ID) {
             return { ...item, quantity: item.quantity! + 1 };
           }
           return item;
@@ -48,10 +48,10 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   const removeQuantity = (product: iProduct) => {
-    if (checkCart(product.id)) {
+    if (checkCart(product.ID)) {
       setCart((prevCart) => {
         const updatedCart = prevCart.map((item) => {
-          if (item.id === product.id) {
+          if (item.ID === product.ID) {
             return { ...item, quantity: item.quantity! - 1 };
           }
           return item;
@@ -62,8 +62,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }
   };
 
-  const checkCart = (productId: number): boolean => {
-    return cart.some((item) => item.id === productId);
+  const checkCart = (productId: string): boolean => {
+    return cart.some((item) => item.ID === productId);
   };
 
   return (

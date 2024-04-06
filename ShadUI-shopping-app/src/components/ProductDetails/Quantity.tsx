@@ -14,7 +14,7 @@ const Quantity: React.FC<QuantityProps> = ({ product }) => {
 
   // Find the quantity of the current product in the cart
   let quantity: number | undefined = 1; // Default quantity
-  const productInCart = cart?.cart.find((ele) => ele.id === product?.id);
+  const productInCart = cart?.cart.find((ele) => ele.ID === product?.ID);
   if (productInCart) {
     quantity = productInCart.quantity;
   }
