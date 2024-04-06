@@ -74,7 +74,7 @@ const Dashboard = () => {
     }
   }, []);
   return (
-    <div className=" content-grid">
+    <div className="content-grid">
       <div className="lg:h-screen h-[70vh] fullwidth">
         <Carousal slideImages={slideImages}></Carousal>
       </div>

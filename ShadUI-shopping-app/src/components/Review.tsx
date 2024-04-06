@@ -2,38 +2,56 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Review = () => {
   return (
-    <div
-      className="border-2 border-slate-400 rounded-3xl p-4 grid grid-cols-5 gap-2"
-      style={{ gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))" }}
-    >
-      {[1, 2, 3, 4, 5, 6].map((e) => {
-        return (
-          <div
-            key={e}
-            className="group h-[400px] rounded-xl bg-[url(https://images.unsplash.com/photo-1707593655398-a9eb0f94ffe9?q=80&w=1970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] relative overflow-hidden bg-center bg-cover"
-          >
-            <div className="bg-slate-200/80 rounded-xl absolute w-full p-2 -mt-[20%] group-hover:mt-0 h-full transform translate-y-full transition group-hover:translate-y-0 ease-in-out">
-              <div className="flex gap-2 items-center ">
-                <Avatar className="h-8 w-8 border border-slate-600">
-                  <AvatarImage
-                    src="https://ui.shadcn.com/avatars/01.png"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>AD</AvatarFallback>
-                </Avatar>
-                <p className="text-sm font-medium leading-none">Sofia Davis</p>
-              </div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Reprehenderit, culpa possimus. Rem illo maiores aliquam, eveniet
-                sunt vel iusto. Neque quae dignissimos nobis fugit iusto id
-                dolore nihil assumenda culpa!
-              </p>
+    <ul className="md:columns-2 lg:columns-3 xl:columns-4 space-y-4 md:space-y-6 md:gap-6 mx-auto">
+      {
+        [1, 2, 3, 4, 5, 6, 7, 8].map((e) => {
+          return (
+            <li className="break-inside-avoid" key={e}>
+              <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/20 bg-base-100 ">
+                {
+                  e == 4 && (<img src="https://github.com/shadcn.png" className="mb-2" alt="review" />)
+                }
+
+                <blockquote>
+                  I managed to exit & <span className=" text-primary-content px-0.5">sell for 5 figures in a few weeks.</span>  Best investment I've made in so long.
+                </blockquote>
+                <figcaption className="relative flex items-center justify-start gap-4 pt-4 mt-4 border-t border-base-content/10">
+                  <div className="overflow-hidden rounded-full bg-base-300 shrink-0">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div className="w-full flex items-end justify-between gap-2">
+                    <p className="text-sm font-medium text-base-content">Akash Dhiwar</p>
+                  </div>
+                </figcaption>
+              </figure>
+            </li>
+          )
+        })
+      }
+
+      <li className="break-inside-avoid">
+        <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/20 bg-base-100 hover:shadow-sm">
+          <video className="mb-2" controls> <source src="https://d1wkquwg5s1b04.cloudfront.net/landing/jack2.mp4"/></video>
+          <blockquote>
+            I managed to exit & <span className=" text-primary-content px-0.5">sell for 5 figures in a few weeks.</span>  Best investment I've made in so long.
+          </blockquote>
+          <figcaption className="relative flex items-center justify-start gap-4 pt-4 mt-4 border-t border-base-content/10">
+            <div className="overflow-hidden rounded-full bg-base-300 shrink-0">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
             </div>
-          </div>
-        );
-      })}
-    </div>
+            <div className="w-full flex items-end justify-between gap-2">
+              <p className="text-sm font-medium text-base-content">Akash Dhiwar</p>
+            </div>
+          </figcaption>
+        </figure>
+      </li>
+    </ul>
   );
 };
 
