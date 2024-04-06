@@ -16,21 +16,21 @@ interface DetailsProps {
 const Details: React.FC<DetailsProps> = ({ product }) => {
   const cart = useContext(CartContext);
 
-  function checkProductInCart(productId: number | undefined) {
-    return cart?.cart.some((ele) => ele.id === productId);
+  function checkProductInCart(productId: string | undefined) {
+    return cart?.cart.some((ele) => ele.ID === productId);
   }
 
   useEffect(() => {
-    checkProductInCart(product?.id);
+    checkProductInCart(product?.ID);
   }, [cart?.cart]);
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-4xl font-bold tracking-tight">{product?.title}</p>
+      <p className="text-4xl font-bold tracking-tight">{product?.Title}</p>
       <div className="flex items-center gap-2">
-        <StarRating rating={Number(product?.rating?.rate)}></StarRating>
+        <StarRating rating={Number(product?.Rating)}></StarRating>
         <p className="text-muted-foreground text-slate-400">
-          {product?.rating?.count} Reviews
+          {product?.Rating} Reviews
         </p>
       </div>
       <div className="flex items-center justify-between text-green-500 font-semibold gap-1">
@@ -48,10 +48,10 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
         <CardHeader>
           <div className="flex gap-1">
             <p className="text-4xl font-bold tracking-tight">
-              ${product?.price}
+              ${product?.Price}
             </p>
             <p className="font-thin line-through">
-              {(Number(product?.price) + 5).toFixed(2)}
+              {(Number(product?.Price) + 5).toFixed(2)}
             </p>
           </div>
           <p>price per unit</p>
@@ -60,7 +60,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
           <Quantity product={product} />
           <div className="flex gap-2 sm:flex-row flex-col">
             <Button className="flex-1">Buy</Button>
-            {checkProductInCart(product?.id) ? (
+            {checkProductInCart(product?.ID) ? (
               <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg flex-1">
                 <p>
                   ADDED TO CART
@@ -100,7 +100,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
           </div>
         </CardContent>
       </Card>
-      <p className="text-lg text-muted-foreground">{product?.description}</p>
+      <p className="text-lg text-muted-foreground">{product?.Description}</p>
     </div>
   );
 };

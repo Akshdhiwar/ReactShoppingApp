@@ -1,14 +1,12 @@
 interface iProduct {
-  id: number;
-  image: string;
-  title: string;
-  description: string;
-  price: number;
-  category?: string;
-  rating?: {
-    rate: number;
-    count: number;
-  };
+  ID: string;
+  Image: string;
+  Title: string;
+  Description: string;
+  Price: number;
+  Category?: string;
+  Rating: number;
+  Count: number;
   quantity?: number;
   isAddedToCart: boolean;
 }

@@ -38,7 +38,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     const sessionData: iProduct[] = sessionDataString;
     products = sessionData;
   } else {
-    axios.get("https://fakestoreapi.com/products").then((data) => {
+    axios.get("https://go-backend.up.railway.app/api/v1/products/").then((data) => {
       products = data.data;
       setItem(data.data);
     });
@@ -53,27 +53,27 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     let filteredProducts = products;
     if (filter.range !== "") {
       filteredProducts = filteredProducts!.filter((product) => {
-        return product.price < Number(filter.range!);
+        return product.Price < Number(filter.range!);
       });
     }
 
     if (filter.category !== "") {
       filteredProducts = filteredProducts!.filter((product) => {
-        return product.category === filter.category;
+        return product.Category === filter.category;
       });
     }
 
     if (filter.brand?.length !== 0) {
       filteredProducts = filteredProducts!.filter((product) => {
         return filter.brand.some((brand: string) =>
-          product.title.toLowerCase().includes(brand)
+          product.Title.toLowerCase().includes(brand)
         );
       });
     }
 
     if (filter.search !== "") {
       filteredProducts = filteredProducts!.filter((product) => {
-        return product.title.toLowerCase().includes(filter.search);
+        return product.Title.toLowerCase().includes(filter.search);
       });
     }
 

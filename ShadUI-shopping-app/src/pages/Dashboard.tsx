@@ -58,7 +58,7 @@ const Dashboard = () => {
       setData(sessionData);
     } else {
       axios
-        .get("https://fakestoreapi.com/products?limit=16")
+        .get("https://go-backend.up.railway.app/api/v1/products/")
         .then((data) => {
           const productsWithIsAdded = data.data.map((item: iProduct) => ({
             ...item,

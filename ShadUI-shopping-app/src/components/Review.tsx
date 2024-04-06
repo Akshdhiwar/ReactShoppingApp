@@ -7,7 +7,7 @@ const Review = () => {
         [1, 2, 3, 4, 5, 6, 7, 8].map((e) => {
           return (
             <li className="break-inside-avoid" key={e}>
-              <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/20 bg-base-100 ">
+              <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/50 bg-base-100 ">
                 {
                   e == 4 && (<img src="https://github.com/shadcn.png" className="mb-2" alt="review" />)
                 }
@@ -33,7 +33,7 @@ const Review = () => {
       }
 
       <li className="break-inside-avoid">
-        <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/20 bg-base-100 hover:shadow-sm">
+        <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/50 bg-base-100 hover:shadow-sm">
           <video className="mb-2" controls> <source src="https://d1wkquwg5s1b04.cloudfront.net/landing/jack2.mp4"/></video>
           <blockquote>
             I managed to exit & <span className=" text-primary-content px-0.5">sell for 5 figures in a few weeks.</span>  Best investment I've made in so long.

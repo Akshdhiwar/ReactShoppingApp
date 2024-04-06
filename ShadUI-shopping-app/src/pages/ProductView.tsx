@@ -16,7 +16,7 @@ const ProductView = () => {
       const sessionData: iProduct[] = sessionDataString;
       setData(sessionData);
     } else {
-      axios.get("https://fakestoreapi.com/products").then((data) => {
+      axios.get("https://go-backend.up.railway.app/api/v1/products/").then((data) => {
         setData(data.data);
         setItem(data.data);
       });

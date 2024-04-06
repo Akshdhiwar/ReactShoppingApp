@@ -27,12 +27,12 @@ const Products: React.FC<ProductProps> = ({ products }) => {
     cart?.addToCart(item);
     item.isAddedToCart = true;
     toast(`Product Added to Cart!`, {
-      description: `"${item.title}" was added to the cart! Enjoy shopping`,
+      description: `"${item.Title}" was added to the cart! Enjoy shopping`,
     });
   }
 
-  function checkProductInCart(productId: number) {
-    return cart?.cart.some((ele) => ele.id === productId);
+  function checkProductInCart(productId: string) {
+    return cart?.cart.some((ele) => ele.ID === productId);
   }
 
   if (products === null || loading) {
@@ -47,14 +47,14 @@ const Products: React.FC<ProductProps> = ({ products }) => {
     <div className="w-full grid lg:grid-cols-4 gap-6 pt-4 pb-6 grid-cols-2">
       {products.map((item: iProduct) => (
         <Link
-          to={`/product/${item.id}`}
-          key={item.id}
+          to={`/product/${item.ID}`}
+          key={item.ID}
           className="group transition-all box-border hover:scale-105 hover:shadow-2xl hover:p-2 hover:rounded-xl hover:border-2 hover:cursor-pointer focus:scale-105 focus:shadow-2xl focus:p-2 focus:rounded-xl focus:border-2 focus:outline-none"
         >
           <div className=" flex flex-col lg:h-full">
             <div className="relative transition-all rounded-lg">
               <img
-                src={item.image}
+                src={item.Image}
                 alt=""
                 loading="lazy"
                 className=" w-full object-cover aspect-square transition p-6"
@@ -64,18 +64,18 @@ const Products: React.FC<ProductProps> = ({ products }) => {
               </div>
             </div>
             <h2 className="text-xl font-semibold mt-2 flex-1 line-clamp-2">
-              {item.title}
+              {item.Title}
             </h2>
             <p className="line-clamp-2 text-sm text-slate-500">
-              {item.description}
+              {item.Description}
             </p>
             <div className="my-2 flex gap-2 lg:mb-0 lg:group-hover:mb-0 group-hover:mb-2">
-              <p className="font-semibold text-xl">${item.price}</p>
-              <p className="line-through text-sm">${item.price}</p>
+              <p className="font-semibold text-xl">${item.Price}</p>
+              <p className="line-through text-sm">${item.Price}</p>
             </div>
           </div>
           <div className="lg:hidden">
-            {checkProductInCart(item.id) ? (
+            {checkProductInCart(item.ID) ? (
               <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg">
                 <p>
                   ADDED TO CART
