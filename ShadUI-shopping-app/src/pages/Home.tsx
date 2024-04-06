@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../Context/CartContext";
 import Loader from "../components/ui/Loader";
 import Footer from "../components/Footer";
+import { ScrollArea } from "../components/ui/scroll-area";
 
 const Home = () => {
   const [right, setRight] = useState(0);
@@ -29,41 +30,41 @@ const Home = () => {
   });
 
   return (
-    <div className="flex flex-col justify-center min-h-screen">
-      <Toolbar />
-      <div className="flex-1">
-        <Suspense fallback={<Loader></Loader>}>
-          <Outlet></Outlet>
-        </Suspense>
-      </div>
-      <div className="mt-2">
-        <Footer />
-      </div>
-
-      {location.pathname.includes("cart") ? null : (
-        <div
-          className="fixed bottom-0 m-4 border-white border-2 rounded-full"
-          style={{ right: right }}
-        >
-          <div className="relative">
-            <Button
-              size={"icon"}
-              className="flex items-center justify-center h-12 w-12 p-3 rounded-full"
-              onClick={() => {
-                navigate("cart");
-              }}
-            >
-              <BackpackIcon width={30} height={30} />
-            </Button>
-            {cartItems!.cart.length > 0 ? (
-              <div className="p-1 rounded-sm absolute w-6 -top-2 -right-2 flex items-center justify-center bg-red-500 text-xs text-white">
-                {cartItems?.cart.length}
-              </div>
-            ) : null}
-          </div>
+      <ScrollArea className="flex flex-col justify-center max-h-screen">
+        <Toolbar />
+        <div className="flex-1">
+          <Suspense fallback={<Loader></Loader>}>
+            <Outlet></Outlet>
+          </Suspense>
         </div>
-      )}
-    </div>
+        <div className="mt-2">
+          <Footer />
+        </div>
+
+        {location.pathname.includes("cart") ? null : (
+          <div
+            className="fixed bottom-0 m-4 border-white border-2 rounded-full"
+            style={{ right: right }}
+          >
+            <div className="relative">
+              <Button
+                size={"icon"}
+                className="flex items-center justify-center h-12 w-12 p-3 rounded-full"
+                onClick={() => {
+                  navigate("cart");
+                }}
+              >
+                <BackpackIcon width={30} height={30} />
+              </Button>
+              {cartItems!.cart.length > 0 ? (
+                <div className="p-1 rounded-sm absolute w-6 -top-2 -right-2 flex items-center justify-center bg-red-500 text-xs text-white">
+                  {cartItems?.cart.length}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        )}
+      </ScrollArea>
   );
 };
 
