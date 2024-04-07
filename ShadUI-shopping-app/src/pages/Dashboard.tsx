@@ -6,9 +6,11 @@ import axios from "axios";
 import iProduct from "../Interfaces/Products";
 import Review from "../components/Review";
 import { baseURL } from "../Constants/api";
+import { useSessionStorage } from "../Custom hook/useSessionStorage";
 
 const Dashboard = () => {
   const [data, setData] = useState<iProduct[]>([]);
+  const { getItem, setItem } = useSessionStorage("products");
   const slideImages = [
     {
       src: `//www.layers.shop/cdn/shop/files/8_eff7d432-be32-4b96-aa9e-95e881cb6cb4.png?v=1681994691`,
@@ -50,19 +52,27 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
-    axios
-      .get(`${baseURL}products/`)
-      .then((data) => {
-        const productsWithIsAdded = data.data.map((item: iProduct) => ({
-          ...item,
-          isAddedToCart: false,
-          quantity: 1,
-        }));
-        setData(productsWithIsAdded);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    const sessionDataString = getItem();
+
+    if (sessionDataString !== undefined) {
+      const sessionData: iProduct[] = sessionDataString;
+      setData(sessionData);
+    } else {
+      axios
+        .get(`${baseURL}products/`)
+        .then((data) => {
+          const productsWithIsAdded = data.data.map((item: iProduct) => ({
+            ...item,
+            isAddedToCart: false,
+            quantity: 1,
+          }));
+          setData(productsWithIsAdded);
+          setItem(productsWithIsAdded)
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
   }, []);
   return (
     <div className="content-grid">
