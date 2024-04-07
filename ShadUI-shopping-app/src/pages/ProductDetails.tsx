@@ -6,6 +6,7 @@ import ProductImage from "../components/ProductDetails/ProductImage";
 import Breadcrum from "../components/ProductDetails/Breadcrum";
 import Details from "../components/ProductDetails/Details";
 import axios from "axios";
+import { baseURL } from "../Constants/api";
 
 export interface ProductDetailsProps {
   product: iProduct | undefined;
@@ -18,7 +19,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-      axios.get(`http://localhost:3000/api/v1/products/${id}`).then((data) => {
+      axios.get(`${baseURL}products/${id}`).then((data) => {
         setProduct(data.data);
         setLoading(false);
       })

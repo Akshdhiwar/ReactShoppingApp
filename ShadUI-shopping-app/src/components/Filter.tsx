@@ -13,6 +13,7 @@ import {
   ResetIcon,
 } from "@radix-ui/react-icons";
 import { useSessionStorage } from "../Custom hook/useSessionStorage";
+import { baseURL } from "../Constants/api";
 
 interface FilterProps {
   handleFilterData: (data: iProduct[]) => void;
@@ -38,7 +39,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     const sessionData: iProduct[] = sessionDataString;
     products = sessionData;
   } else {
-    axios.get("http://localhost:3000/api/v1/products/").then((data) => {
+    axios.get(`${baseURL}products/`).then((data) => {
       products = data.data;
       setItem(data.data);
     });
