@@ -5,11 +5,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import iProduct from "../Interfaces/Products";
 import Review from "../components/Review";
-import { useSessionStorage } from "../Custom hook/useSessionStorage";
 
 const Dashboard = () => {
   const [data, setData] = useState<iProduct[]>([]);
-  const { getItem, setItem } = useSessionStorage("products");
   const slideImages = [
     {
       src: `//www.layers.shop/cdn/shop/files/8_eff7d432-be32-4b96-aa9e-95e881cb6cb4.png?v=1681994691`,
@@ -51,27 +49,19 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
-    const sessionDataString = getItem();
-
-    if (sessionDataString !== undefined) {
-      const sessionData: iProduct[] = sessionDataString;
-      setData(sessionData);
-    } else {
-      axios
-        .get("https://go-backend.up.railway.app/api/v1/products/")
-        .then((data) => {
-          const productsWithIsAdded = data.data.map((item: iProduct) => ({
-            ...item,
-            isAddedToCart: false,
-            quantity: 1,
-          }));
-          setData(productsWithIsAdded);
-          setItem(productsWithIsAdded);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    }
+    axios
+      .get("http://localhost:3000/api/v1/products/")
+      .then((data) => {
+        const productsWithIsAdded = data.data.map((item: iProduct) => ({
+          ...item,
+          isAddedToCart: false,
+          quantity: 1,
+        }));
+        setData(productsWithIsAdded);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
   return (
     <div className="content-grid">

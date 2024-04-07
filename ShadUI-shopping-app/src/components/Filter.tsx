@@ -38,7 +38,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     const sessionData: iProduct[] = sessionDataString;
     products = sessionData;
   } else {
-    axios.get("https://go-backend.up.railway.app/api/v1/products/").then((data) => {
+    axios.get("http://localhost:3000/api/v1/products/").then((data) => {
       products = data.data;
       setItem(data.data);
     });

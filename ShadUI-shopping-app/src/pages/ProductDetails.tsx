@@ -5,7 +5,7 @@ import Loader from "../components/ui/Loader";
 import ProductImage from "../components/ProductDetails/ProductImage";
 import Breadcrum from "../components/ProductDetails/Breadcrum";
 import Details from "../components/ProductDetails/Details";
-import { useSessionStorage } from "../Custom hook/useSessionStorage";
+import axios from "axios";
 
 export interface ProductDetailsProps {
   product: iProduct | undefined;
@@ -15,28 +15,14 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState<iProduct | undefined>();
-  const { getItem } = useSessionStorage("products");
 
   useEffect(() => {
     setLoading(true);
-
-    const sessionDataString = getItem();
-
-    if (sessionDataString !== null) {
-      const sessionData: iProduct[] = sessionDataString;
-
-      // Filter products based on the id
-      const filteredProduct = sessionData.find((ele) => ele.ID === id);
-
-      // If a matching product is found, set it, otherwise set undefined
-      if (filteredProduct) {
-        setProduct(filteredProduct);
+      axios.get(`http://localhost:3000/api/v1/products/${id}`).then((data) => {
+        setProduct(data.data);
         setLoading(false);
-      } else {
-        setProduct(undefined);
-      }
-    }
-  }, []);
+      })
+    } ,[]);
 
   return (
     <div className="content-grid py-2 min-h-full ">
