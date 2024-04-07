@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import iProduct from "../Interfaces/Products";
 import Review from "../components/Review";
+import { baseURL } from "../Constants/api";
 
 const Dashboard = () => {
   const [data, setData] = useState<iProduct[]>([]);
@@ -50,7 +51,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/v1/products/")
+      .get(`${baseURL}products/`)
       .then((data) => {
         const productsWithIsAdded = data.data.map((item: iProduct) => ({
           ...item,
