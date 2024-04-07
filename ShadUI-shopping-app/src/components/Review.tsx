@@ -7,7 +7,7 @@ const Review = () => {
         [1, 2, 3, 4, 5, 6, 7, 8].map((e) => {
           return (
             <li className="break-inside-avoid" key={e}>
-              <figure className="relative h-full w-full max-w-[500px] p-6 rounded-xl border border-orange-500/50 bg-base-100 ">
+              <figure className="relative h-full shadow-xl w-full max-w-[500px] p-6 rounded-xl border border-orange-500/50 bg-base-100 ">
                 {
                   e == 4 && (<img src="https://github.com/shadcn.png" className="mb-2" alt="review" />)
                 }
