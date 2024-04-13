@@ -4,10 +4,44 @@ import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { useState } from "react";
+import axios from "axios";
+import { baseURL } from "../Constants/api";
 
 const Login = () => {
   let navigate = useNavigate();
   const [loginState, setLoginState] = useState(true)
+
+
+  const [email , setEmail] = useState("")
+  const [password , setPassword] = useState("")
+  const [firstName , setFirstName] = useState("")
+  const [lastName , setLastName] = useState("")
+
+  function login(){
+    axios.post(`${baseURL}account/login`,{
+      "Email": email,
+      "Password" : password
+    }).then( response => {
+      // Extract access token from the response
+      const accessToken = response.data.access_token;
+
+      // Set the access token in a cookie with a specified expiration time
+      const expirationTime = 3600 * 1000; // 1 hour in milliseconds
+      const expires = new Date(Date.now() + expirationTime).toUTCString();
+      document.cookie = `access_token=${accessToken}; expires=${expires}; path=/`;
+    }
+    )
+  }
+
+  function signup(){
+    axios.post(`${baseURL}account/signup`,{
+      "Email": email,
+      "Password" : password,
+      "FirstName" : firstName,
+      "LastName" : lastName
+    })
+  }
+
   return (
     <div className="h-screen flex ">
       <div className="h-full w-1/2 relative box-border hidden lg:block">
@@ -55,6 +89,7 @@ const Login = () => {
                     id="email"
                     type="email"
                     placeholder="m@example.com"
+                    onChange={(e)=>setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -68,9 +103,9 @@ const Login = () => {
                       Forgot your password?
                     </a>
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input id="password" type="password" required onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" onClick={login}>
                   Login
                 </Button>
                 <Button variant="outline" className="w-full">
@@ -95,11 +130,11 @@ const Login = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="first-name">First name</Label>
-                        <Input id="first-name" placeholder="Max" required />
+                        <Input id="first-name" placeholder="Max" required onChange={(e)=> setFirstName(e.target.value)}/>
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="last-name">Last name</Label>
-                        <Input id="last-name" placeholder="Robinson" required />
+                        <Input id="last-name" placeholder="Robinson" required  onChange={(e)=> setLastName(e.target.value)}/>
                       </div>
                     </div>
                     <div className="grid gap-2">
@@ -109,17 +144,15 @@ const Login = () => {
                         type="email"
                         placeholder="m@example.com"
                         required
+                        onChange={(e)=> setEmail(e.target.value)}
                       />
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="password">Password</Label>
-                      <Input id="password" type="password" />
+                      <Input id="password" type="password"  onChange={(e)=> setPassword(e.target.value)}/>
                     </div>
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full" onClick={signup}>
                       Create an account
-                    </Button>
-                    <Button variant="outline" className="w-full">
-                      Sign up with GitHub
                     </Button>
                   </div>
                   <div className="mt-4 text-center text-sm">
