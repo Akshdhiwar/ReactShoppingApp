@@ -32,7 +32,7 @@ const Login = () => {
   const signUpForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema)
   })
-
+  
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const response = await axios.post(`${baseURL}account/login`, {
@@ -43,6 +43,7 @@ const Login = () => {
       const expirationTime = 3600 * 1000; // 1 hour in milliseconds
       const expires = new Date(Date.now() + expirationTime).toUTCString();
       document.cookie = `access_token=${accessToken}; expires=${expires}; path=/`;
+      navigate("/dashboard")
     } catch (error) {
       console.error('Login API error:', error);
     }
