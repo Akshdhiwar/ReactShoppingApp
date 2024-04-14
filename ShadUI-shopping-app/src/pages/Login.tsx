@@ -6,39 +6,73 @@ import { Input } from "../components/ui/input";
 import { useState } from "react";
 import axios from "axios";
 import { baseURL } from "../Constants/api";
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../components/ui/form";
+
+const loginSchema = z.object({
+  email: z.string().email("Valid email is required"),
+  password: z.string().min(8, "Minimum 8 characters are required")
+})
+
+const signUpSchema = z.object({
+  email: z.string().email("Valid email is required"),
+  password: z.string().min(8, "Minimum 8 characters are required"),
+  firstName: z.string(),
+  lastName: z.string()
+})
 
 const Login = () => {
   let navigate = useNavigate();
   const [loginState, setLoginState] = useState(true)
 
+  const loginForm = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema)
+  })
+  const signUpForm = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema)
+  })
 
-  const [email , setEmail] = useState("")
-  const [password , setPassword] = useState("")
-  const [firstName , setFirstName] = useState("")
-  const [lastName , setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
 
-  function login(){
-    axios.post(`${baseURL}account/login`,{
-      "Email": email,
-      "Password" : password
-    }).then( response => {
-      // Extract access token from the response
+  const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
+    try {
+      const response = await axios.post(`${baseURL}account/login`, {
+        "Email": values.email,
+        "Password": values.password
+      });
       const accessToken = response.data.access_token;
-
-      // Set the access token in a cookie with a specified expiration time
       const expirationTime = 3600 * 1000; // 1 hour in milliseconds
       const expires = new Date(Date.now() + expirationTime).toUTCString();
       document.cookie = `access_token=${accessToken}; expires=${expires}; path=/`;
+    } catch (error) {
+      console.error('Login API error:', error);
     }
-    )
   }
 
-  function signup(){
-    axios.post(`${baseURL}account/signup`,{
+  const onSignUpSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    try {
+      await axios.post(`${baseURL}account/signup`, {
+        "FirstName": values.firstName,
+        "LastName": values.lastName,
+        "Email": values.email,
+        "Password": values.password,
+      });
+    } catch (error) {
+      console.error('Signup API error:', error);
+    }
+  };
+
+  function signup() {
+    axios.post(`${baseURL}account/signup`, {
       "Email": email,
-      "Password" : password,
-      "FirstName" : firstName,
-      "LastName" : lastName
+      "Password": password,
+      "FirstName": firstName,
+      "LastName": lastName
     })
   }
 
@@ -82,36 +116,43 @@ const Login = () => {
                   Enter your email below to login to your account
                 </p>
               </div>
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    onChange={(e)=>setEmail(e.target.value)}
-                    required
+              <Form {...loginForm}>
+                <form className="grid gap-2" onSubmit={loginForm.handleSubmit(onLoginSubmit)}>
+                  <FormField
+                    control={loginForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="max@example.com" type="email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
-                <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <a
-                      href="/forgot-password"
-                      className="ml-auto inline-block text-sm underline"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-                  <Input id="password" type="password" required onChange={(e)=>setPassword(e.target.value)}/>
-                </div>
-                <Button type="submit" className="w-full" onClick={login}>
-                  Login
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Login with Google
-                </Button>
-              </div>
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full">
+                    Login
+                  </Button>
+                  <Button variant="outline" className="w-full">
+                    Login with Google
+                  </Button>
+                </form>
+              </Form>
+
               <div className="mt-4 text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a href="#" className="underline" onClick={() => setLoginState(false)}>
@@ -119,48 +160,80 @@ const Login = () => {
                 </a>
               </div>
             </div> :
-              <div className="mx-auto grid w-[400px] gap-6">
+              <div className="mx-auto grid w-[350px] gap-6">
                 <div className="grid gap-2 text-center">
                   <h1 className="text-3xl font-bold">Sign Up</h1>
                   <p className="text-balance text-muted-foreground">
                     Enter your information to create an account
                   </p>
                 </div>
-                  <div className="grid gap-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="first-name">First name</Label>
-                        <Input id="first-name" placeholder="Max" required onChange={(e)=> setFirstName(e.target.value)}/>
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="last-name">Last name</Label>
-                        <Input id="last-name" placeholder="Robinson" required  onChange={(e)=> setLastName(e.target.value)}/>
-                      </div>
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="m@example.com"
-                        required
-                        onChange={(e)=> setEmail(e.target.value)}
+                <Form {...signUpForm}>
+                  <form className="grid gap-2" onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}>
+                    <div className="grid grid-cols-2 gap-2">
+                      <FormField
+                        control={signUpForm.control}
+                        name="firstName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>First Name</FormLabel>
+                            <FormControl>
+                              <Input type="text" placeholder="Max" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={signUpForm.control}
+                        name="lastName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Last Name</FormLabel>
+                            <FormControl>
+                              <Input type="text" placeholder="Max" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
                     </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="password">Password</Label>
-                      <Input id="password" type="password"  onChange={(e)=> setPassword(e.target.value)}/>
-                    </div>
+                    <FormField
+                        control={signUpForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input type="email" placeholder="max@example.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                   <FormField
+                        control={signUpForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                              <Input type="password"{...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     <Button type="submit" className="w-full" onClick={signup}>
                       Create an account
                     </Button>
-                  </div>
-                  <div className="mt-4 text-center text-sm">
-                    Already have an account?{" "}
-                    <a href="#" className="underline" onClick={() => setLoginState(true)}>
-                      Sign in
-                    </a>
-                  </div>
+                  </form>
+                </Form>
+                <div className="mt-4 text-center text-sm">
+                  Already have an account?{" "}
+                  <a href="#" className="underline" onClick={() => setLoginState(true)}>
+                    Sign in
+                  </a>
+                </div>
               </div>
           }
         </div>
