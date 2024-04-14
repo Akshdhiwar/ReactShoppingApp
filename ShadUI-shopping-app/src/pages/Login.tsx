@@ -1,7 +1,6 @@
 import { ChevronRightIcon, FrameIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { useState } from "react";
 import axios from "axios";
@@ -34,11 +33,6 @@ const Login = () => {
     resolver: zodResolver(signUpSchema)
   })
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const response = await axios.post(`${baseURL}account/login`, {
@@ -66,15 +60,6 @@ const Login = () => {
       console.error('Signup API error:', error);
     }
   };
-
-  function signup() {
-    axios.post(`${baseURL}account/signup`, {
-      "Email": email,
-      "Password": password,
-      "FirstName": firstName,
-      "LastName": lastName
-    })
-  }
 
   return (
     <div className="h-screen flex ">
@@ -223,7 +208,7 @@ const Login = () => {
                           </FormItem>
                         )}
                       />
-                    <Button type="submit" className="w-full" onClick={signup}>
+                    <Button type="submit" className="w-full">
                       Create an account
                     </Button>
                   </form>
