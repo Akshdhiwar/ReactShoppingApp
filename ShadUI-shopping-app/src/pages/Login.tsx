@@ -256,7 +256,7 @@ const Login = () => {
           <Auth
             supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}
-            providers={["google", "facebook", "apple"]}
+            providers={["google"]}
             socialLayout="horizontal"
             theme="light"
           />
