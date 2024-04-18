@@ -24,6 +24,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, setUser }) => {
     setUser(null);
   }
 
+  let initialName = user?.name ? user?.name.split(" ").map((word) => word[0]).join("") : user.email[0]
+
   return (
     <div className="flex gap-1">
       <DropdownMenu>
@@ -32,10 +34,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, setUser }) => {
             <Avatar className="h-8 w-8">
               <AvatarImage src={user?.picture} alt="@shadcn" />
               <AvatarFallback>
-                {user?.name
-                  .split(" ")
-                  .map((word) => word[0])
-                  .join("")}
+                {initialName}
               </AvatarFallback>
             </Avatar>
           </Button>
