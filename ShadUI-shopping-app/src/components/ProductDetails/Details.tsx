@@ -8,6 +8,8 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { LockIcon, RotateCcw, StarIcon, TruckIcon } from "lucide-react";
 import { CartContext } from "../../Context/CartContext";
+import axios from "axios";
+import { baseURL } from "../../Constants/api";
 
 interface DetailsProps {
   product: iProduct | undefined;
@@ -22,7 +24,35 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
 
   useEffect(() => {
     checkProductInCart(product?.ID);
-  }, [cart?.cart]);
+  }, [cart?.cart]); 
+
+  function getAccessToken(){
+    const data = localStorage.getItem("sb-ecjbxrvyuuadxuhgzyzg-auth-token")
+    if (data === null) return null
+    return JSON.parse(data) 
+  }
+
+  async function addToCart(){
+
+    const accessToken : any = getAccessToken()
+
+    const headers = {
+      'Authorization': `Bearer ${accessToken.access_token}`,
+      'Content-Type': 'application/json',
+    }
+
+    const payload = {
+      "user_id" : accessToken.user.id,
+      "product_id" : product?.ID
+    }
+
+    const response = await axios.post(`${baseURL}cart/add` , payload , {
+      headers : headers
+    } )
+
+    alert(response.data.message)
+    cart?.addToCart(product!);
+  }
 
   return (
     <div className="flex flex-col gap-2">
@@ -71,9 +101,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
               <Button
                 className="flex-1 border border-orange-500"
                 variant={"outline"}
-                onClick={() => {
-                  cart?.addToCart(product!);
-                }}
+                onClick={addToCart}
               >
                 Add to cart
               </Button>
