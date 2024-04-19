@@ -10,6 +10,7 @@ import { LockIcon, RotateCcw, StarIcon, TruckIcon } from "lucide-react";
 import { CartContext } from "../../Context/CartContext";
 import axios from "axios";
 import { baseURL } from "../../Constants/api";
+import {useToast} from '../../components/ui/use-toast'
 
 interface DetailsProps {
   product: iProduct | undefined;
@@ -17,6 +18,7 @@ interface DetailsProps {
 
 const Details: React.FC<DetailsProps> = ({ product }) => {
   const cart = useContext(CartContext);
+  const { toast } = useToast()
 
   function checkProductInCart(productId: string | undefined) {
     return cart?.cart.some((ele) => ele.ID === productId);
@@ -50,7 +52,11 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
       headers : headers
     } )
 
-    alert(response.data.message)
+    toast({
+      title : response.data.message,
+      description : `"${product?.Title}" was added to the cart! Enjoy shopping`
+    })
+    
     cart?.addToCart(product!);
   }
 

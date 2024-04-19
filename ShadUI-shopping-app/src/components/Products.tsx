@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import iProduct from "../Interfaces/Products";
 import { Button } from "./ui/button";
 import { CartContext } from "../Context/CartContext";
-import { toast } from "sonner";
+import { useToast } from "../components/ui/use-toast"
 import { Link } from "react-router-dom";
 
 type ProductProps = {
@@ -15,6 +15,8 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   );
   const cart = useContext(CartContext);
 
+  const { toast } = useToast()
+
   useEffect(() => {
     setLoading(products === null || products.length < 1);
   }, [products]);
@@ -26,9 +28,12 @@ const Products: React.FC<ProductProps> = ({ products }) => {
     event.stopPropagation();
     cart?.addToCart(item);
     item.isAddedToCart = true;
-    toast(`Product Added to Cart!`, {
-      description: `"${item.Title}" was added to the cart! Enjoy shopping`,
-    });
+    toast({
+      description : `"${item.Title}" was added to the cart! Enjoy shopping`
+    })
+    // toast(`Product Added to Cart!`, {
+    //   description: ,
+    // });
   }
 
   function checkProductInCart(productId: string) {
