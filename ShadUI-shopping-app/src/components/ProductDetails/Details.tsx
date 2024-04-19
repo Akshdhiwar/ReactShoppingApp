@@ -54,8 +54,8 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
 
     toast({
       variant : response.data.type === "error" ? "destructive" : "default",
-      title : response.data.message,
-      description : `"${product?.Title}" was added to the cart! Enjoy shopping`
+      title : response.data.type,
+      description : response.data.message
     })
 
     cart?.addToCart(product!);
