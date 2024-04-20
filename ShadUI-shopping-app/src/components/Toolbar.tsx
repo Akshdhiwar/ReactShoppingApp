@@ -7,6 +7,8 @@ import { ArrowRightIcon, HeartIcon } from "@radix-ui/react-icons";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import UserProfile from "./UserProfile";
 import { UserContext } from "../Context/UserContext";
+import axiosHttp from "../axiosHandler/axiosHandler";
+import { CartContext } from "../Context/CartContext";
 
 const Toolbar = () => {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ const Toolbar = () => {
   const [selected, setSelected] = useState("dashboard");
   const [user, setUser] = useState<Userprofile | null>(null);
   const currentUser = useContext(UserContext)
+  const cartContext = useContext(CartContext)
 
   async function getUser() {
     try {
@@ -49,6 +52,17 @@ const Toolbar = () => {
       setUser(res);
     });
   }, []);
+
+  useEffect(()=>{
+    if(user?.sub){
+      getCart()
+    }
+  },[user])
+
+  async function getCart() {
+    const cartData = await axiosHttp.get(`cart/${user?.sub}`)
+    cartContext?.setCart(cartData.data)
+  }
 
   const onTabChange = (value: string) => {
     setSelected(value);

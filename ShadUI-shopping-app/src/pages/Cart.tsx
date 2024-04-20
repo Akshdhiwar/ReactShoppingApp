@@ -6,15 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { UserContext } from "../Context/UserContext";
 import axiosHttp from "../axiosHandler/axiosHandler";
+import { CartContext } from "../Context/CartContext";
 
 const Cart = () => {
   const [cart, setCart] = useState([])
   const user = useContext(UserContext)
+  const cartContext = useContext(CartContext)
   const navigate = useNavigate();
   let totalPrice = 0;
 
   async function getCart() {
     const cartData = await axiosHttp.get(`cart/${user?.user?.sub}`)
+    cartContext?.setCart(cartData.data)
     setCart(cartData.data)
   }
 

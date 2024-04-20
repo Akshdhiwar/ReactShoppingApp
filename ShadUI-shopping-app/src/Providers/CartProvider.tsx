@@ -1,25 +1,18 @@
 import { useState } from "react";
 import iProduct from "../Interfaces/Products";
 import { CartContext } from "../Context/CartContext";
-import { useLocalStorage } from "../Custom hook/useLocalStorage";
 
 interface CartProviderProps {
   children: React.ReactNode;
 }
 
 const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const { setItem, getItem } = useLocalStorage("cart");
-
-  let cartString = getItem();
-  if (cartString == null) cartString = [];
-  const [cart, setCart] = useState<iProduct[]>(cartString);
+  const [cart, setCart] = useState<iProduct[]>([]);
 
   const addToCart = (product: iProduct) => {
     if (checkCart(product.ID)) return;
     product.quantity = 1;
     setCart((prevCart) => [...prevCart, product]);
-    const newCart = [...cart, product];
-    setItem(newCart);
   };
 
   const removeFromCart = (productId: string) => {
@@ -27,7 +20,6 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       const updatedCart = prevCart.filter(
         (product) => product.ID !== productId
       );
-      setItem(updatedCart);
       return updatedCart;
     });
   };
@@ -41,7 +33,6 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
           }
           return item;
         });
-        setItem(updatedCart);
         return updatedCart;
       });
     }
@@ -56,7 +47,6 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
           }
           return item;
         });
-        setItem(updatedCart);
         return updatedCart;
       });
     }
@@ -68,7 +58,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, addQuantity, removeQuantity }}
+      value={{ cart, setCart, addToCart, removeFromCart, addQuantity, removeQuantity }}
     >
       {children}
     </CartContext.Provider>
