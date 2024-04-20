@@ -7,18 +7,41 @@ import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { UserContext } from "../Context/UserContext";
 import axiosHttp from "../axiosHandler/axiosHandler";
 import { CartContext } from "../Context/CartContext";
+import { AxiosRequestConfig } from "axios";
 
 const Cart = () => {
-  const [cart, setCart] = useState([])
   const user = useContext(UserContext)
   const cartContext = useContext(CartContext)
   const navigate = useNavigate();
-  let totalPrice = 0;
+  const [totalPrice, setTotalPrice] = useState(0)
 
   async function getCart() {
     const cartData = await axiosHttp.get(`cart/${user?.user?.sub}`)
     cartContext?.setCart(cartData.data)
-    setCart(cartData.data)
+    let total = 0
+    cartData.data.map((ele: any) => {
+      total = ele.Product.Price + total
+    })
+    setTotalPrice(total)
+  }
+
+  async function deleteProduct(id: string) {
+
+    const payload = {
+      user_id: user?.user?.sub
+    };
+
+    const config: AxiosRequestConfig = {
+      data: payload // Set the payload as the data property in the Axios request config
+    };
+
+    try { 
+      axiosHttp.delete(`cart/delete/${id}`, config) 
+      cartContext?.removeFromCart(id)
+    }
+    catch (error){
+      
+    }
   }
 
   useEffect(
@@ -49,13 +72,13 @@ const Cart = () => {
         </div>
         <div>
           <div className="py-4">
-            {cart.length == 0 ? (
+            {cartContext?.cart.length == 0 ? (
               <div className="text-center">
                 <h1 className="text-2xl font-semibold">No items in cart</h1>
               </div>
             ) : (
               <div className="flex gap-2 flex-col">
-                {cart.map((ele: any) => {
+                {cartContext?.cart.map((ele: any) => {
                   return (
                     <div>
                       <Separator className="h-[1px] bg-slate-600"></Separator>
@@ -65,7 +88,7 @@ const Cart = () => {
                       >
                         <div className="flex gap-2 items-center sm:w-1/2 w-[80%] order-1">
                           <img
-                            src={ele.Product.Image}
+                            src={ele && ele.Product.Image ? ele.Product.Image : ""}
                             alt=""
                             className=" w-24 aspect-square object-cover hover:scale-110 transition bg-slate-500 rounded-md"
                           />
@@ -100,6 +123,7 @@ const Cart = () => {
                             variant={"outline"}
                             size={"icon"}
                             className="h-7 w-7 hover:border-red-500"
+                            onClick={() => deleteProduct(ele.Product.ID)}
                           >
                             <TrashIcon color="red" />
                           </Button>

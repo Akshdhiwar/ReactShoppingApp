@@ -18,7 +18,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const removeFromCart = (productId: string) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.filter(
-        (product) => product.ID !== productId
+        (ele:any) => ele.Product.ID !== productId
       );
       return updatedCart;
     });
