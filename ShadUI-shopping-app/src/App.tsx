@@ -5,6 +5,7 @@ import { Toaster } from "./components/ui/toaster";
 import Home from "./pages/Home";
 import Loader from "./components/ui/Loader";
 import CartProvider from "./Providers/CartProvider";
+import UserProvider from "./Providers/UserProvider";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ProductView = lazy(() => import("./pages/ProductView"));
@@ -15,22 +16,24 @@ const NoMatch = lazy(() => import("./components/NoMatch"));
 
 function App() {
   return (
-    <CartProvider>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" Component={Home}>
-            <Route index element={<Navigate to="dashboard" />}></Route>
-            <Route path="dashboard" element={<Dashboard />}></Route>
-            <Route path="productlist" element={<ProductView />}></Route>
-            <Route path="product/:id" element={<ProductDetails />}></Route>
-            <Route path="cart" element={<Cart />}></Route>
-          </Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </Suspense>
-      <Toaster />
-    </CartProvider>
+    <UserProvider>
+      <CartProvider>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" Component={Home}>
+              <Route index element={<Navigate to="dashboard" />}></Route>
+              <Route path="dashboard" element={<Dashboard />}></Route>
+              <Route path="productlist" element={<ProductView />}></Route>
+              <Route path="product/:id" element={<ProductDetails />}></Route>
+              <Route path="cart" element={<Cart />}></Route>
+            </Route>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </Suspense>
+        <Toaster />
+      </CartProvider>
+    </UserProvider>
   );
 }
 

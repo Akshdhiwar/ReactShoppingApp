@@ -7,7 +7,6 @@ interface StarRatingProps {
 
 const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
   const roundedRating = Math.round(rating);
-  console.log(roundedRating);
   return (
     <div className="flex">
       {[...Array(5)].map((_, index) => {

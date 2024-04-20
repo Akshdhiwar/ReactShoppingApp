@@ -11,6 +11,7 @@ import { CartContext } from "../../Context/CartContext";
 import axios from "axios";
 import { baseURL } from "../../Constants/api";
 import {useToast} from '../../components/ui/use-toast'
+import { UserContext } from "../../Context/UserContext";
 
 interface DetailsProps {
   product: iProduct | undefined;
@@ -19,7 +20,7 @@ interface DetailsProps {
 const Details: React.FC<DetailsProps> = ({ product }) => {
   const cart = useContext(CartContext);
   const { toast } = useToast()
-
+  const user = useContext(UserContext)
   function checkProductInCart(productId: string | undefined) {
     return cart?.cart.some((ele) => ele.ID === productId);
   }
@@ -44,7 +45,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
     }
 
     const payload = {
-      "user_id" : accessToken.user.id,
+      "user_id" : user?.user?.sub,
       "product_id" : product?.ID
     }
 

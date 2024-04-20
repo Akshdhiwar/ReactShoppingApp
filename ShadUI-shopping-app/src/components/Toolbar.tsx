@@ -1,11 +1,12 @@
 import { Button } from "./ui/button";
 import { supabase } from "../Constants/supabase";
 import { Link, matchPath, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Userprofile from "../Interfaces/UserProfile";
 import { ArrowRightIcon, HeartIcon } from "@radix-ui/react-icons";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import UserProfile from "./UserProfile";
+import { UserContext } from "../Context/UserContext";
 
 const Toolbar = () => {
   const navigate = useNavigate();
@@ -14,12 +15,18 @@ const Toolbar = () => {
 
   const [selected, setSelected] = useState("dashboard");
   const [user, setUser] = useState<Userprofile | null>(null);
+  const currentUser = useContext(UserContext)
 
   async function getUser() {
     try {
       const userResponse = await supabase.auth.getUser();
-      const identityData =
-        userResponse?.data?.user?.identities?.[0]?.identity_data;
+      const identityData = 
+      userResponse?.data?.user?.identities?.[0]?.identity_data;
+      const temp = {
+        email : identityData!.email,
+        sub : identityData!.sub
+      }
+      currentUser?.setUserData(temp)
       return identityData;
     } catch (error) {
       console.error("Failed to Get User Identity Data: ", error);
@@ -48,6 +55,7 @@ const Toolbar = () => {
   };
   return (
     <div className=" content-grid">
+      
       <div className="bar h-[30px] bg-black flex items-center justify-center text-white text-sm gap-4 fullwidth">
         <div>Get 10% instant discount on order above 1499$ &#127881;</div>
         <div className="sm:flex items-center gap-2 hidden">
