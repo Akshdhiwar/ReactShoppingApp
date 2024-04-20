@@ -8,10 +8,10 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { LockIcon, RotateCcw, StarIcon, TruckIcon } from "lucide-react";
 import { CartContext } from "../../Context/CartContext";
-import axios from "axios";
 import { baseURL } from "../../Constants/api";
-import {useToast} from '../../components/ui/use-toast'
+import { useToast } from '../../components/ui/use-toast'
 import { UserContext } from "../../Context/UserContext";
+import axiosHttp from "../../axiosHandler/axiosHandler";
 
 interface DetailsProps {
   product: iProduct | undefined;
@@ -27,36 +27,20 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
 
   useEffect(() => {
     checkProductInCart(product?.ID);
-  }, [cart?.cart]); 
+  }, [cart?.cart]);
 
-  function getAccessToken(){
-    const data = localStorage.getItem("sb-ecjbxrvyuuadxuhgzyzg-auth-token")
-    if (data === null) return null
-    return JSON.parse(data) 
-  }
-
-  async function addToCart(){
-
-    const accessToken : any = getAccessToken()
-
-    const headers = {
-      'Authorization': `Bearer ${accessToken.access_token}`,
-      'Content-Type': 'application/json',
-    }
-
+  async function addToCart() {
     const payload = {
-      "user_id" : user?.user?.sub,
-      "product_id" : product?.ID
+      "user_id": user?.user?.sub,
+      "product_id": product?.ID
     }
 
-    const response = await axios.post(`${baseURL}cart/add` , payload , {
-      headers : headers
-    } )
+    const response = await axiosHttp.post(`${baseURL}cart/add`, payload)
 
     toast({
-      variant : response.data.type === "error" ? "destructive" : "default",
-      title : response.data.type,
-      description : response.data.message
+      variant: response.data.type === "error" ? "destructive" : "default",
+      title: response.data.type,
+      description: response.data.message
     })
 
     cart?.addToCart(product!);

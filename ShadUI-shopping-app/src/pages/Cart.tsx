@@ -4,34 +4,17 @@ import { Button } from "../components/ui/button";
 import { ArrowLeft, Backpack } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
-import axios from "axios";
-import { baseURL } from "../Constants/api";
 import { UserContext } from "../Context/UserContext";
+import axiosHttp from "../axiosHandler/axiosHandler";
 
 const Cart = () => {
-  const [cart , setCart] = useState([])
+  const [cart, setCart] = useState([])
   const user = useContext(UserContext)
   const navigate = useNavigate();
   let totalPrice = 0;
 
-  function getAccessToken() {
-    const data = localStorage.getItem("sb-ecjbxrvyuuadxuhgzyzg-auth-token")
-    if (data === null) return null
-    return JSON.parse(data)
-  }
-
-
   async function getCart() {
-    const accessToken: any = getAccessToken()
-
-    const headers = {
-      'Authorization': `Bearer ${accessToken.access_token}`,
-      'Content-Type': 'application/json',
-    }
-    const cartData = await axios.get(`${baseURL}cart/${user?.user?.sub}`, {
-      headers: headers
-    })
-
+    const cartData = await axiosHttp.get(`cart/${user?.user?.sub}`)
     setCart(cartData.data)
   }
 
@@ -69,7 +52,7 @@ const Cart = () => {
               </div>
             ) : (
               <div className="flex gap-2 flex-col">
-                {cart.map((ele:any) => {
+                {cart.map((ele: any) => {
                   return (
                     <div>
                       <Separator className="h-[1px] bg-slate-600"></Separator>
