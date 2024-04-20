@@ -1,21 +1,47 @@
-import { useContext } from "react";
-import { CartContext } from "../Context/CartContext";
+import { useContext, useEffect, useState } from "react";
 import { Separator } from "../components/ui/separator";
 import { Button } from "../components/ui/button";
 import { ArrowLeft, Backpack } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
+import axios from "axios";
+import { baseURL } from "../Constants/api";
+import { UserContext } from "../Context/UserContext";
 
 const Cart = () => {
-  const cartItems = useContext(CartContext);
+  const [cart , setCart] = useState([])
+  const user = useContext(UserContext)
   const navigate = useNavigate();
   let totalPrice = 0;
 
-  if (cartItems?.cart) {
-    for (const item of cartItems.cart) {
-      totalPrice += item.Price * item.quantity!;
-    }
+  function getAccessToken() {
+    const data = localStorage.getItem("sb-ecjbxrvyuuadxuhgzyzg-auth-token")
+    if (data === null) return null
+    return JSON.parse(data)
   }
+
+
+  async function getCart() {
+    const accessToken: any = getAccessToken()
+
+    const headers = {
+      'Authorization': `Bearer ${accessToken.access_token}`,
+      'Content-Type': 'application/json',
+    }
+    const cartData = await axios.get(`${baseURL}cart/${user?.user?.sub}`, {
+      headers: headers
+    })
+
+    setCart(cartData.data)
+  }
+
+  useEffect(
+    () => {
+      if (user?.user?.sub) {
+        getCart()
+      }
+    }
+    , [])
 
   return (
     <div className="content-grid">
@@ -37,28 +63,28 @@ const Cart = () => {
         </div>
         <div>
           <div className="py-4">
-            {cartItems?.cart.length == 0 ? (
+            {cart.length == 0 ? (
               <div className="text-center">
                 <h1 className="text-2xl font-semibold">No items in cart</h1>
               </div>
             ) : (
               <div className="flex gap-2 flex-col">
-                {cartItems?.cart.map((ele) => {
+                {cart.map((ele:any) => {
                   return (
                     <div>
                       <Separator className="h-[1px] bg-slate-600"></Separator>
                       <div
                         className="flex justify-between items-center p-4 flex-wrap"
-                        key={ele.ID}
+                        key={ele.Product.ID}
                       >
                         <div className="flex gap-2 items-center sm:w-1/2 w-[80%] order-1">
                           <img
-                            src={ele.Image}
+                            src={ele.Product.Image}
                             alt=""
                             className=" w-24 aspect-square object-cover hover:scale-110 transition bg-slate-500 rounded-md"
                           />
                           <div className="flex flex-col">
-                            <p className="font-semibold">{ele.Title}</p>
+                            <p className="font-semibold">{ele.Product.Title}</p>
                             <p className="flex font-light text-sm">
                               Color : Blue
                             </p>
@@ -70,17 +96,15 @@ const Cart = () => {
                               variant={"outline"}
                               size={"icon"}
                               className="h-7 w-7"
-                              disabled={ele.quantity === 1}
-                              onClick={() => cartItems.removeQuantity(ele)}
+                              disabled={ele.Quantity === 1}
                             >
                               <MinusIcon />
                             </Button>
-                            {ele.quantity}
+                            {ele.Quantity}
                             <Button
                               variant={"outline"}
                               size={"icon"}
                               className="h-7 w-7"
-                              onClick={() => cartItems.addQuantity(ele)}
                             >
                               <PlusIcon />
                             </Button>
@@ -90,13 +114,12 @@ const Cart = () => {
                             variant={"outline"}
                             size={"icon"}
                             className="h-7 w-7 hover:border-red-500"
-                            onClick={() => cartItems.removeFromCart(ele.ID)}
                           >
                             <TrashIcon color="red" />
                           </Button>
                         </div>
                         <p className="font-semibold sm:w-[10%] flex justify-end sm:order-3 order-2">
-                          ${ele.Price.toFixed(2)}
+                          ${ele.Product.Price.toFixed(2)}
                         </p>
                       </div>
                     </div>
