@@ -8,12 +8,14 @@ import { UserContext } from "../Context/UserContext";
 import axiosHttp from "../axiosHandler/axiosHandler";
 import { CartContext } from "../Context/CartContext";
 import { AxiosRequestConfig } from "axios";
+import { useToast } from "../components/ui/use-toast";
 
 const Cart = () => {
   const user = useContext(UserContext)
   const cartContext = useContext(CartContext)
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0)
+  const { toast } = useToast()
 
   async function getCart() {
     const cartData = await axiosHttp.get(`cart/${user?.user?.sub}`)
@@ -35,13 +37,31 @@ const Cart = () => {
       data: payload // Set the payload as the data property in the Axios request config
     };
 
-    try { 
-      axiosHttp.delete(`cart/delete/${id}`, config) 
+    try {
+      axiosHttp.delete(`cart/delete/${id}`, config)
       cartContext?.removeFromCart(id)
     }
-    catch (error){
-      
+    catch (error) {
+      console.error(error)
     }
+  }
+
+  async function addQuantity(id: string) {
+
+    const payload = {
+      "UserID": user?.user?.sub
+    }
+
+    await axiosHttp.post(`cart/inc/${id}`, payload).then(() => {
+      toast({
+        title: "Success",
+        description: "Added Quantity"
+      })
+
+      cartContext?.addQuantity(id);
+    }).catch((error)=>{
+      console.error(error)
+    })
   }
 
   useEffect(
@@ -114,6 +134,7 @@ const Cart = () => {
                               variant={"outline"}
                               size={"icon"}
                               className="h-7 w-7"
+                              onClick={() => addQuantity(ele.Product.ID)}
                             >
                               <PlusIcon />
                             </Button>

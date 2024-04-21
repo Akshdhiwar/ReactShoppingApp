@@ -6,7 +6,7 @@ interface CartContextValue {
   setCart : (products : iProduct[]) => void
   addToCart: (product: iProduct) => void;
   removeFromCart: (productId: string) => void;
-  addQuantity: (product: iProduct) => void;
+  addQuantity: (id : string) => void;
   removeQuantity: (product: iProduct) => void;
 }
 
