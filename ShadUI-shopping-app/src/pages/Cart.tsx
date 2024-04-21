@@ -64,6 +64,24 @@ const Cart = () => {
     })
   }
 
+  async function removeQuantity(id: string) {
+
+    const payload = {
+      "UserID": user?.user?.sub
+    }
+
+    await axiosHttp.post(`cart/dec/${id}`, payload).then(() => {
+      toast({
+        title: "Success",
+        description: "Removed Quantity"
+      })
+
+      cartContext?.removeQuantity(id);
+    }).catch((error)=>{
+      console.error(error)
+    })
+  }
+
   useEffect(
     () => {
       if (user?.user?.sub) {
@@ -126,6 +144,7 @@ const Cart = () => {
                               size={"icon"}
                               className="h-7 w-7"
                               disabled={ele.Quantity === 1}
+                              onClick={()=> removeQuantity(ele.Product.ID)}
                             >
                               <MinusIcon />
                             </Button>

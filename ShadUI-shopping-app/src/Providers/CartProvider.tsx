@@ -38,12 +38,12 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }
   };
 
-  const removeQuantity = (product: iProduct) => {
-    if (checkCart(product.ID)) {
+  const removeQuantity = (id : string) => {
+    if (checkCart(id)) {
       setCart((prevCart) => {
-        const updatedCart = prevCart.map((item) => {
-          if (item.ID === product.ID) {
-            return { ...item, quantity: item.quantity! - 1 };
+        const updatedCart = prevCart.map((item : any) => {
+          if (item.Product.ID === id) {
+            return { ...item, Quantity: item.Quantity! - 1 };
           }
           return item;
         });
