@@ -46,6 +46,14 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
     cart?.addToCart(product!);
   }
 
+  function buyProduct(){
+    axiosHttp.post("/create-checkout-session").then(
+      (res) => {
+        window.location.href = res.data
+      }
+    )
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <p className="text-4xl font-bold tracking-tight">{product?.Title}</p>
@@ -81,7 +89,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
         <CardContent className="flex flex-col gap-2">
           <Quantity product={product} />
           <div className="flex gap-2 sm:flex-row flex-col">
-            <Button className="flex-1">Buy</Button>
+            <Button className="flex-1" onClick={buyProduct}>Buy</Button>
             {checkProductInCart(product?.ID) ? (
               <div className="flex items-center justify-center h-9 border border-slate-400 rounded-lg flex-1">
                 <p>
