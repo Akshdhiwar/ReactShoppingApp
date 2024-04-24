@@ -94,7 +94,7 @@ const Login = () => {
           className="absolute h-full w-full object-cover bg-center grayscale"
         />
         <div className="absolute p-8 h-2/3 flex flex-col justify-between text-white">
-          <p className="flex items-center gap-2 font-bold text-4xl text-orange-500">
+          <p className="flex items-center gap-2 font-bold text-4xl text-primary">
             <FrameIcon></FrameIcon>Dumbles.shop
           </p>
           <div>
@@ -102,7 +102,7 @@ const Login = () => {
               Get your Home Gym Setup now
             </p>
             <p className="font-extrabold text-5xl mb-16">
-              Be a <span className=" text-orange-500">Ziddi !</span>
+              Be a <span className=" text-primary">Ziddi !</span>
             </p>
           </div>
         </div>
@@ -247,7 +247,7 @@ const Login = () => {
           }
         </div> */}
          <div className="w-[350px] py-6 box-border">
-          <p className="text-2xl font-bold leading-tight tracking-tighter md:text-3xl lg:leading-[1.1] text-orange-500">
+          <p className="text-2xl font-bold leading-tight tracking-tighter md:text-3xl lg:leading-[1.1] text-primary">
             Dumbles.shop
           </p>
           <p className=" text-base text-muted-foreground">

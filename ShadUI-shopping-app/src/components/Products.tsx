@@ -89,7 +89,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
               </div>
             ) : (
               <Button
-                className="w-full border border-orange-500"
+                className="w-full border border-primary"
                 variant={"outline"}
                 onClick={(event) => {
                   event.preventDefault();

@@ -99,7 +99,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
               </div>
             ) : (
               <Button
-                className="flex-1 border border-orange-500"
+                className="flex-1 border border-primary"
                 variant={"outline"}
                 onClick={addToCart}
               >

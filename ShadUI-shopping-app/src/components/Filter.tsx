@@ -144,7 +144,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
         <div className=" w-full flex-1 flex justify-end">
           <Button
             variant={"outline"}
-            className="border-orange-500 h-8 lg:flex hidden"
+            className=" border-primary h-8 lg:flex hidden"
             onClick={resetFilter}
           >
             Reset

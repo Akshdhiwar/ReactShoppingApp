@@ -16,7 +16,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
           return (
             <StarFilledIcon
               key={index}
-              className="text-orange-500"
+              className="text-primary"
               height={18}
               width={18}
             />
@@ -26,7 +26,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
           return (
             <StarFilledIcon
               key={index}
-              className="text-orange-500"
+              className="text-primary"
               height={18}
               width={18}
             />
@@ -36,7 +36,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
           return (
             <StarIcon
               key={index}
-              className="text-orange-500"
+              className="text-primary"
               height={18}
               width={18}
             />

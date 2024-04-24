@@ -12,7 +12,7 @@ const Footer = () => {
     <div className="content-grid bg-neutral-900 p-10 pb-5 px-3">
       <div className="grid sm:grid-cols-3 gap-5">
         <div className="flex flex-col gap-2">
-          <p className=" font-extrabold text-2xl text-orange-500">DUMBLES.IO</p>
+          <p className=" font-extrabold text-2xl text-white">DUMBLES.IO</p>
           <div className="flex gap-2">
             <Input className="border-slate-700 border-t-0 border-x-0 text-white"></Input>
             <Button

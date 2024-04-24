@@ -78,7 +78,7 @@ const Toolbar = () => {
       </div>
       <div className="flex items-center w-full sm:py-2 flex-wrap pt-0 pb-2">
         <Link
-          className="my-2 font-extrabold text-2xl sm:flex-none text-orange-500 flex-1 order-1"
+          className="my-2 font-extrabold text-2xl sm:flex-none text-primary flex-1 order-1"
           to={"/dashboard"}
         >
           DUMBLES.IO
