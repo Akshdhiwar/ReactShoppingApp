@@ -41,7 +41,6 @@ const Toolbar = () => {
     const matchedRoute = routes.find((route) =>
       matchPath(route, location.pathname)
     );
-    console.log(matchedRoute);
     if (matchedRoute) {
       setSelected(matchedRoute.slice(1)); // Remove the leading '/' from the route
     }

@@ -49,7 +49,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
   function buyProduct(){
     axiosHttp.post("/create-checkout-session").then(
       (res) => {
-        window.location.href = res.data
+        window.location.href = res.data.url
       }
     )
   }

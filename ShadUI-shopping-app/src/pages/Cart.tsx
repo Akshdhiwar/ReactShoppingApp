@@ -17,15 +17,14 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useState(0)
   const { toast } = useToast()
 
-  async function getCart() {
-    const cartData = await axiosHttp.get(`cart/${user?.user?.sub}`)
-    cartContext?.setCart(cartData.data)
+
+  useEffect(() => {
     let total = 0
-    cartData.data.map((ele: any) => {
+    cartContext?.cart.map((ele: any) => {
       total = ele.Product.Price + total
     })
     setTotalPrice(total)
-  }
+  }, [])
 
   async function deleteProduct(id: string) {
 
@@ -59,7 +58,7 @@ const Cart = () => {
       })
 
       cartContext?.addQuantity(id);
-    }).catch((error)=>{
+    }).catch((error) => {
       console.error(error)
     })
   }
@@ -77,18 +76,10 @@ const Cart = () => {
       })
 
       cartContext?.removeQuantity(id);
-    }).catch((error)=>{
+    }).catch((error) => {
       console.error(error)
     })
   }
-
-  useEffect(
-    () => {
-      if (user?.user?.sub) {
-        getCart()
-      }
-    }
-    , [])
 
   return (
     <div className="content-grid">
@@ -144,7 +135,7 @@ const Cart = () => {
                               size={"icon"}
                               className="h-7 w-7"
                               disabled={ele.Quantity === 1}
-                              onClick={()=> removeQuantity(ele.Product.ID)}
+                              onClick={() => removeQuantity(ele.Product.ID)}
                             >
                               <MinusIcon />
                             </Button>
