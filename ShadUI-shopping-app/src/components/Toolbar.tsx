@@ -23,11 +23,11 @@ const Toolbar = () => {
   async function getUser() {
     try {
       const userResponse = await supabase.auth.getUser();
-      const identityData = 
-      userResponse?.data?.user?.identities?.[0]?.identity_data;
+      const identityData =
+        userResponse?.data?.user?.identities?.[0]?.identity_data;
       const temp = {
-        email : identityData!.email,
-        sub : identityData!.sub
+        email: identityData!.email,
+        sub: identityData!.sub
       }
       currentUser?.setUserData(temp)
       return identityData;
@@ -52,11 +52,11 @@ const Toolbar = () => {
     });
   }, []);
 
-  useEffect(()=>{
-    if(user?.sub){
+  useEffect(() => {
+    if (user?.sub) {
       getCart()
     }
-  },[user])
+  }, [user])
 
   async function getCart() {
     const cartData = await axiosHttp.get(`cart/${user?.sub}`)
@@ -68,7 +68,7 @@ const Toolbar = () => {
   };
   return (
     <div className=" content-grid">
-      
+
       <div className="bar h-[30px] bg-black flex items-center justify-center text-white text-sm gap-4 fullwidth">
         <div>Get 10% instant discount on order above 1499$ &#127881;</div>
         <div className="sm:flex items-center gap-2 hidden">
@@ -123,7 +123,9 @@ const Toolbar = () => {
           </Button>
 
           {user != null ? (
-            <UserProfile user={user} setUser={setUser} />
+            <>
+              <UserProfile user={user} setUser={setUser} />
+            </>
           ) : (
             <div className="flex gap-1">
               <Button
