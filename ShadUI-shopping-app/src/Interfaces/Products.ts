@@ -9,6 +9,7 @@ interface iProduct {
   Count: number;
   quantity?: number;
   isAddedToCart: boolean;
+  PriceID : string
 }
 
 export default iProduct;

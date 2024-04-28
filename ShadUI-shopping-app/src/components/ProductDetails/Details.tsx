@@ -47,7 +47,16 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
   }
 
   function buyProduct(){
-    axiosHttp.post("/create-checkout-session").then(
+    let payload = {
+      products : [
+        {
+          price_id : product?.PriceID,
+          quantity : 1
+        }
+      ]
+    }
+
+    axiosHttp.post("/create-checkout-session" , payload ).then(
       (res) => {
         window.location.href = res.data.url
       }

@@ -81,6 +81,30 @@ const Cart = () => {
     })
   }
 
+  function checkout(){
+
+    let checkoutProducts : any[] = []
+
+    cartContext?.cart.forEach((item : any)=>{
+      let product = {
+        price_id : item.Product.PriceID,
+        quantity : item.Quantity
+      }
+      checkoutProducts.push(product)
+    })
+    
+
+    let payload = {
+      products : checkoutProducts
+    }
+
+    axiosHttp.post("/create-checkout-session" , payload ).then(
+      (res) => {
+        window.location.href = res.data.url
+      }
+    )
+  }
+
   return (
     <div className="content-grid">
       <div>
@@ -171,6 +195,7 @@ const Cart = () => {
                   <p className="font-semibold">Total</p>
                   <p className="font-semibold">${totalPrice.toFixed(2)}</p>
                 </div>
+                <Button onClick={checkout}>Checkout</Button>
               </div>
             )}
           </div>
