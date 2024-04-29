@@ -7,6 +7,7 @@ import iProduct from "../Interfaces/Products";
 import Review from "../components/Review";
 import { baseURL } from "../Constants/api";
 import { useSessionStorage } from "../Custom hook/useSessionStorage";
+import axiosHttp from "../axiosHandler/axiosHandler";
 
 const slideImages = [
   {
@@ -59,7 +60,7 @@ const Dashboard = () => {
       const sessionData: iProduct[] = sessionDataString;
       setData(sessionData);
     } else {
-      axios
+      axiosHttp
         .get(`${baseURL}products/`)
         .then((data) => {
           const productsWithIsAdded = data.data.map((item: iProduct) => ({
