@@ -2,7 +2,6 @@ import Carousal from "../components/Carousal";
 import Products from "../components/Products";
 import Category from "../components/Category";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import iProduct from "../Interfaces/Products";
 import Review from "../components/Review";
 import { baseURL } from "../Constants/api";
