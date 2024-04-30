@@ -15,6 +15,8 @@ const Home = () => {
   const location = useLocation();
   const cartItems = useContext(CartContext);
   const navigate = useNavigate();
+  const [cartLength , setCartLength] = useState<number>(0)
+
   useEffect(() => {
     const updatePosition = () => {
       const right =
@@ -28,6 +30,10 @@ const Home = () => {
       window.removeEventListener("resize", updatePosition);
     };
   });
+
+  useEffect(()=>{
+    setCartLength(cartItems?.cart == undefined ? 0 : cartItems?.cart?.length)
+  },[cartItems?.cart])
 
   return (
       <ScrollArea className="flex flex-col justify-center max-h-screen">
@@ -56,9 +62,9 @@ const Home = () => {
               >
                 <BackpackIcon width={30} height={30} />
               </Button>
-              {cartItems!.cart?.length > 0 ? (
+              {cartLength > 0 ? (
                 <div className="p-1 rounded-sm absolute w-6 -top-2 -right-2 flex items-center justify-center bg-red-500 text-xs text-white">
-                  {cartItems?.cart.length}
+                  {cartLength}
                 </div>
               ) : null}
             </div>
