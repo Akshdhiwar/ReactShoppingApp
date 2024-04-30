@@ -8,7 +8,7 @@ const axiosHttp = axios.create({
 })
 
 function getAccessToken() {
-    const data = localStorage.getItem("sb-ecjbxrvyuuadxuhgzyzg-auth-token")
+    const data = localStorage.getItem("sb-jztymizzcfssbjauqsrq-auth-token")
     if (data === null) return null
     return JSON.parse(data)
 }
