@@ -22,7 +22,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
   const { toast } = useToast()
   const user = useContext(UserContext)
   function checkProductInCart(productId: string | undefined) {
-    return cart?.cart.some((ele) => ele.ID === productId);
+    return cart?.cart?.some((ele) => ele.ID === productId);
   }
 
   useEffect(() => {

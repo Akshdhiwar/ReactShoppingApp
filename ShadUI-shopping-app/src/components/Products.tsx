@@ -37,7 +37,7 @@ const Products: React.FC<ProductProps> = ({ products }) => {
   }
 
   function checkProductInCart(productId: string) {
-    return cart?.cart.some((ele) => ele.ID === productId);
+    return cart?.cart?.some((ele) => ele.ID === productId);
   }
 
   if (products === null || loading) {

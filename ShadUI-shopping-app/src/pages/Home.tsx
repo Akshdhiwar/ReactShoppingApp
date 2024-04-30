@@ -56,7 +56,7 @@ const Home = () => {
               >
                 <BackpackIcon width={30} height={30} />
               </Button>
-              {cartItems!.cart.length > 0 ? (
+              {cartItems!.cart?.length > 0 ? (
                 <div className="p-1 rounded-sm absolute w-6 -top-2 -right-2 flex items-center justify-center bg-red-500 text-xs text-white">
                   {cartItems?.cart.length}
                 </div>
