@@ -1,14 +1,14 @@
 import axios from "axios"
 import { baseURL } from "../Constants/api"
 
-
-
 const axiosHttp = axios.create({
     baseURL: baseURL
 })
 
+const url = import.meta.env.VITE_ENVIRONMENT === "Local" ? "ecjbxrvyuuadxuhgzyzg" : "jztymizzcfssbjauqsrq"
+
 function getAccessToken() {
-    const data = localStorage.getItem("sb-jztymizzcfssbjauqsrq-auth-token")
+    const data = localStorage.getItem(`sb-${url}-auth-token`)
     if (data === null) return null
     return JSON.parse(data)
 }
