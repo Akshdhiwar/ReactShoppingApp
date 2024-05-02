@@ -13,6 +13,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Cart = lazy(() => import("./pages/Cart"));
 const ProductDetails = lazy(() => import("./pages/ProductDetails"));
 const NoMatch = lazy(() => import("./components/NoMatch"));
+const OrderStatus = lazy(()=> import("./pages/OrderStatus"))
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="productlist" element={<ProductView />}></Route>
               <Route path="product/:id" element={<ProductDetails />}></Route>
               <Route path="cart" element={<Cart />}></Route>
+              <Route path="order-status" element={<OrderStatus/>}></Route>
             </Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="*" element={<NoMatch />} />
