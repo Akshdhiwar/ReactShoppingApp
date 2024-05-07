@@ -73,10 +73,10 @@ const AdminDashboard = () => {
               </CardDescription>
             </div>
             <Button asChild size="sm" className="ml-auto gap-1">
-              <a href="#">
+              <Button>
                 View All
                 <ArrowUpRight className="h-4 w-4" />
-              </a>
+              </Button>
             </Button>
           </CardHeader>
           <CardContent>
