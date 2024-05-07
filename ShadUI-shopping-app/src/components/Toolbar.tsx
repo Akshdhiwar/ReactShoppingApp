@@ -67,8 +67,7 @@ const Toolbar = () => {
     setSelected(value);
   };
   return (
-    <div className=" content-grid">
-
+    <div className="content-grid">
       <div className="bar h-[30px] bg-black flex items-center justify-center text-white text-sm gap-4 fullwidth">
         <div>Get 10% instant discount on order above 1499$ &#127881;</div>
         <div className="sm:flex items-center gap-2 hidden">
@@ -114,6 +113,7 @@ const Toolbar = () => {
           </Tabs>
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
+          <Button onClick={()=>navigate("/admin")}>Admin</Button>
           <Button
             variant={"ghost"}
             size={"icon"}

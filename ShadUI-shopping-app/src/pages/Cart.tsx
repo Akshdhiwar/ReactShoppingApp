@@ -125,13 +125,13 @@ const Cart = () => {
         </div>
         <div>
           <div className="py-4">
-            {cartContext?.cart.length == 0 ? (
+            {cartContext?.cart?.length == 0 ? (
               <div className="text-center">
                 <h1 className="text-2xl font-semibold">No items in cart</h1>
               </div>
             ) : (
               <div className="flex gap-2 flex-col">
-                {cartContext?.cart.map((ele: any) => {
+                {cartContext?.cart?.map((ele: any) => {
                   return (
                     <div>
                       <Separator className="h-[1px] bg-slate-600"></Separator>
