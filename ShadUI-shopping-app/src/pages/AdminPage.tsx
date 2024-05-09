@@ -2,7 +2,7 @@ import { Sheet, SheetContent, SheetTrigger } from '../components/ui/sheet'
 import { Button } from '../components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../components/ui/dropdown-menu'
 import { CircleUser, Menu, Package2 } from 'lucide-react'
-import AdminDashboard from '../components/Admin/AdminDashboard'
+import { Outlet } from 'react-router-dom'
 
 const AdminMenu = ["Dashboard", "Orders", "Products", "Customers", "Analytics"]
 
@@ -80,7 +80,7 @@ const AdminPage = () => {
                     </DropdownMenu>
                 </div>
             </header>
-            <AdminDashboard />
+            <Outlet></Outlet>
         </div>
     )
 
