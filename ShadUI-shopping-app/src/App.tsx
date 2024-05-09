@@ -16,6 +16,7 @@ const NoMatch = lazy(() => import("./components/NoMatch"));
 const OrderStatus = lazy(() => import("./pages/OrderStatus"))
 const AdminPage = lazy(() => import("./pages/AdminPage"))
 const AdminDashboard = lazy(() => import("./components/Admin/AdminDashboard"))
+const ProductList = lazy(() => import("./components/Admin/ProductList"))
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/admin" element={<AdminPage />}>
               <Route index element={<Navigate to="dashboard" />}></Route>
               <Route path="dashboard" element={<AdminDashboard />}></Route>
+              <Route path="products" element={<ProductList />}></Route>
             </Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="*" element={<NoMatch />} />

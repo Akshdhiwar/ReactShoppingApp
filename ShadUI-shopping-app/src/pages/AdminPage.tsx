@@ -2,32 +2,48 @@ import { Sheet, SheetContent, SheetTrigger } from '../components/ui/sheet'
 import { Button } from '../components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../components/ui/dropdown-menu'
 import { CircleUser, Menu, Package2 } from 'lucide-react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const AdminMenu = ["Dashboard", "Orders", "Products", "Customers", "Analytics"]
 
 const AdminPage = () => {
+    const [activeMenu, setActiveMenu] = useState(AdminMenu[0])
+    const location = useLocation()
+    const navigate = useNavigate()
+    console.log(location.pathname.split("/"))
+
+    useEffect(() => {
+        AdminMenu.forEach(menu => {
+            if (location.pathname.includes(menu.toLowerCase())) {
+                setActiveMenu(menu.toLowerCase());
+                return;
+            }
+        });
+    }, [location.pathname]);
+
 
     return (
         <div className='content-grid flex min-h-screen w-full flex-col'>
-            <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 fullwidth">
+            <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 fullwidth z-50">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-                    <a
-                        href="#"
-                        className="flex items-center gap-2 text-lg font-semibold md:text-base"
+                    <Button
+                        className="p-0 flex items-center gap-2 text-lg font-semibold md:text-base"
+                        variant="link"
                     >
                         <Package2 className="h-6 w-6" />
                         <span className="sr-only">Acme Inc</span>
-                    </a>
+                    </Button>
                     {
                         AdminMenu.map(ele => (
-                            <a
+                            <Button
+                                variant="link"
                                 key={ele}
-                                href="#"
-                                className="text-muted-foreground transition-colors hover:text-foreground"
+                                onClick={() => navigate(`/admin/${ele.toLowerCase()}`)}
+                                className={`p-0 transition-colors hover:text-foreground ${activeMenu === ele.toLowerCase() ? "text-foreground" : "text-muted-foreground"}`}
                             >
                                 {ele}
-                            </a>
+                            </Button>
                         ))
                     }
                 </nav>
