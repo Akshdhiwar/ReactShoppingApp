@@ -12,8 +12,8 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 
 const AdminOrderList = () => {
     return (
-        <div className="flex flex-col sm:p-6 p-4 pt-2 ">
-            <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background sm:static sm:h-auto sm:border-0 sm:bg-transparent">
+        <div className="flex flex-col p-4 pt-2 ">
+            <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
                 <Breadcrumb className="hidden md:flex">
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -65,7 +65,7 @@ const AdminOrderList = () => {
                     </div>
                 </div>
             </header>
-            <div className="flex gap-6 pt-4">
+            <main className="flex gap-6 pt-4">
                 <div className="flex flex-1 flex-col">
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="text-2xl font-bold">Orders</h1>
@@ -290,7 +290,7 @@ const AdminOrderList = () => {
                         </Pagination>
                     </CardFooter>
                 </Card>
-            </div>
+            </main>
         </div>
     )
 }
