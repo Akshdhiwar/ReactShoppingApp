@@ -20,6 +20,7 @@ const ProductList = lazy(() => import("./components/Admin/ProductList"))
 const ProductPage = lazy(() => import("./components/Admin/ProductsPage"))
 const EditProduct = lazy(() => import("./components/Admin/EditProduct"))
 const Orders = lazy(() => import("./components/Admin/AdminOrderList"))
+const CustomerList = lazy(() => import("./components/Admin/CustomerList"))
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
               <Route index element={<Navigate to="dashboard" />}></Route>
               <Route path="dashboard" element={<AdminDashboard />}></Route>
               <Route path="orders" element={<Orders />}></Route>
+              <Route path="customers" element={<CustomerList />}></Route>
               <Route path="products" element={<ProductPage />}>
                 <Route index element={<ProductList />} />
                 <Route path="edit-product" element={<EditProduct />} />
