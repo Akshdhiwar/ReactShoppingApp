@@ -9,6 +9,7 @@ const AdminMenu = ["Dashboard", "Orders", "Products", "Customers", "Analytics"]
 
 const AdminPage = () => {
     const [activeMenu, setActiveMenu] = useState(AdminMenu[0])
+    const [sheetOpen, setSheetOpen] = useState(false);
     const location = useLocation()
     const navigate = useNavigate()
     console.log(location.pathname.split("/"))
@@ -21,6 +22,11 @@ const AdminPage = () => {
             }
         });
     }, [location.pathname]);
+
+    function navigateToLinks(link: string) {
+        setSheetOpen(false);
+        navigate(`/admin/${link.toLowerCase()}`);
+    }
 
 
     return (
@@ -47,7 +53,7 @@ const AdminPage = () => {
                         ))
                     }
                 </nav>
-                <Sheet>
+                <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                     <SheetTrigger asChild>
                         <Button
                             variant="outline"
@@ -69,9 +75,10 @@ const AdminPage = () => {
                             </a>
                             {
                                 AdminMenu.map(ele => (
-                                    <a href="#" key={ele} className="hover:text-foreground text-muted-foreground">
+                                    <Button
+                                        variant="link" key={ele} onClick={() => navigateToLinks(ele)} className={`p-0 transition-colors hover:text-foreground ${activeMenu === ele.toLowerCase() ? "text-foreground" : "text-muted-foreground"}`}>
                                         {ele}
-                                    </a>
+                                    </Button>
                                 ))
                             }
                         </nav>
