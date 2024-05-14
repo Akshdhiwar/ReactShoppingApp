@@ -106,7 +106,7 @@ const CustomerList = () => {
                             </div>
                         </CardFooter>
                     </Card>
-                    <Card className="w-full max-w-md">
+                    <Card className="w-full hidden lg:block">
                         <CardContent className="space-y-6 p-6">
                             <div className="flex flex-col items-center space-y-2">
                                 <Avatar className="h-16 w-16">
