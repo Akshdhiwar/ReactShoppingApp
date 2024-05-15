@@ -12,7 +12,6 @@ const AdminPage = () => {
     const [sheetOpen, setSheetOpen] = useState(false);
     const location = useLocation()
     const navigate = useNavigate()
-    console.log(location.pathname.split("/"))
 
     useEffect(() => {
         AdminMenu.forEach(menu => {
@@ -83,6 +82,13 @@ const AdminPage = () => {
                         </nav>
                     </SheetContent>
                 </Sheet>
+                <Button
+                    className="p-0 flex items-center gap-2 text-lg font-semibold md:text-base md:hidden"
+                    variant="link"
+                >
+                    <Package2 className="h-6 w-6" />
+                    <span className="sr-only">Acme Inc</span>
+                </Button>
                 <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
