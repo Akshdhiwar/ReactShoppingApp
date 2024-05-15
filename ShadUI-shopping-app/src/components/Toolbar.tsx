@@ -17,6 +17,7 @@ const Toolbar = () => {
 
   const [selected, setSelected] = useState("dashboard");
   const [user, setUser] = useState<Userprofile | null>(null);
+  const [role , setRole] = useState<number>(2);
   const currentUser = useContext(UserContext)
   const cartContext = useContext(CartContext)
 
@@ -27,7 +28,8 @@ const Toolbar = () => {
         userResponse?.data?.user?.identities?.[0]?.identity_data;
       const temp = {
         email: identityData!.email,
-        sub: identityData!.sub
+        sub: identityData!.sub,
+        id : userResponse?.data?.user?.identities?.[0]?.user_id
       }
       currentUser?.setUserData(temp)
       return identityData;
@@ -54,6 +56,7 @@ const Toolbar = () => {
 
   useEffect(() => {
     if (user?.sub) {
+      getUserData()
       getCart()
     }
   }, [user])
@@ -61,6 +64,11 @@ const Toolbar = () => {
   async function getCart() {
     const cartData = await axiosHttp.get(`cart/${user?.sub}`)
     cartContext?.setCart(cartData.data)
+  }
+
+  async function getUserData(){
+    const userData = await axiosHttp.get(`account/${currentUser?.user?.id}`)
+    setRole(userData.data)
   }
 
   const onTabChange = (value: string) => {
@@ -113,7 +121,9 @@ const Toolbar = () => {
           </Tabs>
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
-          <Button onClick={()=>navigate("/admin")}>Admin</Button>
+          {
+            role === 1 ? <Button onClick={()=>navigate("/admin")}>Admin</Button> : null
+          }
           <Button
             variant={"ghost"}
             size={"icon"}

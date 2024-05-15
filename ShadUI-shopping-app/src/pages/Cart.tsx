@@ -20,7 +20,7 @@ const Cart = () => {
 
   useEffect(() => {
     let total = 0
-    cartContext?.cart.map((ele: any) => {
+    cartContext?.cart?.map((ele: any) => {
       total = ele.Product.Price + total
     })
     setTotalPrice(total)
