@@ -8,8 +8,20 @@ import { ChevronLeft, ChevronRight, Copy, CreditCard, FilterIcon, MoreVertical, 
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '../ui/card'
 import { Separator } from "../ui/separator"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb"
+import { useEffect, useState } from "react"
+import Order from "../../Interfaces/Order"
+import axiosHttp from "../../axiosHandler/axiosHandler"
 
 const AdminOrderList = () => {
+
+    const [order, setOrder] = useState<Order[]>([])
+
+    useEffect(() => {
+        axiosHttp.get("/order").then(res => {
+            setOrder(res.data)
+        })
+    }, [])
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <div className="flex flex-col sm:gap-4 sm:py-4">
@@ -86,11 +98,43 @@ const AdminOrderList = () => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
+                                    {
+                                        order.map(item => (
+                                            <TableRow key={item.id}>
+                                                <TableCell>
+                                                    <p className="font-medium hover:underline">
+                                                        {`#${item.id}`}
+                                                    </p>
+                                                </TableCell>
+                                                <TableCell>{item.name}</TableCell>
+                                                <TableCell>{item.created_at}</TableCell>
+                                                <TableCell>${item.total_amount}</TableCell>
+                                                <TableCell>
+                                                    <Badge>{item.status}</Badge>
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button size="icon" variant="ghost">
+                                                                <MoveHorizontalIcon className="w-4 h-4" />
+                                                                <span className="sr-only">Order actions</span>
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end">
+                                                            <DropdownMenuItem>View order</DropdownMenuItem>
+                                                            <DropdownMenuItem>Track shipment</DropdownMenuItem>
+                                                            <DropdownMenuItem>Cancel order</DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    }
                                     <TableRow>
                                         <TableCell>
-                                            <a className="font-medium hover:underline" href="#">
+                                            <p className="font-medium hover:underline">
                                                 #123
-                                            </a>
+                                            </p>
                                         </TableCell>
                                         <TableCell>John Doe</TableCell>
                                         <TableCell>May 12</TableCell>
