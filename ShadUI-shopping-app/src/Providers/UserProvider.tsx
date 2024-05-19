@@ -7,6 +7,7 @@ interface UserProviderInterface {
 interface UserProfileInterface {
     email : string | undefined
     sub : string | undefined
+    id : string | undefined
 }
 
 const UserProvider: React.FC<UserProviderInterface> = ({ children }) => {
