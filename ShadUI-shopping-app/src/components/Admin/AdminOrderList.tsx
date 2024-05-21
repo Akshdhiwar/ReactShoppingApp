@@ -10,14 +10,17 @@ import { useEffect, useState } from "react"
 import Order from "../../Interfaces/Order"
 import axiosHttp from "../../axiosHandler/axiosHandler"
 import DisplayOrder from "./DisplayOrder"
+import DateFormater from "../DateFormater"
 
 const AdminOrderList = () => {
 
     const [order, setOrder] = useState<Order[]>([])
+    const [selectedOrder, setSelectOrder] = useState<Order | undefined>(undefined)
 
     useEffect(() => {
         axiosHttp.get("/order").then(res => {
             setOrder(res.data)
+            setSelectOrder(res.data[0])
         })
     }, [])
 
@@ -106,7 +109,7 @@ const AdminOrderList = () => {
                                                     </p>
                                                 </TableCell>
                                                 <TableCell>{item.name}</TableCell>
-                                                <TableCell>{item.created_at}</TableCell>
+                                                <TableCell><DateFormater isoDate={item?.created_at} /></TableCell>
                                                 <TableCell>${item.total_amount}</TableCell>
                                                 <TableCell>
                                                     <Badge>{item.status}</Badge>
@@ -120,7 +123,7 @@ const AdminOrderList = () => {
                                                             </Button>
                                                         </DropdownMenuTrigger>
                                                         <DropdownMenuContent align="end">
-                                                            <DropdownMenuItem>View order</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => { setSelectOrder(item) }}>View order</DropdownMenuItem>
                                                             <DropdownMenuItem>Track shipment</DropdownMenuItem>
                                                             <DropdownMenuItem>Cancel order</DropdownMenuItem>
                                                         </DropdownMenuContent>
@@ -167,7 +170,7 @@ const AdminOrderList = () => {
                             </div>
                         </CardFooter>
                     </Card>
-                    <DisplayOrder/>
+                    <DisplayOrder order={selectedOrder} />
                 </main>
             </div>
         </div>

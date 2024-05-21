@@ -11,6 +11,7 @@ interface Order {
   interface OrderProducts {
     product_name : string
     quantity : number
+    price : number
   }
   
   export default Order;
