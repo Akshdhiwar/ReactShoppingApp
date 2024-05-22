@@ -1,10 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Products from "../components/Products";
 import iProduct from "../Interfaces/Products";
 import Filter from "../components/Filter";
-import { baseURL } from "../Constants/api";
 import { useSessionStorage } from "../Custom hook/useSessionStorage";
+import axiosHttp from "../axiosHandler/axiosHandler";
 
 const ProductView = () => {
   const [data, setData] = useState<iProduct[] | null>([]);
@@ -16,7 +15,7 @@ const ProductView = () => {
       const sessionData: iProduct[] = sessionDataString;
       setData(sessionData);
     } else {
-      axios.get(`${baseURL}products/`).then((data) => {
+      axiosHttp.get(`products/`).then((data) => {
         setData(data.data);
         setItem(data.data);
       });

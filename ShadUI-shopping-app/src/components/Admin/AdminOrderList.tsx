@@ -112,7 +112,7 @@ const AdminOrderList = () => {
                                                 <TableCell><DateFormater isoDate={item?.created_at} /></TableCell>
                                                 <TableCell>${item.total_amount}</TableCell>
                                                 <TableCell>
-                                                    <Badge>{item.status}</Badge>
+                                                    <Badge variant="outline">{item.status}</Badge>
                                                 </TableCell>
                                                 <TableCell className="text-right">
                                                     <DropdownMenu>
@@ -132,34 +132,6 @@ const AdminOrderList = () => {
                                             </TableRow>
                                         ))
                                     }
-                                    <TableRow>
-                                        <TableCell>
-                                            <p className="font-medium hover:underline">
-                                                #123
-                                            </p>
-                                        </TableCell>
-                                        <TableCell>John Doe</TableCell>
-                                        <TableCell>May 12</TableCell>
-                                        <TableCell>$99.99</TableCell>
-                                        <TableCell>
-                                            <Badge>Delivered</Badge>
-                                        </TableCell>
-                                        <TableCell className="text-right">
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button size="icon" variant="ghost">
-                                                        <MoveHorizontalIcon className="w-4 h-4" />
-                                                        <span className="sr-only">Order actions</span>
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem>View order</DropdownMenuItem>
-                                                    <DropdownMenuItem>Track shipment</DropdownMenuItem>
-                                                    <DropdownMenuItem>Cancel order</DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                        </TableCell>
-                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </CardContent>

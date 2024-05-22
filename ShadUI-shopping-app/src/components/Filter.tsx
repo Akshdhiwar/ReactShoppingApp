@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import iProduct from "../Interfaces/Products";
-import axios from "axios";
 import iFilter from "../Interfaces/Filter";
 import FilterByBrand from "./FilterBy/FilterByBrand";
 import { Button } from "./ui/button";
@@ -14,6 +13,7 @@ import {
 } from "@radix-ui/react-icons";
 import { useSessionStorage } from "../Custom hook/useSessionStorage";
 import { baseURL } from "../Constants/api";
+import axiosHttp from "../axiosHandler/axiosHandler";
 
 interface FilterProps {
   handleFilterData: (data: iProduct[]) => void;
@@ -39,7 +39,7 @@ const Filter: React.FC<FilterProps> = ({ handleFilterData }) => {
     const sessionData: iProduct[] = sessionDataString;
     products = sessionData;
   } else {
-    axios.get(`${baseURL}products/`).then((data) => {
+    axiosHttp.get(`${baseURL}products/`).then((data) => {
       products = data.data;
       setItem(data.data);
     });

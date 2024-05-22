@@ -5,8 +5,7 @@ import Loader from "../components/ui/Loader";
 import ProductImage from "../components/ProductDetails/ProductImage";
 import Breadcrum from "../components/ProductDetails/Breadcrum";
 import Details from "../components/ProductDetails/Details";
-import axios from "axios";
-import { baseURL } from "../Constants/api";
+import axiosHttp from "../axiosHandler/axiosHandler";
 
 export interface ProductDetailsProps {
   product: iProduct | undefined;
@@ -19,7 +18,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-      axios.get(`${baseURL}products/${id}`).then((data) => {
+      axiosHttp.get(`products/${id}`).then((data) => {
         setProduct(data.data);
         setLoading(false);
       })

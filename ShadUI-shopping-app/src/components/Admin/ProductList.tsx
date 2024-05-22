@@ -7,10 +7,20 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Badge } from "../ui/badge"
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import axiosHttp from "../../axiosHandler/axiosHandler"
+import iProduct from "../../Interfaces/Products"
 
 
 const ProductList = () => {
     const navigate = useNavigate();
+    const [products, setProduct] = useState<iProduct[] | []>([])
+    useEffect(() => {
+        axiosHttp.get(`products/`).then((result) => {
+            setProduct(result.data)
+        });
+    }, [])
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <div className="flex flex-col sm:gap-4 sm:py-4">
@@ -93,9 +103,6 @@ const ProductList = () => {
                                         <TableHead>Status</TableHead>
                                         <TableHead>Price</TableHead>
                                         <TableHead className="hidden md:table-cell">
-                                            Total Sales
-                                        </TableHead>
-                                        <TableHead className="hidden md:table-cell">
                                             Created at
                                         </TableHead>
                                         <TableHead>
@@ -104,49 +111,50 @@ const ProductList = () => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell className="hidden sm:table-cell">
-                                            <img
-                                                alt="Product image"
-                                                className="aspect-square rounded-md object-cover"
-                                                height="64"
-                                                src="/placeholder.svg"
-                                                width="64"
-                                            />
-                                        </TableCell>
-                                        <TableCell className="font-medium">
-                                            Laser Lemonade Machine
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="outline">Draft</Badge>
-                                        </TableCell>
-                                        <TableCell>$499.99</TableCell>
-                                        <TableCell className="hidden md:table-cell">
-                                            25
-                                        </TableCell>
-                                        <TableCell className="hidden md:table-cell">
-                                            2023-07-12 10:42 AM
-                                        </TableCell>
-                                        <TableCell>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button
-                                                        aria-haspopup="true"
-                                                        size="icon"
-                                                        variant="ghost"
-                                                    >
-                                                        <MoreHorizontal className="h-4 w-4" />
-                                                        <span className="sr-only">Toggle menu</span>
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                    <DropdownMenuItem onClick={()=>navigate("/admin/products/edit-product")} >Edit</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                        </TableCell>
-                                    </TableRow>
+                                    {
+                                        products.map((product) => (
+                                            <TableRow>
+                                                <TableCell className="hidden sm:table-cell">
+                                                    <img
+                                                        alt="Product image"
+                                                        className="aspect-square rounded-md object-cover"
+                                                        height="64"
+                                                        src={product.Image}
+                                                        width="64"
+                                                    />
+                                                </TableCell>
+                                                <TableCell className="font-medium">
+                                                    {product.Title}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Badge variant="outline">Active</Badge>
+                                                </TableCell>
+                                                <TableCell>${product.Price}</TableCell>
+                                                <TableCell className="hidden md:table-cell">
+                                                    2023-07-12 10:42 AM
+                                                </TableCell>
+                                                <TableCell>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button
+                                                                aria-haspopup="true"
+                                                                size="icon"
+                                                                variant="ghost"
+                                                            >
+                                                                <MoreHorizontal className="h-4 w-4" />
+                                                                <span className="sr-only">Toggle menu</span>
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end">
+                                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                            <DropdownMenuItem onClick={() => navigate("/admin/products/edit-product")} >Edit</DropdownMenuItem>
+                                                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    }
                                 </TableBody>
                             </Table>
                         </CardContent>
