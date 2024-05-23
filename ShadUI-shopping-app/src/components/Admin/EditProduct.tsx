@@ -8,8 +8,22 @@ import { ChevronLeft, PlusCircle, Upload } from "lucide-react"
 import { Label } from "../ui/label"
 import { Textarea } from "../ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
+import axiosHttp from "../../axiosHandler/axiosHandler"
 
 const EditProduct = () => {
+
+    const { id } = useParams();
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        axiosHttp(`/admin/product/${id}`).then(result=>{
+            console.log(result.data)
+        })
+    }, [])
+
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -37,7 +51,7 @@ const EditProduct = () => {
                 <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                     <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
                         <div className="flex items-center gap-4">
-                            <Button variant="outline" size="icon" className="h-7 w-7">
+                            <Button variant="outline" size="icon" className="h-7 w-7" onClick={()=>{navigate(-1)}}>
                                 <ChevronLeft className="h-4 w-4" />
                                 <span className="sr-only">Back</span>
                             </Button>

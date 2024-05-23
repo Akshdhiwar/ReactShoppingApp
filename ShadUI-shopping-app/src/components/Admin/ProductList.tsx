@@ -148,7 +148,7 @@ const ProductList = () => {
                                                         </DropdownMenuTrigger>
                                                         <DropdownMenuContent align="end">
                                                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                            <DropdownMenuItem onClick={() => navigate("/admin/products/edit-product")} >Edit</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => navigate(`/admin/products/edit-product/${product.ID}`)} >Edit</DropdownMenuItem>
                                                             <DropdownMenuItem>Delete</DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
