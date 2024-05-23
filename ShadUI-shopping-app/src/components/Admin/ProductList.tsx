@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axiosHttp from "../../axiosHandler/axiosHandler"
 import iProduct from "../../Interfaces/Products"
+import DateFormater from "../DateFormater"
 
 
 const ProductList = () => {
@@ -131,7 +132,7 @@ const ProductList = () => {
                                                 </TableCell>
                                                 <TableCell>${product.Price}</TableCell>
                                                 <TableCell className="hidden md:table-cell">
-                                                    2023-07-12 10:42 AM
+                                                    <DateFormater isoDate={product.CreatedAt}></DateFormater>
                                                 </TableCell>
                                                 <TableCell>
                                                     <DropdownMenu>
