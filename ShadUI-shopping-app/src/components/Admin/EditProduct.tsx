@@ -9,25 +9,62 @@ import { Label } from "../ui/label"
 import { Textarea } from "../ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useNavigate, useParams } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useReducer } from "react"
 import axiosHttp from "../../axiosHandler/axiosHandler"
+
+
+function reducer(state: any, action: any) {
+    switch (action.type) {
+        case 'name': {
+            return {
+                ...state,
+                Title: action.name,
+            }
+        }
+            break
+        case 'data': {
+            return {
+                ...action.data
+            }
+        }
+    }
+}
+
+let initialData = {
+    Title: '',
+};
 
 const EditProduct = () => {
 
     const { id } = useParams();
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        axiosHttp(`/admin/product/${id}`).then(result=>{
-            console.log(result.data)
-        })
+    const [state, dispatch] = useReducer(reducer, initialData)
+
+    useEffect(() => {
+        getProductData()
     }, [])
 
+    function getProductData() {
+        axiosHttp(`/admin/product/${id}`).then(result => {
+            dispatch({
+                type: 'data',
+                data: result.data
+            })
+        })
+    }
+
+    function updateTitle(event:any){
+        dispatch({
+            type : 'name',
+            name : event.target.value
+        })
+    }
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
-            <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-                <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+            <div className="flex flex-col sm:gap-4 sm:py-4 md:pl-14">
+                <header className=" hidden top-0 z-30 sm:flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
                     <Breadcrumb className="hidden md:flex">
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -51,12 +88,12 @@ const EditProduct = () => {
                 <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                     <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
                         <div className="flex items-center gap-4">
-                            <Button variant="outline" size="icon" className="h-7 w-7" onClick={()=>{navigate(-1)}}>
+                            <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => { navigate(-1) }}>
                                 <ChevronLeft className="h-4 w-4" />
                                 <span className="sr-only">Back</span>
                             </Button>
-                            <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                                Pro Controller
+                            <h1 className="whitespace-nowrap text-xl font-semibold tracking-tight overflow-hidden w-[270px] sm:w-[50%] truncate">
+                                {state.Title}
                             </h1>
                             <Badge variant="outline" className="ml-auto sm:ml-0">
                                 In stock
@@ -85,14 +122,15 @@ const EditProduct = () => {
                                                     id="name"
                                                     type="text"
                                                     className="w-full"
-                                                    defaultValue="Gamer Gear Pro Controller"
+                                                    defaultValue={state.Title}
+                                                    onInput={updateTitle}
                                                 />
                                             </div>
                                             <div className="grid gap-3">
                                                 <Label htmlFor="description">Description</Label>
                                                 <Textarea
                                                     id="description"
-                                                    defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nunc nisl nec nunc."
+                                                    defaultValue={state.Description}
                                                     className="min-h-32"
                                                 />
                                             </div>
@@ -138,7 +176,7 @@ const EditProduct = () => {
                                                         <Input
                                                             id="price-1"
                                                             type="number"
-                                                            defaultValue="99.99"
+                                                            defaultValue={state.Price}
                                                         />
                                                     </TableCell>
                                                     {/* <TableCell>
