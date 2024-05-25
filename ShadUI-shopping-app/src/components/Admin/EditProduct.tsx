@@ -9,8 +9,9 @@ import { Label } from "../ui/label"
 import { Textarea } from "../ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useNavigate, useParams } from "react-router-dom"
-import { useEffect, useReducer } from "react"
+import { useEffect, useReducer, useState } from "react"
 import axiosHttp from "../../axiosHandler/axiosHandler"
+import iProduct from "../../Interfaces/Products"
 
 
 function reducer(state: any, action: any) {
@@ -27,26 +28,83 @@ function reducer(state: any, action: any) {
                 ...action.data
             }
         }
+        case 'description': {
+            return {
+                ...state,
+                Description: action.description
+            }
+        }
+        case 'price': {
+            return {
+                ...state,
+                Price: action.price
+            }
+        }
     }
 }
 
 let initialData = {
     Title: '',
+    Description: '',
+    Price: 0
 };
 
 const EditProduct = () => {
 
     const { id } = useParams();
     const navigate = useNavigate()
-
     const [state, dispatch] = useReducer(reducer, initialData)
+    const [originalProduct , setOriginalProduct] = useState<iProduct | undefined>(undefined)
 
+
+    function saveProduct() {
+        if(!originalProduct) return
+        // Destructure properties for a clearer comparison
+        const { Title, Description, Price, Category, Image, ID } = state;
+
+        // Check if any of the fields have changed
+        const hasChanged = (
+            Title !== originalProduct.Title ||
+            Description !== originalProduct.Description ||
+            Price !== originalProduct.Price ||
+            Category !== originalProduct.Category ||
+            Image !== originalProduct.Image
+        );
+
+        // If nothing has changed, return early
+        if (!hasChanged) {
+            return;
+        }
+
+        // Create the payload object
+        const payload = {
+            Title,
+            Description,
+            Price,
+            Category,
+            Image,
+        };
+
+        // Send the PUT request to update the product
+        axiosHttp.put(`products/${ID}`, payload)
+            .then(result => {
+                console.log(result.data);
+            })
+            .catch(error => {
+                console.error('Error updating the product:', error);
+            });
+    }
     useEffect(() => {
         getProductData()
     }, [])
 
+    useEffect(() => {
+        console.log("render")
+    })
+
     function getProductData() {
         axiosHttp(`/admin/product/${id}`).then(result => {
+            setOriginalProduct(result.data)
             dispatch({
                 type: 'data',
                 data: result.data
@@ -54,10 +112,24 @@ const EditProduct = () => {
         })
     }
 
-    function updateTitle(event:any){
+    function updateTitle(event: any) {
         dispatch({
-            type : 'name',
-            name : event.target.value
+            type: 'name',
+            name: event.target.value
+        })
+    }
+
+    function updateDescription(event: any) {
+        dispatch({
+            type: 'description',
+            description: event.target.value
+        })
+    }
+
+    function updatePrice(event: any) {
+        dispatch({
+            type: 'price',
+            price: event.target.value
         })
     }
 
@@ -102,7 +174,7 @@ const EditProduct = () => {
                                 <Button variant="outline" size="sm">
                                     Discard
                                 </Button>
-                                <Button size="sm">Save Product</Button>
+                                <Button size="sm" onClick={saveProduct}>Save Product</Button>
                             </div>
                         </div>
                         <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -132,6 +204,7 @@ const EditProduct = () => {
                                                     id="description"
                                                     defaultValue={state.Description}
                                                     className="min-h-32"
+                                                    onChange={updateDescription}
                                                 />
                                             </div>
                                         </div>
@@ -177,6 +250,7 @@ const EditProduct = () => {
                                                             id="price-1"
                                                             type="number"
                                                             defaultValue={state.Price}
+                                                            onChange={updatePrice}
                                                         />
                                                     </TableCell>
                                                     {/* <TableCell>
@@ -289,7 +363,7 @@ const EditProduct = () => {
                                                 alt="Product image"
                                                 className="aspect-square w-full rounded-md object-cover"
                                                 height="300"
-                                                src="/placeholder.svg"
+                                                src={state.Image}
                                                 width="300"
                                             />
                                             <div className="grid grid-cols-3 gap-2">
@@ -298,7 +372,7 @@ const EditProduct = () => {
                                                         alt="Product image"
                                                         className="aspect-square w-full rounded-md object-cover"
                                                         height="84"
-                                                        src="/placeholder.svg"
+                                                        src={state.Image}
                                                         width="84"
                                                     />
                                                 </button>
@@ -307,7 +381,7 @@ const EditProduct = () => {
                                                         alt="Product image"
                                                         className="aspect-square w-full rounded-md object-cover"
                                                         height="84"
-                                                        src="/placeholder.svg"
+                                                        src={state.Image}
                                                         width="84"
                                                     />
                                                 </button>
@@ -339,7 +413,7 @@ const EditProduct = () => {
                             <Button variant="outline" size="sm">
                                 Discard
                             </Button>
-                            <Button size="sm">Save Product</Button>
+                            <Button size="sm" onClick={saveProduct}>Save Product</Button>
                         </div>
                     </div>
                 </main>

@@ -11,15 +11,15 @@ const Breadcrum: React.FC<BreadcrumProps> = ({ productTitle }) => {
   let breadcrums = location.pathname.split("/").filter(Boolean);
   breadcrums = breadcrums.filter((ele) => isNaN(Number(ele)));
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 ">
       <Link className="hover:underline" to="/dashboard">
         Home
       </Link>
       {breadcrums.map((link) => {
         return (
-          <div className="flex items-center gap-2">
+          <div className="sm:flex items-center gap-2 hidden">
             <ChevronRightIcon key={link}></ChevronRightIcon>
-            <p className="hover:underline capitalize" key={link}>
+            <p className="hover:underline capitalize truncate max-w-[100px]" key={link}>
               {link}
             </p>
           </div>
@@ -28,7 +28,7 @@ const Breadcrum: React.FC<BreadcrumProps> = ({ productTitle }) => {
       {productTitle && (
         <div className="flex items-center gap-1">
           <ChevronRightIcon></ChevronRightIcon>
-          <p className="hover:underline capitalize truncate sm:max-w-full max-w-[180px]">
+          <p className="hover:underline capitalize truncate sm:max-w-full max-w-[280px]">
             {productTitle}
           </p>
         </div>
