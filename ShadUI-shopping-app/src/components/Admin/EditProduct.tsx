@@ -164,7 +164,7 @@ const EditProduct = () => {
                                 <ChevronLeft className="h-4 w-4" />
                                 <span className="sr-only">Back</span>
                             </Button>
-                            <h1 className="whitespace-nowrap text-xl font-semibold tracking-tight overflow-hidden w-[270px] sm:w-[50%] truncate">
+                            <h1 className="whitespace-nowrap text-xl font-semibold tracking-tight overflow-hidden w-[250px] sm:w-[50%] truncate">
                                 {state.Title}
                             </h1>
                             <Badge variant="outline" className="ml-auto sm:ml-0">
