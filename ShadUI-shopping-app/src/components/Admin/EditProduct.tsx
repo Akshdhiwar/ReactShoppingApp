@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useReducer, useState } from "react"
 import axiosHttp from "../../axiosHandler/axiosHandler"
 import iProduct from "../../Interfaces/Products"
+import { useToast } from "../ui/use-toast"
 
 
 function reducer(state: any, action: any) {
@@ -40,13 +41,20 @@ function reducer(state: any, action: any) {
                 Price: action.price
             }
         }
+        case 'stock': {
+            return {
+                ...state,
+                Stock: action.stock
+            }
+        }
     }
 }
 
 let initialData = {
     Title: '',
     Description: '',
-    Price: 0
+    Price: 0,
+    Stock: 0,
 };
 
 const EditProduct = () => {
@@ -54,13 +62,19 @@ const EditProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     const [state, dispatch] = useReducer(reducer, initialData)
-    const [originalProduct , setOriginalProduct] = useState<iProduct | undefined>(undefined)
+    const [originalProduct, setOriginalProduct] = useState<iProduct | undefined>(undefined)
+    const [stock, setStock] = useState<number>(0)
+    const { toast } = useToast();
+
+    useEffect(() => {
+        console.log(state)
+    })
 
 
     function saveProduct() {
-        if(!originalProduct) return
+        if (!originalProduct) return
         // Destructure properties for a clearer comparison
-        const { Title, Description, Price, Category, Image, ID } = state;
+        const { Title, Description, Price, Category, Image, ID, Stock } = state;
 
         // Check if any of the fields have changed
         const hasChanged = (
@@ -70,6 +84,10 @@ const EditProduct = () => {
             Category !== originalProduct.Category ||
             Image !== originalProduct.Image
         );
+
+        if (stock !== Stock) {
+            axiosHttp.post(`/stock/update/${id}`, { unit: Number(Stock) })
+        }
 
         // If nothing has changed, return early
         if (!hasChanged) {
@@ -85,10 +103,20 @@ const EditProduct = () => {
             Image,
         };
 
+        originalProduct.Title = Title;
+        originalProduct.Description = Description;
+        originalProduct.Price = Price;
+        originalProduct.Category = Category;
+        originalProduct.Image = Image;
+
         // Send the PUT request to update the product
         axiosHttp.put(`products/${ID}`, payload)
             .then(result => {
                 console.log(result.data);
+                toast({
+                    title: "Success",
+                    description: "Saved product details successfully"
+                })
             })
             .catch(error => {
                 console.error('Error updating the product:', error);
@@ -98,16 +126,22 @@ const EditProduct = () => {
         getProductData()
     }, [])
 
-    useEffect(() => {
-        console.log("render")
-    })
-
-    function getProductData() {
+    async function getProductData() {
         axiosHttp(`/admin/product/${id}`).then(result => {
             setOriginalProduct(result.data)
             dispatch({
                 type: 'data',
                 data: result.data
+            })
+        }).then(() => getProductStock())
+    }
+
+    function getProductStock() {
+        axiosHttp(`/stock/${id}`).then(result => {
+            setStock(result.data)
+            dispatch({
+                type: 'stock',
+                stock: result.data
             })
         })
     }
@@ -130,6 +164,13 @@ const EditProduct = () => {
         dispatch({
             type: 'price',
             price: event.target.value
+        })
+    }
+
+    function updateStock(event: any) {
+        dispatch({
+            type: 'stock',
+            stock: event.target.value
         })
     }
 
@@ -224,7 +265,7 @@ const EditProduct = () => {
                                                     <TableHead className="w-[100px]">SKU</TableHead>
                                                     <TableHead>Stock</TableHead>
                                                     <TableHead>Price</TableHead>
-                                                    <TableHead className="w-[100px]">Size</TableHead>
+                                                    {/* <TableHead className="w-[100px]">Size</TableHead> */}
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
@@ -239,7 +280,8 @@ const EditProduct = () => {
                                                         <Input
                                                             id="stock-1"
                                                             type="number"
-                                                            defaultValue="100"
+                                                            value={state.Stock}
+                                                            onChange={updateStock}
                                                         />
                                                     </TableCell>
                                                     <TableCell>
@@ -249,7 +291,7 @@ const EditProduct = () => {
                                                         <Input
                                                             id="price-1"
                                                             type="number"
-                                                            defaultValue={state.Price}
+                                                            value={state.Price}
                                                             onChange={updatePrice}
                                                         />
                                                     </TableCell>
