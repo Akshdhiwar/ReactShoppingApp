@@ -14,7 +14,6 @@ import axiosHttp from "../../axiosHandler/axiosHandler"
 import iProduct from "../../Interfaces/Products"
 import { useToast } from "../ui/use-toast"
 
-
 function reducer(state: any, action: any) {
     switch (action.type) {
         case 'name': {
@@ -23,7 +22,6 @@ function reducer(state: any, action: any) {
                 Title: action.name,
             }
         }
-            break
         case 'data': {
             return {
                 ...action.data
