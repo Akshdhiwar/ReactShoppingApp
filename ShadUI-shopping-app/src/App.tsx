@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Loader from "./components/ui/Loader";
 import CartProvider from "./Providers/CartProvider";
 import UserProvider from "./Providers/UserProvider";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ProductView = lazy(() => import("./pages/ProductView"));
@@ -36,7 +37,7 @@ function App() {
               <Route path="cart" element={<Cart />}></Route>
               <Route path="order-status" element={<OrderStatus />}></Route>
             </Route>
-            <Route path="/admin" element={<AdminPage />}>
+            <Route path="/admin" element={<ProtectedRoute><AdminPage></AdminPage></ProtectedRoute>}>
               <Route index element={<Navigate to="dashboard" />}></Route>
               <Route path="dashboard" element={<AdminDashboard />}></Route>
               <Route path="orders" element={<Orders />}></Route>

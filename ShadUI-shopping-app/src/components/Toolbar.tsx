@@ -122,7 +122,7 @@ const Toolbar = () => {
         </div>
         <div className="flex items-center justify-center my-2 order-2 sm:order-3 gap-1">
           {
-            role === 1 ? <Button onClick={()=>navigate("/admin")}>Admin</Button> : null
+            user && role === 1 && <Button onClick={()=>navigate("/admin")}>Admin</Button>
           }
           <Button
             variant={"ghost"}
