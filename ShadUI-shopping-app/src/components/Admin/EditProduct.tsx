@@ -13,6 +13,7 @@ import { useEffect, useReducer, useState } from "react"
 import axiosHttp from "../../axiosHandler/axiosHandler"
 import iProduct from "../../Interfaces/Products"
 import { useToast } from "../ui/use-toast"
+import DeleteProduct from "./DeleteProduct"
 
 function reducer(state: any, action: any) {
     switch (action.type) {
@@ -80,12 +81,9 @@ const EditProduct = () => {
             Description !== originalProduct.Description ||
             Price !== originalProduct.Price ||
             Category !== originalProduct.Category ||
-            Image !== originalProduct.Image
+            Image !== originalProduct.Image ||
+            Stock !== stock
         );
-
-        if (stock !== Stock) {
-            axiosHttp.post(`/stock/update/${id}`, { unit: Number(Stock) })
-        }
 
         // If nothing has changed, return early
         if (!hasChanged) {
@@ -109,12 +107,17 @@ const EditProduct = () => {
 
         // Send the PUT request to update the product
         axiosHttp.put(`products/${ID}`, payload)
-            .then(result => {
-                console.log(result.data);
+            .then(() => {
+                if (Stock !== stock) {
+                    axiosHttp.post(`/stock/update/${id}`, {
+                        unit: Number(Stock)
+                    })
+                }
                 toast({
                     title: "Success",
                     description: "Saved product details successfully"
                 })
+                navigate(-1);
             })
             .catch(error => {
                 console.error('Error updating the product:', error);
@@ -210,9 +213,7 @@ const EditProduct = () => {
                                 In stock
                             </Badge>
                             <div className="hidden items-center gap-2 md:ml-auto md:flex">
-                                <Button variant="outline" size="sm">
-                                    Discard
-                                </Button>
+                                <DeleteProduct type="button" buttonName="Discard" id={originalProduct?.ID!}></DeleteProduct>
                                 <Button size="sm" onClick={saveProduct}>Save Product</Button>
                             </div>
                         </div>

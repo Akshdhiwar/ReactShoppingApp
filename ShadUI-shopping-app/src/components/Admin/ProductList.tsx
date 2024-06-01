@@ -1,7 +1,7 @@
-import { ListFilter, MoreHorizontal, PlusCircle, Search } from "lucide-react"
+import { Edit, ListFilter, PlusCircle, Search } from "lucide-react"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb"
 import { Input } from "../ui/input"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
@@ -13,19 +13,26 @@ import iProduct from "../../Interfaces/Products"
 import DateFormater from "../DateFormater"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import AddProduct from "./AddProduct"
+import DeleteProduct from "./DeleteProduct"
 
 
 const ProductList = () => {
     const navigate = useNavigate();
     const [products, setProduct] = useState<iProduct[] | []>([])
+    const [sheetOpen, setSheetOpen] = useState(false);
     useEffect(() => {
+        if(sheetOpen) return
+        getProducts()
+    }, [sheetOpen])
+
+    function getProducts(){
         axiosHttp.get(`products/`).then((result) => {
             setProduct(result.data)
         });
-    }, [])
+    }
 
     return (
-        <Sheet>
+        <Sheet  open={sheetOpen} onOpenChange={setSheetOpen}>
             <div className="flex min-h-screen w-full flex-col bg-muted/40">
                 <div className="flex flex-col sm:gap-4 sm:py-4">
                     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -80,7 +87,7 @@ const ProductList = () => {
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                                 <SheetTrigger asChild>
-                                    <Button size="sm" className="gap-1">
+                                    <Button size="sm" className="gap-1" onClick={()=>setSheetOpen(true)}>
                                         <PlusCircle className="h-3.5 w-3.5" />
                                         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                             Add Product
@@ -140,23 +147,10 @@ const ProductList = () => {
                                                         <DateFormater isoDate={product.CreatedAt}></DateFormater>
                                                     </TableCell>
                                                     <TableCell>
-                                                        <DropdownMenu>
-                                                            <DropdownMenuTrigger asChild>
-                                                                <Button
-                                                                    aria-haspopup="true"
-                                                                    size="icon"
-                                                                    variant="ghost"
-                                                                >
-                                                                    <MoreHorizontal className="h-4 w-4" />
-                                                                    <span className="sr-only">Toggle menu</span>
-                                                                </Button>
-                                                            </DropdownMenuTrigger>
-                                                            <DropdownMenuContent align="end">
-                                                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                                <DropdownMenuItem onClick={() => navigate(`/admin/products/edit-product/${product.ID}`)} >Edit</DropdownMenuItem>
-                                                                <DropdownMenuItem>Delete</DropdownMenuItem>
-                                                            </DropdownMenuContent>
-                                                        </DropdownMenu>
+                                                        <div className="flex items-center gap-2">
+                                                            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => navigate(`/admin/products/edit-product/${product.ID}`)} ><Edit className="h-4 w-4"></Edit></Button>
+                                                            <DeleteProduct buttonName="Delete" type="icon" id={product.ID}></DeleteProduct>
+                                                        </div>
                                                     </TableCell>
                                                 </TableRow>
                                             ))
@@ -175,7 +169,7 @@ const ProductList = () => {
                 </div>
             </div>
             <SheetContent className="w-[450px]">
-                <AddProduct/>
+                <AddProduct closeSheet={setSheetOpen} />
             </SheetContent>
         </Sheet>
     )

@@ -23,8 +23,8 @@ const AdminPage = () => {
     }, [location.pathname]);
 
     function navigateToLinks(link: string) {
-        setSheetOpen(false);
         navigate(`/admin/${link.toLowerCase()}`);
+        setSheetOpen(false);
     }
 
     return (

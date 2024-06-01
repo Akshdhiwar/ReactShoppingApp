@@ -1,6 +1,10 @@
-import { useEffect, useReducer } from 'react'
+import { Dispatch, SetStateAction, useEffect, useReducer } from 'react'
 import { Button } from '../ui/button'
 import axiosHttp from '../../axiosHandler/axiosHandler'
+
+interface AddProductProps{
+    closeSheet : Dispatch<SetStateAction<boolean>>;
+}
 
 const initialState = {
     Title: '',
@@ -33,7 +37,7 @@ function reducer(state: any, action: any) {
     }
 }
 
-const AddProduct = () => {
+const AddProduct:React.FC<AddProductProps> = ({closeSheet}) => {
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -69,8 +73,8 @@ const AddProduct = () => {
             price : Number(state.Price),
             category : state.Category,
             image : state.Image
-        }).then(res => {
-            console.log(res.data)
+        }).then(() => {
+            closeSheet(false)
         })
     }
 
