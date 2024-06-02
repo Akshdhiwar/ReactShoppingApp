@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import iProduct from "../../Interfaces/Products";
 import StarRating from "./StarRating";
 import { CheckCircledIcon, HeartFilledIcon } from "@radix-ui/react-icons";
@@ -19,6 +19,7 @@ interface DetailsProps {
 
 const Details: React.FC<DetailsProps> = ({ product }) => {
   const cart = useContext(CartContext);
+  const [productQuantity , setProductQuantity] = useState(1)
   const { toast } = useToast()
   const user = useContext(UserContext)
   function checkProductInCart(productId: string | undefined) {
@@ -51,7 +52,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
       products : [
         {
           price_id : product?.PriceID,
-          quantity : 1
+          quantity : productQuantity
         }
       ]
     }
@@ -96,7 +97,7 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
           <p>price per unit</p>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <Quantity product={product} />
+          <Quantity setQuantity={setProductQuantity} quantity={productQuantity} />
           <div className="flex gap-2 sm:flex-row flex-col">
             <Button className="flex-1" onClick={buyProduct}>Buy</Button>
             {checkProductInCart(product?.ID) ? (
