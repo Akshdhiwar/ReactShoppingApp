@@ -12,6 +12,7 @@ import { baseURL } from "../../Constants/api";
 import { useToast } from '../../components/ui/use-toast'
 import { UserContext } from "../../Context/UserContext";
 import axiosHttp from "../../axiosHandler/axiosHandler";
+import { useNavigate } from "react-router-dom";
 
 interface DetailsProps {
   product: iProduct | undefined;
@@ -19,9 +20,12 @@ interface DetailsProps {
 
 const Details: React.FC<DetailsProps> = ({ product }) => {
   const cart = useContext(CartContext);
-  const [productQuantity , setProductQuantity] = useState(1)
+  const [productQuantity, setProductQuantity] = useState(1)
   const { toast } = useToast()
   const user = useContext(UserContext)
+  const navigate = useNavigate()
+
+
   function checkProductInCart(productId: string | undefined) {
     return cart?.cart?.some((ele) => ele.ID === productId);
   }
@@ -47,17 +51,22 @@ const Details: React.FC<DetailsProps> = ({ product }) => {
     cart?.addToCart(product!);
   }
 
-  function buyProduct(){
+  function buyProduct() {
+
+    if(user?.user === undefined){
+      navigate("/login")
+    }
+
     let payload = {
-      products : [
+      products: [
         {
-          price_id : product?.PriceID,
-          quantity : productQuantity
+          price_id: product?.PriceID,
+          quantity: productQuantity
         }
       ]
     }
 
-    axiosHttp.post("/create-checkout-session" , payload ).then(
+    axiosHttp.post("/create-checkout-session", payload).then(
       (res) => {
         window.location.href = res.data.url
       }
