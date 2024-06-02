@@ -1,19 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosHttp from "../axiosHandler/axiosHandler";
-import { UserContext } from "../Context/UserContext";
+import { useSessionStorage } from "../Custom hook/useSessionStorage";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-    const currentUser = useContext(UserContext);
     const [role, setRole] = useState<boolean>(false);
+    const {getItem} = useSessionStorage("user")
+    const [user] = useState(getItem)
+    
 
     useEffect(() => {
         async function getUserData() {
             try {
-                const userData = await axiosHttp.get(`account/${currentUser?.user?.id}`);
+                const userData = await axiosHttp.get(`account/${user?.id}`);
                 setRole(userData.data === 1);
             } catch (error) {
                 console.error("Error fetching user data:", error);
@@ -21,7 +23,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             }
         }
         getUserData();
-    }, [currentUser]);
+        console.log("protected route rrender");
+        
+    }, [user]);
 
 
     return role ? <>{children}</> : <Unauthorized />;

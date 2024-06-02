@@ -9,11 +9,13 @@ import UserProfile from "./UserProfile";
 import { UserContext } from "../Context/UserContext";
 import axiosHttp from "../axiosHandler/axiosHandler";
 import { CartContext } from "../Context/CartContext";
+import { useSessionStorage } from "../Custom hook/useSessionStorage";
 
 const Toolbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const routes = ["/dashboard", "/productlist"];
+  const {setItem} = useSessionStorage("user")
 
   const [selected, setSelected] = useState("dashboard");
   const [user, setUser] = useState<Userprofile | null>(null);
@@ -31,6 +33,7 @@ const Toolbar = () => {
         sub: identityData!.sub,
         id : userResponse?.data?.user?.identities?.[0]?.user_id
       }
+      setItem(temp)
       currentUser?.setUserData(temp)
       return identityData;
     } catch (error) {
