@@ -81,24 +81,24 @@ const Cart = () => {
     })
   }
 
-  function checkout(){
+  function checkout() {
 
-    let checkoutProducts : any[] = []
+    let checkoutProducts: any[] = []
 
-    cartContext?.cart.forEach((item : any)=>{
+    cartContext?.cart.forEach((item: any) => {
       let product = {
-        price_id : item.Product.PriceID,
-        quantity : item.Quantity
+        price_id: item.Product.PriceID,
+        quantity: item.Quantity
       }
       checkoutProducts.push(product)
     })
-    
+
 
     let payload = {
-      products : checkoutProducts
+      products: checkoutProducts
     }
 
-    axiosHttp.post("/create-checkout-session" , payload ).then(
+    axiosHttp.post("/create-checkout-session", payload).then(
       (res) => {
         window.location.href = res.data.url
       }
@@ -195,7 +195,9 @@ const Cart = () => {
                   <p className="font-semibold">Total</p>
                   <p className="font-semibold">${totalPrice.toFixed(2)}</p>
                 </div>
-                <Button onClick={checkout}>Checkout</Button>
+                <div className="flex justify-end">
+                  <Button onClick={checkout}>Checkout</Button>
+                </div>
               </div>
             )}
           </div>
