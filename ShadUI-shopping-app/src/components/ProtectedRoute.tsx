@@ -23,7 +23,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             }
         }
         getUserData();
-        console.log("protected route rrender");
         
     }, [user]);
 
