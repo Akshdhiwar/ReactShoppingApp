@@ -22,6 +22,7 @@ const ProductPage = lazy(() => import("./components/Admin/ProductsPage"))
 const EditProduct = lazy(() => import("./components/Admin/EditProduct"))
 const Orders = lazy(() => import("./components/Admin/AdminOrderList"))
 const CustomerList = lazy(() => import("./components/Admin/CustomerList"))
+const UserProfile = lazy(() => import("./components/UserProfileSection"))
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="product/:id" element={<ProductDetails />}></Route>
               <Route path="cart" element={<Cart />}></Route>
               <Route path="order-status" element={<OrderStatus />}></Route>
+              <Route path="user-profile" element={<UserProfile />}></Route>
             </Route>
             <Route path="/admin" element={<ProtectedRoute><AdminPage></AdminPage></ProtectedRoute>}>
               <Route index element={<Navigate to="dashboard" />}></Route>

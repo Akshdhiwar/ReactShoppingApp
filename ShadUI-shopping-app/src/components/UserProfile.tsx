@@ -12,6 +12,7 @@ import { Button } from "./ui/button";
 import { DropdownMenuShortcut } from "./ui/dropdown-menu";
 import Userprofile from "../Interfaces/UserProfile";
 import { supabase } from "../Constants/supabase";
+import { useNavigate } from "react-router-dom";
 
 interface UserProfileProps {
   user: Userprofile;
@@ -19,6 +20,9 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user, setUser }) => {
+
+  const navigate = useNavigate()
+
   function logout() {
     supabase.auth.signOut();
     setUser(null);
@@ -50,7 +54,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, setUser }) => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={()=>navigate("/user-profile")}>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
