@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Avatar, AvatarFallback } from "./ui/avatar"
 import { Separator } from "./ui/separator"
 import { Label } from "./ui/label"
@@ -6,12 +6,12 @@ import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import { Badge } from "./ui/badge"
+import { supabase } from "../Constants/supabase"
+import Userprofile from "../Interfaces/UserProfile"
+import { UserContext } from "../Context/UserContext"
 
 const UserProfileSection = () => {
     const user = {
-        name: "Sophia Anderson",
-        email: "sophia@example.com",
-        profilePicture: "/placeholder-user.jpg",
         orders: [
             {
                 id: "ORDER001",
@@ -96,6 +96,16 @@ const UserProfileSection = () => {
             },
         ],
     }
+
+    const currentUser = useContext(UserContext)
+    const [userData , setUser] = useState<Userprofile | null>(null);
+
+    useEffect(() => {
+        getUser().then((res: Userprofile | any) => {
+          setUser(res);
+        });
+      }, [currentUser?.user]);
+
     const [editingPersonalInfo, setEditingPersonalInfo] = useState(false)
     const [editingShippingAddress, setEditingShippingAddress] = useState(false)
     const [editingPaymentMethods, setEditingPaymentMethods] = useState(false)
@@ -114,18 +124,33 @@ const UserProfileSection = () => {
     const handleReviewSubmit = (review: any) => {
         console.log("New review:", review)
     }
+
+    async function getUser() {
+        try {
+            const userResponse = await supabase.auth.getUser();
+            const identityData =
+                userResponse?.data?.user?.identities?.[0]?.identity_data;
+            return identityData;
+        } catch (error) {
+            console.error("Failed to Get User Identity Data: ", error);
+            return null;
+        }
+    }
+
+    let initialName = userData?.name ? userData?.name.split(" ").map((word) => word[0]).join("") : userData?.email[0]
+
     return (
         <div className="container mx-auto px-4 md:px-6 py-8">
             <div className="grid md:grid-cols-[1fr_2fr] gap-8">
                 <div className="bg-white dark:bg-gray-950 rounded-lg shadow-sm p-6">
                     <div className="flex items-center gap-4">
                         <Avatar className="w-16 h-16">
-                            <img src="/placeholder.svg" alt={user.name} />
-                            <AvatarFallback>SA</AvatarFallback>
+                            <img src={userData?.avatar_url} />
+                            <AvatarFallback>{initialName}</AvatarFallback>
                         </Avatar>
                         <div>
-                            <h1 className="text-xl font-bold">{user.name}</h1>
-                            <p className="text-gray-500 dark:text-gray-400">{user.email}</p>
+                            <h1 className="text-xl font-bold">{userData?.name !== undefined ? userData?.name : "-"}</h1>
+                            <p className="text-gray-500 dark:text-gray-400">{userData?.email}</p>
                         </div>
                     </div>
                     <Separator className="my-6" />
@@ -145,11 +170,11 @@ const UserProfileSection = () => {
                                 >
                                     <div className="grid gap-2">
                                         <Label htmlFor="name">Name</Label>
-                                        <Input id="name" defaultValue={user.name} />
+                                        <Input id="name" defaultValue={userData?.name !== undefined ? userData?.name : "-"} />
                                     </div>
                                     <div className="grid gap-2">
                                         <Label htmlFor="email">Email</Label>
-                                        <Input id="email" type="email" defaultValue={user.email} />
+                                        <Input id="email" type="email" defaultValue={userData?.email} />
                                     </div>
                                     <div className="flex justify-end gap-2">
                                         <Button variant="outline" onClick={() => setEditingPersonalInfo(false)}>
@@ -162,11 +187,11 @@ const UserProfileSection = () => {
                                 <div className="grid gap-2">
                                     <div className="flex justify-between">
                                         <span>Name</span>
-                                        <span>{user.name}</span>
+                                        <span>{userData?.name !== undefined ? userData?.name : "-"}</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span>Email</span>
-                                        <span>{user.email}</span>
+                                        <span>{userData?.email}</span>
                                     </div>
                                     <Button variant="outline" size="sm" onClick={() => setEditingPersonalInfo(true)}>
                                         Edit
