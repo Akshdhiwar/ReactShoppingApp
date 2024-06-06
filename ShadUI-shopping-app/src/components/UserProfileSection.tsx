@@ -6,9 +6,8 @@ import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import { Badge } from "./ui/badge"
-import { supabase } from "../Constants/supabase"
-import Userprofile from "../Interfaces/UserProfile"
 import { UserContext } from "../Context/UserContext"
+import axiosHttp from "../axiosHandler/axiosHandler"
 
 const UserProfileSection = () => {
     const user = {
@@ -98,13 +97,13 @@ const UserProfileSection = () => {
     }
 
     const currentUser = useContext(UserContext)
-    const [userData , setUser] = useState<Userprofile | null>(null);
+    const [userData , setUser] = useState<any>(null);
 
     useEffect(() => {
-        getUser().then((res: Userprofile | any) => {
+        getUser().then((res:any) => {
           setUser(res);
         });
-      }, [currentUser?.user]);
+      }, []);
 
     const [editingPersonalInfo, setEditingPersonalInfo] = useState(false)
     const [editingShippingAddress, setEditingShippingAddress] = useState(false)
@@ -127,17 +126,15 @@ const UserProfileSection = () => {
 
     async function getUser() {
         try {
-            const userResponse = await supabase.auth.getUser();
-            const identityData =
-                userResponse?.data?.user?.identities?.[0]?.identity_data;
-            return identityData;
+            const userResponse = await axiosHttp.get(`/account/data/${currentUser?.user?.id}`)
+            return userResponse.data;
         } catch (error) {
             console.error("Failed to Get User Identity Data: ", error);
             return null;
         }
     }
 
-    let initialName = userData?.name ? userData?.name.split(" ").map((word) => word[0]).join("") : userData?.email[0]
+    let initialName = userData?.name ? userData?.name.split(" ").map((word:any) => word[0]).join("") : userData?.email
 
     return (
         <div className="container mx-auto px-4 md:px-6 py-8">
@@ -145,7 +142,7 @@ const UserProfileSection = () => {
                 <div className="bg-white dark:bg-gray-950 rounded-lg shadow-sm p-6">
                     <div className="flex items-center gap-4">
                         <Avatar className="w-16 h-16">
-                            <img src={userData?.avatar_url} />
+                            <img src={userData?.avatar} />
                             <AvatarFallback>{initialName}</AvatarFallback>
                         </Avatar>
                         <div>
