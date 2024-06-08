@@ -1,12 +1,14 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useContext, useEffect } from "react";
 import { Toaster } from "./components/ui/toaster";
 import Home from "./pages/Home";
 import Loader from "./components/ui/Loader";
 import CartProvider from "./Providers/CartProvider";
 import UserProvider from "./Providers/UserProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { supabase } from "./Constants/supabase";
+import { UserContext } from "./Context/UserContext";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ProductView = lazy(() => import("./pages/ProductView"));
@@ -25,6 +27,31 @@ const CustomerList = lazy(() => import("./components/Admin/CustomerList"))
 const UserProfile = lazy(() => import("./components/UserProfileSection"))
 
 function App() {
+
+  const currentUser = useContext(UserContext)
+
+  async function getUser() {
+    try {
+      const userResponse = await supabase.auth.getUser();
+      const identityData =
+        userResponse?.data?.user?.identities?.[0]?.identity_data;
+      const temp = {
+        email: identityData!.email,
+        sub: identityData!.sub,
+        id : userResponse?.data?.user?.identities?.[0]?.user_id
+      }
+      currentUser?.setUserData(temp)
+      return identityData;
+    } catch (error) {
+      console.error("Failed to Get User Identity Data: ", error);
+      return null;
+    }
+  }
+
+  useEffect(()=>{
+    getUser()
+  },[])
+
   return (
     <UserProvider>
       <CartProvider>

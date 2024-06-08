@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Badge } from "./ui/badge"
 import { UserContext } from "../Context/UserContext"
 import axiosHttp from "../axiosHandler/axiosHandler"
+import { useToast } from "./ui/use-toast"
 
 const UserProfileSection = () => {
     const user = {
@@ -95,23 +96,26 @@ const UserProfileSection = () => {
             },
         ],
     }
+    const { toast } = useToast()
 
     const currentUser = useContext(UserContext)
-    const [userData , setUser] = useState<any>(null);
+    const [userData, setUser] = useState<any>(null);
+    const [name, setName] = useState('');
 
     useEffect(() => {
-        getUser().then((res:any) => {
-          setUser(res);
+        getUser().then((res: any) => {
+            setUser(res);
         });
-      }, []);
+    }, [currentUser?.user]);
+
+
+    useEffect(() => {
+        setName(userData?.name)
+    }, [userData])
 
     const [editingPersonalInfo, setEditingPersonalInfo] = useState(false)
     const [editingShippingAddress, setEditingShippingAddress] = useState(false)
     const [editingPaymentMethods, setEditingPaymentMethods] = useState(false)
-    const handlePersonalInfoSubmit = (updatedInfo: any) => {
-        console.log("Updated personal info:", updatedInfo)
-        setEditingPersonalInfo(false)
-    }
     const handleShippingAddressSubmit = (updatedAddress: any) => {
         console.log("Updated shipping address:", updatedAddress)
         setEditingShippingAddress(false)
@@ -134,7 +138,31 @@ const UserProfileSection = () => {
         }
     }
 
-    let initialName = userData?.name ? userData?.name.split(" ").map((word:any) => word[0]).join("") : userData?.email
+    function saveUserData() {
+        console.log("hello")
+        const payload = {
+            name: name
+        }
+        axiosHttp.post(`/account/${currentUser?.user?.id}`, payload).then(() => {
+            toast({
+                description: `Updated details successfully.`
+            })
+            setEditingPersonalInfo(false)
+            getUser().then((res: any) => {
+                setUser(res);
+            });
+        }).catch(() => {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+            })
+            setEditingPersonalInfo(false)
+        })
+
+    }
+
+    let initialName = userData?.name ? userData?.name.split(" ").map((word: any) => word[0]).join("") : userData?.email
 
     return (
         <div className="container mx-auto px-4 md:px-6 py-8">
@@ -155,31 +183,20 @@ const UserProfileSection = () => {
                         <div>
                             <h2 className="text-lg font-semibold">Personal Information</h2>
                             {editingPersonalInfo ? (
-                                <form
-                                    onSubmit={(e) => {
-                                        e.preventDefault()
-                                        handlePersonalInfoSubmit({
-                                            name: "Sophia Anderson",
-                                            email: "sophia@example.com",
-                                        })
-                                    }}
+                                <div
                                     className="grid gap-4"
                                 >
                                     <div className="grid gap-2">
                                         <Label htmlFor="name">Name</Label>
-                                        <Input id="name" defaultValue={userData?.name !== undefined ? userData?.name : "-"} />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="email">Email</Label>
-                                        <Input id="email" type="email" defaultValue={userData?.email} />
+                                        <Input id="name" defaultValue={name} onChange={(e) => setName(e.target.value)}  />
                                     </div>
                                     <div className="flex justify-end gap-2">
                                         <Button variant="outline" onClick={() => setEditingPersonalInfo(false)}>
                                             Cancel
                                         </Button>
-                                        <Button type="submit">Save</Button>
+                                        <Button onClick={saveUserData}>Save</Button>
                                     </div>
-                                </form>
+                                </div>
                             ) : (
                                 <div className="grid gap-2">
                                     <div className="flex justify-between">
